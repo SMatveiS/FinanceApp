@@ -1,10 +1,10 @@
-package com.example.myfinance
+package com.example.myfinance.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ArticlesScreen(){
-    Text("Articles", fontSize = 30.sp)
+fun IncomesScreen() {
+    Text("Incomes", fontSize = 30.sp)
 }
