@@ -39,6 +39,7 @@ import com.example.myfinance.screens.IncomesScreen
 import com.example.myfinance.screens.SettingsScreen
 import com.example.myfinance.ui.theme.MyFinanceTheme
 
+// Я немного ошибся с порядком действий и раньше времени сделал merge, так что эта строчка для pull request-а
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
