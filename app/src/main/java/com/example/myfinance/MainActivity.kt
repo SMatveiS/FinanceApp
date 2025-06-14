@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -172,12 +173,54 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) { innerPadding ->
+                    val expenses = remember {
+                        listOf(
+                            Expense(id = 0, category = "Аренда квартиры", amount = 100000, emoji = "\uD83C\uDFE1"),
+                            Expense(id = 1, category = "Одежда", amount = 100000, emoji = "\uD83D\uDC57"),
+                            Expense(id = 2, category = "На собачку", comment = "Джек", amount = 100000, emoji = "\uD83D\uDC36"),
+                            Expense(id = 3, category = "На собачку", comment = "Энни", amount = 100000, emoji = "\uD83D\uDC36"),
+                            Expense(id = 4, category = "Ремонт квартиры", amount = 100000, emoji = "РК"),
+                            Expense(id = 5, category = "Продукты", amount = 100000, emoji = "\uD83C\uDF6D"),
+                            Expense(id = 6, category = "Спортзал", amount = 100000, emoji = "\uD83C\uDFCB\uFE0F"),
+                            Expense(id = 7, category = "Медицина", amount = 100000, emoji = "\uD83D\uDC8A")
+                        )
+                    }
+                    val incomes = remember {
+                        listOf(
+                            Income(id = 0, category = "Зарплата", 500000),
+                            Income(id = 1, category = "Подработка", 100000)
+                        )
+                    }
+                    val articles = remember {
+                        listOf(
+                            Article(id = 0, name = "Аренда квартиры", emoji = "\uD83C\uDFE1"),
+                            Article(id = 1, name = "Одежда", emoji = "\uD83D\uDC57"),
+                            Article(id = 2, name = "На собачку", emoji = "\uD83D\uDC36"),
+                            Article(id = 3, name = "На собачку", emoji = "\uD83D\uDC36"),
+                            Article(id = 4, name = "Ремонт квартиры", emoji = "РК"),
+                            Article(id = 5, name = "Продукты", emoji = "\uD83C\uDF6D"),
+                            Article(id = 6, name = "Спортзал", emoji = "\uD83C\uDFCB\uFE0F"),
+                            Article(id = 7, name = "Медицина", emoji = "\uD83D\uDC8A")
+                        )
+                    }
+                    val settings = remember {
+                        listOf(
+                            Settings(id = 0, name = "Основной цвет"),
+                            Settings(id = 1, name = "Звуки"),
+                            Settings(id = 2, name = "Хаптики"),
+                            Settings(id = 3, name = "Код пароль"),
+                            Settings(id = 4, name = "Синхронизация"),
+                            Settings(id = 5, name = "Язык"),
+                            Settings(id = 6, name = "О программе")
+                        )
+                    }
+
                     NavHost(navController, startDestination = NavRoutes.Expenses.route, Modifier.padding(innerPadding)) {
-                        composable(NavRoutes.Expenses.route) { ExpensesScreen() }
-                        composable(NavRoutes.Incomes.route) { IncomesScreen() }
+                        composable(NavRoutes.Expenses.route) { ExpensesScreen(expenses) }
+                        composable(NavRoutes.Incomes.route) { IncomesScreen(incomes) }
                         composable(NavRoutes.Account.route) { AccountScreen() }
-                        composable(NavRoutes.Articles.route) { ArticlesScreen() }
-                        composable(NavRoutes.Settings.route) { SettingsScreen() }
+                        composable(NavRoutes.Articles.route) { ArticlesScreen(articles) }
+                        composable(NavRoutes.Settings.route) { SettingsScreen(settings) }
                     }
                 }
             }
