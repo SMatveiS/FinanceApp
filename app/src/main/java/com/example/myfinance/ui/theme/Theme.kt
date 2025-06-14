@@ -26,7 +26,7 @@ private val LightColorScheme = lightColorScheme(
     primary = Green,
     secondary = LightGreen,
     tertiary = Grey,
-    tertiaryContainer = LightGrey,
+    outlineVariant = LightGrey,
     background = White,
     surface = Light,
 

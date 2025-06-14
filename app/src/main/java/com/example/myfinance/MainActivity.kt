@@ -161,8 +161,7 @@ class MainActivity : ComponentActivity() {
                                 onClick = { /* Действие */ },
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.background,
-                                shape = CircleShape,
-                                modifier = Modifier.size(56.dp)
+                                shape = CircleShape
                             ) {
                                 Icon(
                                     ImageVector.vectorResource(R.drawable.plus_for_add_button),
