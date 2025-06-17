@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myfinance.ListItem
+import com.example.myfinance.ui.common.FinappListItem
 import com.example.myfinance.R
 import com.example.myfinance.domain.Settings
 
@@ -55,7 +55,7 @@ fun SettingsScreen(settings: List<Settings>){
 
 @Composable
 fun SettingsItem(settings: Settings) {
-    ListItem(
+    FinappListItem(
         leftTitle = settings.name,
         rightIcon = ImageVector.vectorResource(R.drawable.dark_arrow),
         listHeight = 56,

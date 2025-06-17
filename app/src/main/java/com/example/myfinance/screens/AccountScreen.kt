@@ -6,13 +6,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.ListItem
 import com.example.myfinance.R
+import com.example.myfinance.ui.common.FinappListItem
 
 @Composable
 fun AccountScreen(){
     Column {
-        ListItem(
+        FinappListItem(
             leftTitle = "Баланс",
             rightTitle = "-670 000 ₽",
             leftIcon = "\uD83D\uDCB0",
@@ -24,7 +24,7 @@ fun AccountScreen(){
             onClick = { /* Действие */}
         )
         HorizontalDivider()
-        ListItem(
+        FinappListItem(
             leftTitle = "Валюта",
             rightTitle = "₽",
             rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),

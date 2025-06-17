@@ -37,9 +37,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.domain.Article
-import com.example.myfinance.domain.Expense
-import com.example.myfinance.domain.Income
 import com.example.myfinance.domain.Settings
+import com.example.myfinance.domain.Category
 import com.example.myfinance.screens.AccountScreen
 import com.example.myfinance.screens.ArticlesScreen
 import com.example.myfinance.screens.ExpensesScreen
@@ -189,62 +188,70 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     val expenses = remember {
                         listOf(
-                            Expense(
+                            Category(
                                 id = 0,
                                 category = "Аренда квартиры",
                                 amount = 100000,
-                                emoji = "\uD83C\uDFE1"
+                                emoji = "\uD83C\uDFE1",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 1,
                                 category = "Одежда",
                                 amount = 100000,
-                                emoji = "\uD83D\uDC57"
+                                emoji = "\uD83D\uDC57",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 2,
                                 category = "На собачку",
                                 comment = "Джек",
                                 amount = 100000,
-                                emoji = "\uD83D\uDC36"
+                                emoji = "\uD83D\uDC36",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 3,
                                 category = "На собачку",
                                 comment = "Энни",
                                 amount = 100000,
-                                emoji = "\uD83D\uDC36"
+                                emoji = "\uD83D\uDC36",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 4,
                                 category = "Ремонт квартиры",
                                 amount = 100000,
-                                emoji = "РК"
+                                emoji = "РК",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 5,
                                 category = "Продукты",
                                 amount = 100000,
-                                emoji = "\uD83C\uDF6D"
+                                emoji = "\uD83C\uDF6D",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 6,
                                 category = "Спортзал",
                                 amount = 100000,
-                                emoji = "\uD83C\uDFCB\uFE0F"
+                                emoji = "\uD83C\uDFCB\uFE0F",
+                                isIncome = false
                             ),
-                            Expense(
+                            Category(
                                 id = 7,
                                 category = "Медицина",
                                 amount = 100000,
-                                emoji = "\uD83D\uDC8A"
+                                emoji = "\uD83D\uDC8A",
+                                isIncome = false
                             )
                         )
                     }
                     val incomes = remember {
                         listOf(
-                            Income(id = 0, category = "Зарплата", 500000),
-                            Income(id = 1, category = "Подработка", 100000)
+                            Category(id = 0, category = "Зарплата", 500000, isIncome = true),
+                            Category(id = 1, category = "Подработка", 100000, isIncome = true)
                         )
                     }
                     val articles = remember {

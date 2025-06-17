@@ -1,4 +1,4 @@
-package com.example.myfinance
+package com.example.myfinance.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ListItem(
+fun FinappListItem(
     leftTitle: String,
     leftSubtitle: String = "",
     rightTitle: String = "",

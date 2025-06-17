@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.myfinance.domain.Article
-import com.example.myfinance.ListItem
+import com.example.myfinance.ui.common.FinappListItem
 import com.example.myfinance.R
 
 @Composable
@@ -76,7 +76,7 @@ fun ArticlesScreen(articles: List<Article>){
 
 @Composable
 fun ArticleItem(article: Article) {
-    ListItem(
+    FinappListItem(
         leftTitle = article.name,
         leftIcon = article.emoji
     )

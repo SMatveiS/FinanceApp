@@ -7,15 +7,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.domain.Income
-import com.example.myfinance.ListItem
+import com.example.myfinance.ui.common.FinappListItem
 import com.example.myfinance.R
+import com.example.myfinance.domain.Category
 
 @Composable
-fun IncomesScreen(incomes: List<Income>) {
+fun IncomesScreen(incomes: List<Category>) {
     LazyColumn {
         item {
-            ListItem(
+            FinappListItem(
                 leftTitle = "Всего",
                 rightTitle = "600 000 ₽",
                 listBackground = MaterialTheme.colorScheme.secondary,
@@ -31,8 +31,8 @@ fun IncomesScreen(incomes: List<Income>) {
 }
 
 @Composable
-fun IncomeItem(income: Income) {
-    ListItem(
+fun IncomeItem(income: Category) {
+    FinappListItem(
         leftTitle = income.category,
         leftSubtitle = income.comment,
         rightTitle = formatNumber(income.amount),

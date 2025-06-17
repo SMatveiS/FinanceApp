@@ -7,17 +7,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.domain.Expense
 import com.example.myfinance.R
-import com.example.myfinance.ListItem
+import com.example.myfinance.ui.common.FinappListItem
+import com.example.myfinance.domain.Category
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
 @Composable
-fun ExpensesScreen(expenses: List<Expense>) {
+fun ExpensesScreen(expenses: List<Category>) {
     LazyColumn {
         item {
-            ListItem(
+            FinappListItem(
                 leftTitle = "Всего",
                 rightTitle = "436 558 ₽",
                 listBackground = MaterialTheme.colorScheme.secondary,
@@ -33,8 +33,8 @@ fun ExpensesScreen(expenses: List<Expense>) {
 }
 
 @Composable
-fun ExpenseItem(expense: Expense) {
-    ListItem(
+fun ExpenseItem(expense: Category) {
+    FinappListItem(
         leftTitle = expense.category,
         leftSubtitle = expense.comment,
         rightTitle = formatNumber(expense.amount),
