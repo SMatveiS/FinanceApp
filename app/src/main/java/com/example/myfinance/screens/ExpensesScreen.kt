@@ -1,33 +1,50 @@
 package com.example.myfinance.screens
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
-import com.example.myfinance.ui.common.FinappListItem
 import com.example.myfinance.domain.Category
+import com.example.myfinance.ui.common.FinappFAB
+import com.example.myfinance.ui.common.FinappListItem
+import com.example.myfinance.ui.common.FinappTopBar
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
 @Composable
 fun ExpensesScreen(expenses: List<Category>) {
-    LazyColumn {
-        item {
-            FinappListItem(
-                leftTitle = "Всего",
-                rightTitle = "436 558 ₽",
-                listBackground = MaterialTheme.colorScheme.secondary,
-                listHeight = 56
-            )
-            HorizontalDivider()
-        }
-        items(expenses) { expense ->
-            ExpenseItem(expense)
-            HorizontalDivider()
+    Scaffold (
+        topBar = {
+            FinappTopBar(
+                title = "Расходы сегодня",
+                actionIcon = R.drawable.history
+            ) },
+        floatingActionButton = { FinappFAB() },
+        contentWindowInsets = WindowInsets.statusBars
+    ) { innerPadding ->
+        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+            item {
+                FinappListItem(
+                    leftTitle = "Всего",
+                    rightTitle = "436 558 ₽",
+                    listBackground = MaterialTheme.colorScheme.secondary,
+                    listHeight = 56
+                )
+                HorizontalDivider()
+            }
+            items(expenses) { expense ->
+                ExpenseItem(expense)
+                HorizontalDivider()
+            }
         }
     }
 }
