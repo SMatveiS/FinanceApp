@@ -1,6 +1,7 @@
 package com.example.myfinance
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +34,9 @@ fun ListItem(
     rightIcon: ImageVector? = null,
     listHeight: Int = 70,
     listBackground: Color = MaterialTheme.colorScheme.background,
-    leftIconBackground: Color = MaterialTheme.colorScheme.secondary
+    leftIconBackground: Color = MaterialTheme.colorScheme.secondary,
+    clickable: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -42,6 +45,7 @@ fun ListItem(
             .fillMaxWidth()
             .height(listHeight.dp)
             .background(listBackground)
+            .clickable(clickable, onClick = onClick)
     ) {
         // Между spacer и следующим элементом будет отступ в 16dp
         Spacer(modifier = Modifier.width(0.dp))

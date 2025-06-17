@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfinance.ListItem
 import com.example.myfinance.R
-import com.example.myfinance.Settings
+import com.example.myfinance.domain.Settings
 
 @Composable
 fun SettingsScreen(settings: List<Settings>){
@@ -58,6 +58,8 @@ fun SettingsItem(settings: Settings) {
     ListItem(
         leftTitle = settings.name,
         rightIcon = ImageVector.vectorResource(R.drawable.dark_arrow),
-        listHeight = 56
+        listHeight = 56,
+        clickable = true,
+        onClick = { /* Действие */}
     )
 }

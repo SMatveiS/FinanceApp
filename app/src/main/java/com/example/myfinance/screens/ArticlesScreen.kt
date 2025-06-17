@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import com.example.myfinance.Article
+import com.example.myfinance.domain.Article
 import com.example.myfinance.ListItem
 import com.example.myfinance.R
 
