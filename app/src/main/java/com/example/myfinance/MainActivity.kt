@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +36,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myfinance.domain.Article
+import com.example.myfinance.domain.Expense
+import com.example.myfinance.domain.Income
+import com.example.myfinance.domain.Settings
 import com.example.myfinance.screens.AccountScreen
 import com.example.myfinance.screens.ArticlesScreen
 import com.example.myfinance.screens.ExpensesScreen
@@ -126,7 +134,10 @@ class MainActivity : ComponentActivity() {
                     },
                     // Навигационная панель
                     bottomBar = {
-                        NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
+                        NavigationBar(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
+                        ) {
                             navBarItems.forEach { navItem ->
                                 NavigationBarItem(
                                     icon = { Icon(
@@ -157,12 +168,15 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     floatingActionButton = {
-                        if (currentRoute == NavRoutes.Expenses.route || currentRoute == NavRoutes.Incomes.route) {
+                        if (currentRoute == NavRoutes.Expenses.route ||
+                            currentRoute == NavRoutes.Incomes.route ||
+                            currentRoute == NavRoutes.Account.route) {
                             FloatingActionButton(
                                 onClick = { /* Действие */ },
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.background,
-                                shape = CircleShape
+                                shape = CircleShape,
+                                elevation = FloatingActionButtonDefaults.elevation(0.dp)
                             ) {
                                 Icon(
                                     ImageVector.vectorResource(R.drawable.plus_for_add_button),
@@ -175,14 +189,56 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     val expenses = remember {
                         listOf(
-                            Expense(id = 0, category = "Аренда квартиры", amount = 100000, emoji = "\uD83C\uDFE1"),
-                            Expense(id = 1, category = "Одежда", amount = 100000, emoji = "\uD83D\uDC57"),
-                            Expense(id = 2, category = "На собачку", comment = "Джек", amount = 100000, emoji = "\uD83D\uDC36"),
-                            Expense(id = 3, category = "На собачку", comment = "Энни", amount = 100000, emoji = "\uD83D\uDC36"),
-                            Expense(id = 4, category = "Ремонт квартиры", amount = 100000, emoji = "РК"),
-                            Expense(id = 5, category = "Продукты", amount = 100000, emoji = "\uD83C\uDF6D"),
-                            Expense(id = 6, category = "Спортзал", amount = 100000, emoji = "\uD83C\uDFCB\uFE0F"),
-                            Expense(id = 7, category = "Медицина", amount = 100000, emoji = "\uD83D\uDC8A")
+                            Expense(
+                                id = 0,
+                                category = "Аренда квартиры",
+                                amount = 100000,
+                                emoji = "\uD83C\uDFE1"
+                            ),
+                            Expense(
+                                id = 1,
+                                category = "Одежда",
+                                amount = 100000,
+                                emoji = "\uD83D\uDC57"
+                            ),
+                            Expense(
+                                id = 2,
+                                category = "На собачку",
+                                comment = "Джек",
+                                amount = 100000,
+                                emoji = "\uD83D\uDC36"
+                            ),
+                            Expense(
+                                id = 3,
+                                category = "На собачку",
+                                comment = "Энни",
+                                amount = 100000,
+                                emoji = "\uD83D\uDC36"
+                            ),
+                            Expense(
+                                id = 4,
+                                category = "Ремонт квартиры",
+                                amount = 100000,
+                                emoji = "РК"
+                            ),
+                            Expense(
+                                id = 5,
+                                category = "Продукты",
+                                amount = 100000,
+                                emoji = "\uD83C\uDF6D"
+                            ),
+                            Expense(
+                                id = 6,
+                                category = "Спортзал",
+                                amount = 100000,
+                                emoji = "\uD83C\uDFCB\uFE0F"
+                            ),
+                            Expense(
+                                id = 7,
+                                category = "Медицина",
+                                amount = 100000,
+                                emoji = "\uD83D\uDC8A"
+                            )
                         )
                     }
                     val incomes = remember {

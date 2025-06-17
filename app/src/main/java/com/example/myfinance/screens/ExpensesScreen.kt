@@ -7,7 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.Expense
+import com.example.myfinance.domain.Expense
 import com.example.myfinance.R
 import com.example.myfinance.ListItem
 import java.text.DecimalFormat
@@ -39,7 +39,9 @@ fun ExpenseItem(expense: Expense) {
         leftSubtitle = expense.comment,
         rightTitle = formatNumber(expense.amount),
         leftIcon = expense.emoji,
-        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow)
+        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
+        clickable = true,
+        onClick = { /* Действие */}
     )
 }
 

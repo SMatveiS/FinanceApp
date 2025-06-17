@@ -1,4 +1,4 @@
-package com.example.myfinance
+package com.example.myfinance.domain
 
 data class Article(
     val id: Int,

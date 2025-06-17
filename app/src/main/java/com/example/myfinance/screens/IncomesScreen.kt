@@ -7,7 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.Income
+import com.example.myfinance.domain.Income
 import com.example.myfinance.ListItem
 import com.example.myfinance.R
 
@@ -36,6 +36,8 @@ fun IncomeItem(income: Income) {
         leftTitle = income.category,
         leftSubtitle = income.comment,
         rightTitle = formatNumber(income.amount),
-        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow)
+        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
+        clickable = true,
+        onClick = { /* Действие */}
     )
 }
