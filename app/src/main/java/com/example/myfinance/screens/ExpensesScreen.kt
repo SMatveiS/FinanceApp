@@ -21,12 +21,14 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
 @Composable
-fun ExpensesScreen(expenses: List<Category>) {
+fun ExpensesScreen(expenses: List<Category>, onHistoryClicked: () -> Unit) {
     Scaffold (
         topBar = {
             FinappTopBar(
                 title = "Расходы сегодня",
-                actionIcon = R.drawable.history
+                rightButtonIcon = R.drawable.history,
+                rightButtonDescription = "История",
+                rightButtonAction = onHistoryClicked
             ) },
         floatingActionButton = { FinappFAB() },
         contentWindowInsets = WindowInsets.statusBars

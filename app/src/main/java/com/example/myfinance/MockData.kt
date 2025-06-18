@@ -4,6 +4,7 @@ package com.example.myfinance
 import com.example.myfinance.domain.Article
 import com.example.myfinance.domain.Category
 import com.example.myfinance.domain.Settings
+import com.example.myfinance.domain.Transaction
 
 object MockData {
     val expenses = listOf(
@@ -64,12 +65,28 @@ object MockData {
             amount = 100000,
             emoji = "\uD83D\uDC8A",
             isIncome = false
+        ),
+        Category(
+            id = 0,
+            category = "Аренда квартиры",
+            amount = 100000,
+            emoji = "\uD83C\uDFE1",
+            isIncome = false
+        ),
+        Category(
+            id = 1,
+            category = "Одежда",
+            amount = 100000,
+            emoji = "\uD83D\uDC57",
+            isIncome = false
         )
     )
+
     val incomes = listOf(
         Category(id = 0, category = "Зарплата", 500000, isIncome = true),
         Category(id = 1, category = "Подработка", 100000, isIncome = true)
     )
+
     val articles = listOf(
         Article(id = 0, name = "Аренда квартиры", emoji = "\uD83C\uDFE1"),
         Article(id = 1, name = "Одежда", emoji = "\uD83D\uDC57"),
@@ -80,6 +97,7 @@ object MockData {
         Article(id = 6, name = "Спортзал", emoji = "\uD83C\uDFCB\uFE0F"),
         Article(id = 7, name = "Медицина", emoji = "\uD83D\uDC8A")
     )
+
     val settings = listOf(
         Settings(id = 0, name = "Основной цвет"),
         Settings(id = 1, name = "Звуки"),
@@ -88,5 +106,22 @@ object MockData {
         Settings(id = 4, name = "Синхронизация"),
         Settings(id = 5, name = "Язык"),
         Settings(id = 6, name = "О программе")
+    )
+
+    val transactions = listOf(
+        Transaction(
+            id = 0,
+            category = "Аренда квартиры",
+            amount = 100000,
+            emoji = "\uD83C\uDFE1",
+            date = "12.01.2012"
+        ),
+        Transaction(
+            id = 1,
+            category = "Одежда",
+            amount = 100000,
+            emoji = "\uD83D\uDC57",
+            date = "12.01.2012"
+        )
     )
 }

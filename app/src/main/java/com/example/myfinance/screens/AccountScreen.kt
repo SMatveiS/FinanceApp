@@ -22,7 +22,8 @@ fun AccountScreen(){
         topBar = {
             FinappTopBar(
                 title = "Мой счет",
-                actionIcon = R.drawable.edit
+                rightButtonIcon = R.drawable.edit,
+                rightButtonDescription = "Изменить"
             ) },
         floatingActionButton = { FinappFAB() },
         contentWindowInsets = WindowInsets.statusBars

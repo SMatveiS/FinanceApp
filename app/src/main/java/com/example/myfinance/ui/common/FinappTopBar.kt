@@ -17,7 +17,15 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinappTopBar(title: String, actionIcon: Int? = null, action: () -> Unit = {}) {
+fun FinappTopBar(
+    title: String,
+    rightButtonIcon: Int? = null,
+    leftButtonIcon: Int? = null,
+    rightButtonDescription: String? = null,
+    leftButtonDescription: String? = null,
+    rightButtonAction: () -> Unit = {},
+    leftButtonAction: () -> Unit = {}
+) {
     CenterAlignedTopAppBar(
         title = { Text(title, fontSize = 22.sp) },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -25,13 +33,25 @@ fun FinappTopBar(title: String, actionIcon: Int? = null, action: () -> Unit = {}
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
         actions = {
-            actionIcon?.let {
-                IconButton(onClick = action) {
+            rightButtonIcon?.let {
+                IconButton(onClick = rightButtonAction) {
                     Icon(
-                        ImageVector.vectorResource(actionIcon),
-                        contentDescription = "История",
+                        ImageVector.vectorResource(rightButtonIcon),
+                        contentDescription = rightButtonDescription,
                         modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        },
+        navigationIcon = {
+            leftButtonIcon?.let {
+                IconButton(onClick = leftButtonAction) {
+                    Icon(
+                        ImageVector.vectorResource(leftButtonIcon),
+                        contentDescription = leftButtonDescription,
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

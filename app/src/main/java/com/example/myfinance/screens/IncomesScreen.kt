@@ -19,12 +19,14 @@ import com.example.myfinance.ui.common.FinappFAB
 import com.example.myfinance.ui.common.FinappTopBar
 
 @Composable
-fun IncomesScreen(incomes: List<Category>) {
+fun IncomesScreen(incomes: List<Category>, onHistoryClicked: () -> Unit) {
     Scaffold (
         topBar = {
             FinappTopBar(
                 title = "Доходы сегодня",
-                actionIcon = R.drawable.history
+                rightButtonIcon = R.drawable.history,
+                rightButtonDescription = "История",
+                rightButtonAction = onHistoryClicked
             ) },
         floatingActionButton = { FinappFAB() },
         contentWindowInsets = WindowInsets.statusBars

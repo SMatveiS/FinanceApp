@@ -112,7 +112,7 @@ fun FinappListItem(
                         Text(
                             rightSubtitle,
                             fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = MaterialTheme.colorScheme.onSurface,
                         )
                     }
                 }
