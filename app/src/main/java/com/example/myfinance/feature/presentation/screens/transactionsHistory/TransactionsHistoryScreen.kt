@@ -1,4 +1,4 @@
-package com.example.myfinance.screens
+package com.example.myfinance.feature.presentation.screens.transactionsHistory
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -10,13 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import com.example.myfinance.ui.common.FinappListItem
 import com.example.myfinance.R
-import com.example.myfinance.domain.Transaction
-import com.example.myfinance.ui.common.FinappTopBar
-import javax.xml.transform.Source
+import com.example.myfinance.feature.domain.Transaction
+import com.example.myfinance.ui.components.AppListItem
+import com.example.myfinance.ui.components.AppTopBar
 
 @Composable
 fun TransactionsHistoryScreen(
@@ -25,7 +22,7 @@ fun TransactionsHistoryScreen(
 ) {
     Scaffold (
         topBar = {
-            FinappTopBar(
+            AppTopBar(
                 title = "Моя история",
                 rightButtonIcon = R.drawable.analytic_button,
                 leftButtonIcon = R.drawable.back_arrow,
@@ -38,21 +35,21 @@ fun TransactionsHistoryScreen(
     ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
-                FinappListItem(
+                AppListItem(
                     leftTitle = "Начало",
                     rightTitle = "436 558 ₽",
                     listBackground = MaterialTheme.colorScheme.secondary,
                     listHeight = 56
                 )
                 HorizontalDivider()
-                FinappListItem(
+                AppListItem(
                     leftTitle = "Конец",
                     rightTitle = "436 558 ₽",
                     listBackground = MaterialTheme.colorScheme.secondary,
                     listHeight = 56
                 )
                 HorizontalDivider()
-                FinappListItem(
+                AppListItem(
                     leftTitle = "Сумма",
                     rightTitle = "436 558 ₽",
                     listBackground = MaterialTheme.colorScheme.secondary,
@@ -65,18 +62,4 @@ fun TransactionsHistoryScreen(
             }
         }
     }
-}
-
-@Composable
-fun TransactionItem(transaction: Transaction) {
-    FinappListItem(
-        leftTitle = transaction.category,
-        leftSubtitle = transaction.comment,
-        rightTitle = formatNumber(transaction.amount),
-        rightSubtitle = transaction.date,
-        leftIcon = transaction.emoji,
-        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
-        clickable = true,
-        onClick = { /* Действие */}
-    )
 }

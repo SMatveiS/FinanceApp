@@ -1,4 +1,4 @@
-package com.example.myfinance
+package com.example.myfinance.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,8 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.myfinance.navigation.FinappNavBar
-import com.example.myfinance.navigation.FinappNavHost
+import com.example.myfinance.app.navigation.FinappNavBar
+import com.example.myfinance.app.navigation.FinappNavHost
 import com.example.myfinance.ui.theme.MyFinanceTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +28,10 @@ class MainActivity : ComponentActivity() {
                     contentWindowInsets = WindowInsets(0.dp),
                     bottomBar = { FinappNavBar(navController) }
                 ) { innerPadding ->
-                    FinappNavHost(navController, modifier = Modifier.padding(innerPadding))
+                    FinappNavHost(
+                        navController,
+                        modifier = Modifier.Companion.padding(innerPadding)
+                    )
                 }
             }
         }

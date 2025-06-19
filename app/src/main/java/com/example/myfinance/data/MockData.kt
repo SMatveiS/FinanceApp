@@ -1,10 +1,9 @@
-package com.example.myfinance
+package com.example.myfinance.data
 
-
-import com.example.myfinance.domain.Article
-import com.example.myfinance.domain.Category
-import com.example.myfinance.domain.Settings
-import com.example.myfinance.domain.Transaction
+import com.example.myfinance.feature.domain.Article
+import com.example.myfinance.feature.domain.Category
+import com.example.myfinance.feature.domain.Settings
+import com.example.myfinance.feature.domain.Transaction
 
 object MockData {
     val expenses = listOf(
@@ -64,20 +63,6 @@ object MockData {
             category = "Медицина",
             amount = 100000,
             emoji = "\uD83D\uDC8A",
-            isIncome = false
-        ),
-        Category(
-            id = 0,
-            category = "Аренда квартиры",
-            amount = 100000,
-            emoji = "\uD83C\uDFE1",
-            isIncome = false
-        ),
-        Category(
-            id = 1,
-            category = "Одежда",
-            amount = 100000,
-            emoji = "\uD83D\uDC57",
             isIncome = false
         )
     )

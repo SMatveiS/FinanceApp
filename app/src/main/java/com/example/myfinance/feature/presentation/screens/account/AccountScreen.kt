@@ -1,4 +1,4 @@
-package com.example.myfinance.screens
+package com.example.myfinance.feature.presentation.screens.account
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -12,24 +12,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
-import com.example.myfinance.ui.common.FinappFAB
-import com.example.myfinance.ui.common.FinappListItem
-import com.example.myfinance.ui.common.FinappTopBar
+import com.example.myfinance.ui.components.AppFAB
+import com.example.myfinance.ui.components.AppListItem
+import com.example.myfinance.ui.components.AppTopBar
 
 @Composable
 fun AccountScreen(){
     Scaffold (
         topBar = {
-            FinappTopBar(
+            AppTopBar(
                 title = "Мой счет",
                 rightButtonIcon = R.drawable.edit,
                 rightButtonDescription = "Изменить"
             ) },
-        floatingActionButton = { FinappFAB() },
+        floatingActionButton = { AppFAB() },
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            FinappListItem(
+            AppListItem(
                 leftTitle = "Баланс",
                 rightTitle = "-670 000 ₽",
                 leftIcon = "\uD83D\uDCB0",
@@ -41,7 +41,7 @@ fun AccountScreen(){
                 onClick = { /* Действие */ }
             )
             HorizontalDivider()
-            FinappListItem(
+            AppListItem(
                 leftTitle = "Валюта",
                 rightTitle = "₽",
                 rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),

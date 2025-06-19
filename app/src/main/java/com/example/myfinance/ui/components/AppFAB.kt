@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.common
+package com.example.myfinance.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myfinance.R
 
 @Composable
-fun FinappFAB(onClick: () -> Unit = {}) {
+fun AppFAB(onClick: () -> Unit = {}) {
     FloatingActionButton(
         onClick = onClick,
         containerColor = MaterialTheme.colorScheme.primary,

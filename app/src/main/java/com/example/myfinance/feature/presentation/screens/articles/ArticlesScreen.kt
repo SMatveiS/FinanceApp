@@ -1,4 +1,4 @@
-package com.example.myfinance.screens
+package com.example.myfinance.feature.presentation.screens.articles
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -24,15 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import com.example.myfinance.domain.Article
-import com.example.myfinance.ui.common.FinappListItem
+import com.example.myfinance.feature.domain.Article
 import com.example.myfinance.R
-import com.example.myfinance.ui.common.FinappTopBar
+import com.example.myfinance.ui.components.AppTopBar
 
 @Composable
 fun ArticlesScreen(articles: List<Article>){
     Scaffold (
-        topBar = { FinappTopBar(title = "Мои статьи") },
+        topBar = { AppTopBar(title = "Мои статьи") },
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
@@ -81,12 +80,4 @@ fun ArticlesScreen(articles: List<Article>){
             }
         }
     }
-}
-
-@Composable
-fun ArticleItem(article: Article) {
-    FinappListItem(
-        leftTitle = article.name,
-        leftIcon = article.emoji
-    )
 }

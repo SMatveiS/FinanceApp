@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.common
+package com.example.myfinance.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinappTopBar(
+fun AppTopBar(
     title: String,
     rightButtonIcon: Int? = null,
     leftButtonIcon: Int? = null,

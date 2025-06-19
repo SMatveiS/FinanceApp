@@ -1,4 +1,4 @@
-package com.example.myfinance.screens
+package com.example.myfinance.feature.presentation.screens.expenses
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -10,32 +10,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
-import com.example.myfinance.domain.Category
-import com.example.myfinance.ui.common.FinappFAB
-import com.example.myfinance.ui.common.FinappListItem
-import com.example.myfinance.ui.common.FinappTopBar
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
+import com.example.myfinance.feature.domain.Category
+import com.example.myfinance.ui.components.AppFAB
+import com.example.myfinance.ui.components.AppListItem
+import com.example.myfinance.ui.components.AppTopBar
 
 @Composable
 fun ExpensesScreen(expenses: List<Category>, onHistoryClicked: () -> Unit) {
     Scaffold (
         topBar = {
-            FinappTopBar(
+            AppTopBar(
                 title = "Расходы сегодня",
                 rightButtonIcon = R.drawable.history,
                 rightButtonDescription = "История",
                 rightButtonAction = onHistoryClicked
             ) },
-        floatingActionButton = { FinappFAB() },
+        floatingActionButton = { AppFAB() },
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             item {
-                FinappListItem(
+                AppListItem(
                     leftTitle = "Всего",
                     rightTitle = "436 558 ₽",
                     listBackground = MaterialTheme.colorScheme.secondary,
@@ -49,26 +45,5 @@ fun ExpensesScreen(expenses: List<Category>, onHistoryClicked: () -> Unit) {
             }
         }
     }
-}
-
-@Composable
-fun ExpenseItem(expense: Category) {
-    FinappListItem(
-        leftTitle = expense.category,
-        leftSubtitle = expense.comment,
-        rightTitle = formatNumber(expense.amount),
-        leftIcon = expense.emoji,
-        rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
-        clickable = true,
-        onClick = { /* Действие */}
-    )
-}
-
-fun formatNumber(number: Int): String {
-    val symbols = DecimalFormatSymbols().apply {
-        groupingSeparator = ' '
-    }
-    val formatter = DecimalFormat("#,###", symbols)
-    return formatter.format(number) + "₽"
 }
 

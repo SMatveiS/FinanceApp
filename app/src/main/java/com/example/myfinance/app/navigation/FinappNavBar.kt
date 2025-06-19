@@ -1,4 +1,4 @@
-package com.example.myfinance.navigation
+package com.example.myfinance.app.navigation
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
@@ -101,12 +101,3 @@ data class BarItem(
     val icon: Int,
     val route: String
 )
-
-sealed class NavRoutes(val route: String) {
-    object Expenses : NavRoutes("expenses")
-    object Incomes : NavRoutes("incomes")
-    object Account : NavRoutes("account")
-    object Articles : NavRoutes("articles")
-    object Settings : NavRoutes("settings")
-    object TransactionsHistory : NavRoutes("history")
-}
