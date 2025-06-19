@@ -20,6 +20,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+//        lifecycleScope.launch {
+//            val retrofit = provideRetrofit(provideOkHttpClient())
+//            val accountsApi: AccountsApi = retrofit.create(AccountsApi::class.java)
+//            println(accountsApi.getAccount().count())
+//        }
+
         setContent {
             MyFinanceTheme {
                 val navController = rememberNavController()
