@@ -1,23 +1,23 @@
 package com.example.myfinance.data
 
-import com.example.myfinance.feature.domain.Article
-import com.example.myfinance.feature.domain.Category
-import com.example.myfinance.feature.domain.Settings
-import com.example.myfinance.feature.domain.Transaction
+import com.example.myfinance.feature.domain.model.Article
+import com.example.myfinance.feature.domain.model.Category
+import com.example.myfinance.feature.domain.model.Settings
+import com.example.myfinance.feature.domain.model.Transaction
 
 object MockData {
     val expenses = listOf(
         Category(
             id = 0,
             category = "Аренда квартиры",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83C\uDFE1",
             isIncome = false
         ),
         Category(
             id = 1,
             category = "Одежда",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83D\uDC57",
             isIncome = false
         ),
@@ -25,7 +25,7 @@ object MockData {
             id = 2,
             category = "На собачку",
             comment = "Джек",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83D\uDC36",
             isIncome = false
         ),
@@ -33,43 +33,43 @@ object MockData {
             id = 3,
             category = "На собачку",
             comment = "Энни",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83D\uDC36",
             isIncome = false
         ),
         Category(
             id = 4,
             category = "Ремонт квартиры",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "РК",
             isIncome = false
         ),
         Category(
             id = 5,
             category = "Продукты",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83C\uDF6D",
             isIncome = false
         ),
         Category(
             id = 6,
             category = "Спортзал",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83C\uDFCB\uFE0F",
             isIncome = false
         ),
         Category(
             id = 7,
             category = "Медицина",
-            amount = 100000,
+            amount = 100000.0,
             emoji = "\uD83D\uDC8A",
             isIncome = false
         )
     )
 
     val incomes = listOf(
-        Category(id = 0, category = "Зарплата", 500000, isIncome = true),
-        Category(id = 1, category = "Подработка", 100000, isIncome = true)
+        Category(id = 0, category = "Зарплата", 500000.0, isIncome = true),
+        Category(id = 1, category = "Подработка", 100000.0, isIncome = true)
     )
 
     val articles = listOf(

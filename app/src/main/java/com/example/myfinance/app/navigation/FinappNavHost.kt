@@ -12,12 +12,12 @@ import com.example.myfinance.data.MockData.expenses
 import com.example.myfinance.data.MockData.incomes
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.data.MockData.transactions
-import com.example.myfinance.feature.presentation.screens.account.AccountScreen
-import com.example.myfinance.feature.presentation.screens.articles.ArticlesScreen
-import com.example.myfinance.feature.presentation.screens.expenses.ExpensesScreen
-import com.example.myfinance.feature.presentation.screens.incomes.IncomesScreen
-import com.example.myfinance.feature.presentation.screens.settings.SettingsScreen
-import com.example.myfinance.feature.presentation.screens.transactionsHistory.TransactionsHistoryScreen
+import com.example.myfinance.feature.presentation.account.AccountScreen
+import com.example.myfinance.feature.presentation.articles.ArticlesScreen
+import com.example.myfinance.feature.presentation.expenses.ExpensesScreen
+import com.example.myfinance.feature.presentation.incomes.IncomesScreen
+import com.example.myfinance.feature.presentation.settings.SettingsScreen
+import com.example.myfinance.feature.presentation.transactionsHistory.TransactionsHistoryScreen
 
 sealed class NavRoutes(val route: String) {
     object Expenses : NavRoutes("expenses")
@@ -33,7 +33,6 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
     NavHost(navController, startDestination = NavRoutes.Expenses.route, modifier = modifier) {
         composable(NavRoutes.Expenses.route) { backStackEntry ->
             ExpensesScreen(
-                expenses,
                 onHistoryClicked = {
                     navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Expenses.route}")
                 }
@@ -58,7 +57,6 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
         ) { backStackEntry ->
             val source = backStackEntry.arguments?.getString("source") ?: NavRoutes.Expenses.route
             TransactionsHistoryScreen(
-                transactions = transactions,
                 onBackArrowClicked = {
                     navController.navigate(source)
                 }
