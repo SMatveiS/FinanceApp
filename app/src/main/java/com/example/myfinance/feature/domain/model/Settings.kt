@@ -1,4 +1,4 @@
-package com.example.myfinance.domain
+package com.example.myfinance.feature.domain.model
 
 data class Settings(
     val id: Int,

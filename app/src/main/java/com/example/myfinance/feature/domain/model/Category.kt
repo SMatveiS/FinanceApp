@@ -1,0 +1,10 @@
+package com.example.myfinance.feature.domain.model
+
+data class Category(
+    val id: Int,
+    val category: String,
+    val amount: Double = 0.0,
+    val emoji: String = "",
+    val comment: String = "",
+    val isIncome: Boolean = false
+)
