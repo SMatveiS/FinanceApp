@@ -8,10 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.myfinance.data.MockData.articles
-import com.example.myfinance.data.MockData.expenses
 import com.example.myfinance.data.MockData.incomes
 import com.example.myfinance.data.MockData.settings
-import com.example.myfinance.data.MockData.transactions
 import com.example.myfinance.feature.presentation.account.AccountScreen
 import com.example.myfinance.feature.presentation.articles.ArticlesScreen
 import com.example.myfinance.feature.presentation.expenses.ExpensesScreen

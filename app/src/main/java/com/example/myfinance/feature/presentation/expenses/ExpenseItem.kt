@@ -13,7 +13,7 @@ fun ExpenseItem(expense: Category) {
     AppListItem(
         leftTitle = expense.category,
         leftSubtitle = expense.comment,
-        rightTitle = formatNumber(expense.amount.toInt()),
+        rightTitle = formatNumber(expense.amount),
         leftIcon = expense.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,

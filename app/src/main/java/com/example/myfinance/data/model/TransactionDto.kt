@@ -12,7 +12,7 @@ data class TransactionDto(
     @SerialName("category")
     val category: CategoryDto? = null,
     @SerialName("amount")
-    val amount: Int? = null,
+    val amount: String? = null,
     @SerialName("transactionDate")
     val transactionDate: String? = null,
     @SerialName("comment")

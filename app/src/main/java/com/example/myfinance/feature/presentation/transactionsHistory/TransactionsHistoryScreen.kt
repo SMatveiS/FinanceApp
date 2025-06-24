@@ -17,23 +17,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
 import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.utils.formatNumber
 import com.example.myfinance.ui.components.AppListItem
 import com.example.myfinance.ui.components.AppTopBar
-import java.text.NumberFormat
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Currency
 import java.util.Locale
 
 @Composable
@@ -43,31 +42,19 @@ fun TransactionsHistoryScreen(
     val viewModel: TransactionsHistoryViewModel = viewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    when (val currentState = state) {
-        is TransactionsState.Success -> {
-            TransactionsHistoryContent(
-                transactions = currentState.transactions,
-                onBackArrowClicked = onBackArrowClicked
-            )
+    state.dialogType?.let {
+        val dialogDate = when (it) {
+            DialogType.START_DATE -> state.startDate
+            DialogType.END_DATE -> state.endDate
         }
-        is TransactionsState.Error -> {
-            ErrorState(
-                message = currentState.message,
-                onRetry = { viewModel.getTransactions() },
-                onBack = onBackArrowClicked
-            )
-        }
-        TransactionsState.Loading -> {
-            LoadingState(onBack = onBackArrowClicked)
-        }
-    }
-}
 
-@Composable
-fun TransactionsHistoryContent(
-    transactions: List<Transaction>,
-    onBackArrowClicked: () -> Unit
-) {
+        DatePickerModal(
+            selectedDate = dialogDate.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli(),
+            onDateSelected = viewModel::onDateSelected,
+            onDismiss = viewModel::onDatePickerDismiss
+        )
+    }
+
     Scaffold (
         topBar = {
             AppTopBar(
@@ -81,132 +68,118 @@ fun TransactionsHistoryContent(
             ) },
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            item {
-                GetTitles(transactions)
+        if (state.screenState == ScreenState.ERROR) {
+            ErrorState(
+                message = state.error ?: "Неизвестная ошибка",
+                onRetry = viewModel::getTransactions,
+                modifier = Modifier.padding(innerPadding)
+            )
+        } else if (state.screenState == ScreenState.LOADING) {
+            LoadingState( modifier = Modifier.padding(innerPadding) )
+        } else {
+            TransactionsHistoryContent(
+                transactions = state.transactions,
+                startDate = state.startDate,
+                endDate = state.endDate,
+                totalSum = state.totalSum,
+                onStartDatePickerOpen = viewModel::onStartDatePickerOpen ,
+                onEndDatePickerOpen = viewModel::onEndDatePickerOpen,
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+}
+
+@Composable
+fun TransactionsHistoryContent(
+    transactions: List<Transaction>,
+    startDate: LocalDate,
+    endDate: LocalDate,
+    totalSum: Double,
+    onStartDatePickerOpen: () -> Unit,
+    onEndDatePickerOpen: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    LazyColumn(modifier = modifier) {
+        item {
+            val dateFormatter = remember {
+                DateTimeFormatter.ofPattern("d MMMM y", Locale("ru"))
             }
-            items(transactions) { transaction ->
-                TransactionItem(transaction)
+
+            Column {
+                AppListItem(
+                    leftTitle = "Начало",
+                    rightTitle = startDate.format(dateFormatter),
+                    listBackground = MaterialTheme.colorScheme.secondary,
+                    listHeight = 56,
+                    clickable = true,
+                    onClick = onStartDatePickerOpen
+                )
+                HorizontalDivider()
+
+                AppListItem(
+                    leftTitle = "Конец",
+                    rightTitle = endDate.format(dateFormatter),
+                    listBackground = MaterialTheme.colorScheme.secondary,
+                    listHeight = 56,
+                    clickable = true,
+                    onClick = onEndDatePickerOpen
+                )
+                HorizontalDivider()
+
+                AppListItem(
+                    leftTitle = "Сумма",
+                    rightTitle = formatNumber(totalSum),
+                    listBackground = MaterialTheme.colorScheme.secondary,
+                    listHeight = 56
+                )
                 HorizontalDivider()
             }
         }
+
+        items(transactions) { transaction ->
+            TransactionItem(transaction)
+            HorizontalDivider()
+        }
     }
 }
 
 @Composable
-fun GetTitles(
-    transactions: List<Transaction>
+fun ErrorState(
+    message: String,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val today = LocalDate.now()
-    val firstDayOfMonth = today.withDayOfMonth(1)
-
-    val dateFormatter = remember {
-        DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("ru"))
-    }
-
-    val totalAmount = remember(transactions) {
-        transactions.sumOf { it.amount }
-    }
-
-    Column {
-        AppListItem(
-            leftTitle = "Начало",
-            rightTitle = firstDayOfMonth.format(dateFormatter),
-            listBackground = MaterialTheme.colorScheme.secondary,
-            listHeight = 56
-        )
-        HorizontalDivider()
-
-        AppListItem(
-            leftTitle = "Конец",
-            rightTitle = today.format(dateFormatter),
-            listBackground = MaterialTheme.colorScheme.secondary,
-            listHeight = 56
-        )
-        HorizontalDivider()
-
-        AppListItem(
-            leftTitle = "Сумма",
-            rightTitle = formatNumber(totalAmount),
-            listBackground = MaterialTheme.colorScheme.secondary,
-            listHeight = 56
-        )
-        HorizontalDivider()
-    }
-}
-
-@Composable
-fun ErrorState(message: String, onRetry: () -> Unit, onBack: () -> Unit) {
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                title = "Моя история",
-                leftButtonIcon = R.drawable.back_arrow,
-                leftButtonDescription = "Назад",
-                leftButtonAction = onBack
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = message,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = onRetry) {
-                    Text("Повторить попытку")
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun LoadingState(onBack: () -> Unit) {
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                title = "Моя история",
-                leftButtonIcon = R.drawable.back_arrow,
-                leftButtonDescription = "Назад",
-                leftButtonAction = onBack
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }
-}
-
-@Composable
-fun EmptyState(onRetry: () -> Unit) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Нет данных за период")
+            Text(
+                text = message,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRetry) {
-                Text("Загрузить снова")
+                Text("Повторить попытку")
             }
         }
     }
+}
+
+@Composable
+fun LoadingState(modifier: Modifier = Modifier) {
+
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+
 }

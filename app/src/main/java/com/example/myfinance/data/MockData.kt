@@ -92,21 +92,4 @@ object MockData {
         Settings(id = 5, name = "Язык"),
         Settings(id = 6, name = "О программе")
     )
-
-    val transactions = listOf(
-        Transaction(
-            id = 0,
-            category = "Аренда квартиры",
-            amount = 100000,
-            emoji = "\uD83C\uDFE1",
-            date = "12.01.2012"
-        ),
-        Transaction(
-            id = 1,
-            category = "Одежда",
-            amount = 100000,
-            emoji = "\uD83D\uDC57",
-            date = "12.01.2012"
-        )
-    )
 }

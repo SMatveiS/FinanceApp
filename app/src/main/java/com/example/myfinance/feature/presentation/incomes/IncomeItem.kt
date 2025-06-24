@@ -13,7 +13,7 @@ fun IncomeItem(income: Category) {
     AppListItem(
         leftTitle = income.category,
         leftSubtitle = income.comment,
-        rightTitle = formatNumber(income.amount.toInt()),
+        rightTitle = formatNumber(income.amount),
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,
         onClick = { /* Действие */}
