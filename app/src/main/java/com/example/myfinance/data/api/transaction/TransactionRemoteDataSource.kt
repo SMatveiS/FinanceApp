@@ -1,8 +1,9 @@
 package com.example.myfinance.data.api.transaction
 
 import com.example.myfinance.data.model.TransactionDto
+import javax.inject.Inject
 
-class TransactionRemoteDataSource(
+class TransactionRemoteDataSource @Inject constructor(
     private val transactionApi: TransactionApi
 ) {
     suspend fun getTransaction(id: Int) =

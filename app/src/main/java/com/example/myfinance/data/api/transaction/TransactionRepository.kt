@@ -3,8 +3,9 @@ package com.example.myfinance.data.api.transaction
 import com.example.myfinance.data.model.TransactionDto
 import com.example.myfinance.feature.utils.BaseApiResponse
 import com.example.myfinance.feature.utils.NetworkResult
+import javax.inject.Inject
 
-class TransactionRepository(
+class TransactionRepository @Inject constructor(
     private val transactionRemoteDataSource: TransactionRemoteDataSource
 ): BaseApiResponse() {
 

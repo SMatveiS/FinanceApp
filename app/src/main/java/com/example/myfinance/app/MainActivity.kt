@@ -14,7 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.app.navigation.FinappNavBar
 import com.example.myfinance.app.navigation.FinappNavHost
 import com.example.myfinance.ui.theme.MyFinanceTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

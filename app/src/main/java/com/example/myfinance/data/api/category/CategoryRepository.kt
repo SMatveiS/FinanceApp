@@ -3,8 +3,9 @@ package com.example.myfinance.data.api.category
 import com.example.myfinance.data.model.CategoryDto
 import com.example.myfinance.feature.utils.BaseApiResponse
 import com.example.myfinance.feature.utils.NetworkResult
+import javax.inject.Inject
 
-class CategoryRepository(
+class CategoryRepository @Inject constructor(
     private val categoryRemoteDataSource: CategoryRemoteDataSource
 ): BaseApiResponse() {
 

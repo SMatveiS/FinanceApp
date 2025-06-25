@@ -11,10 +11,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.example.myfinance.data.api.account.AccountApi
 import com.example.myfinance.data.api.transaction.TransactionApi
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class ExpenseViewModel : ViewModel() {
+@HiltViewModel
+class ExpenseViewModel @Inject constructor(
+    private val accountApi: AccountApi,
+    private val transactionApi: TransactionApi,
+    private val categoryApi: CategoryApi
+) : ViewModel() {
+
     private val _state = MutableStateFlow<ExpensesState>(ExpensesState.Loading)
     val state: StateFlow<ExpensesState> = _state
 
@@ -27,10 +35,10 @@ class ExpenseViewModel : ViewModel() {
             _state.value = ExpensesState.Loading
 
             try {
-                val okHttpClient = OkHttpClient().getClient()
-                val retrofit = RetrofitClient().getClient(okHttpClient)
-
-                val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
+//                val okHttpClient = OkHttpClient().getClient()
+//                val retrofit = RetrofitClient().getClient(okHttpClient)
+//
+//                val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
                 val accountResponse = accountApi.getAllAccounts()
 
                 if (!accountResponse.isSuccessful || accountResponse.body().isNullOrEmpty()) {
@@ -46,7 +54,7 @@ class ExpenseViewModel : ViewModel() {
                 val startDate = firstDayOfMonth.format(dateFormatter)
                 val endDate = today.format(dateFormatter)
 
-                val transactionApi: TransactionApi = retrofit.create(TransactionApi::class.java)
+                //val transactionApi: TransactionApi = retrofit.create(TransactionApi::class.java)
                 val transactionResponse = transactionApi.getTransactionsForPeriod(
                     accountId = accountId!!,
                     startDate = startDate,
@@ -60,7 +68,7 @@ class ExpenseViewModel : ViewModel() {
                     return@launch
                 }
 
-                val categoryApi: CategoryApi = retrofit.create(CategoryApi::class.java)
+                //val categoryApi: CategoryApi = retrofit.create(CategoryApi::class.java)
                 val categoryResponse = categoryApi.getAllCategories()
 
                 if (!categoryResponse.isSuccessful) {

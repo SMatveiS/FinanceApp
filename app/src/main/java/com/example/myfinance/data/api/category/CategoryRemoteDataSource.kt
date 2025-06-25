@@ -1,7 +1,9 @@
 package com.example.myfinance.data.api.category
 
+import javax.inject.Inject
 
-class CategoryRemoteDataSource(
+
+class CategoryRemoteDataSource @Inject constructor(
     private val categoryApi: CategoryApi
 ) {
     suspend fun getAllCategories() = categoryApi.getAllCategories()

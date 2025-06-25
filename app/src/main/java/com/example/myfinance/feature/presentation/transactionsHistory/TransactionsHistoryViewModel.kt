@@ -7,6 +7,9 @@ import com.example.myfinance.data.api.transaction.TransactionApi
 import com.example.myfinance.data.network.OkHttpClient
 import com.example.myfinance.data.network.RetrofitClient
 import com.example.myfinance.feature.domain.model.Transaction
+import com.example.myfinance.feature.domain.usecase.GetAccountIdUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -35,7 +38,11 @@ data class TransactionsState(
     val error: String? = null
 )
 
-class TransactionsHistoryViewModel: ViewModel() {
+@HiltViewModel
+class TransactionsHistoryViewModel @Inject constructor(
+    private val getAccountIdUseCase: GetAccountIdUseCase,
+    private val transactionApi: TransactionApi
+): ViewModel() {
     private val _state = MutableStateFlow(TransactionsState())
     val state: StateFlow<TransactionsState> = _state
 
@@ -83,47 +90,59 @@ class TransactionsHistoryViewModel: ViewModel() {
             _state.update { it.copy(screenState = ScreenState.LOADING) }
 
             try {
-                val okHttpClient = OkHttpClient().getClient()
-                val retrofit = RetrofitClient().getClient(okHttpClient)
-                val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
+//                val okHttpClient = OkHttpClient().getClient()
+//                val retrofit = RetrofitClient().getClient(okHttpClient)
 
-                val accountResponse = accountApi.getAllAccounts()
+//                val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
+//
+//                val accountResponse = accountApi.getAllAccounts()
+//
+//                if (!accountResponse.isSuccessful || accountResponse.body().isNullOrEmpty()) {
+//                    _state.update {
+//                        it.copy(
+//                            error = "Нет доступных аккаунтов",
+//                            screenState = ScreenState.ERROR
+//                        ) }
+//                    return@launch
+//                }
+//
+//                val accountId = accountResponse.body()!!.first().id
+                val accountIdResult = getAccountIdUseCase.invoke()
+                accountIdResult.fold(
+                    onFailure = { error ->
+                        _state.update {
+                            it.copy(
+                                error = "${error.message}",
+                                screenState = ScreenState.ERROR
+                            ) }
+                    },
+                    onSuccess = { accountId ->
+                        val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
+                        val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
 
-                if (!accountResponse.isSuccessful || accountResponse.body().isNullOrEmpty()) {
-                    _state.update {
-                        it.copy(
-                            error = "Нет доступных аккаунтов",
-                            screenState = ScreenState.ERROR
-                        ) }
-                    return@launch
-                }
-
-                val accountId = accountResponse.body()!!.first().id
-
-                val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
-                val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
-
-                val transactionApi: TransactionApi = retrofit.create(TransactionApi::class.java)
-                val transactionResponse = transactionApi.getTransactionsForPeriod(
-                    accountId = accountId!!,
-                    startDate = startDate,
-                    endDate = endDate
-                )
-
-                if (transactionResponse.isSuccessful) {
-                    val transactions = transactionResponse.body()?.filter { it.category!!.isIncome == true }?.map {
-                        Transaction(
-                            id = it.id ?: 0,
-                            category = it.category?.name ?: "",
-                            amount = it.amount?.toDouble() ?: 0.0,
-                            date = OffsetDateTime.parse(it.transactionDate)
-                                .format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"))
+                       // val transactionApi: TransactionApi = retrofit.create(TransactionApi::class.java)
+                        val transactionResponse = transactionApi.getTransactionsForPeriod(
+                            accountId = accountId,
+                            startDate = startDate,
+                            endDate = endDate
                         )
-                    }?.sortedByDescending { it.date } ?: emptyList()
-                    _state.update { it.copy(transactions, screenState = ScreenState.SUCCESS) }
-                } else {
-                    _state.update { it.copy(error = "Ошибка транзакций: ${transactionResponse.code()}", screenState = ScreenState.ERROR) }
-                }
+
+                        if (transactionResponse.isSuccessful) {
+                            val transactions = transactionResponse.body()?.filter { it.category!!.isIncome == true }?.map {
+                                Transaction(
+                                    id = it.id ?: 0,
+                                    category = it.category?.name ?: "",
+                                    amount = it.amount?.toDouble() ?: 0.0,
+                                    date = OffsetDateTime.parse(it.transactionDate)
+                                        .format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"))
+                                )
+                            }?.sortedByDescending { it.date } ?: emptyList()
+                            _state.update { it.copy(transactions, screenState = ScreenState.SUCCESS) }
+                        } else {
+                            _state.update { it.copy(error = "Ошибка транзакций: ${transactionResponse.code()}", screenState = ScreenState.ERROR) }
+                        }
+                    }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(error = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}", screenState = ScreenState.ERROR) }
             }

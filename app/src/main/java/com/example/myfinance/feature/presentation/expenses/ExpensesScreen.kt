@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myfinance.R
 import com.example.myfinance.feature.domain.model.Category
 import com.example.myfinance.ui.components.AppFAB
@@ -35,7 +36,7 @@ import com.example.myfinance.ui.components.AppTopBar
 @Composable
 fun ExpensesScreen(onHistoryClicked: () -> Unit) {
 
-    val viewModel: ExpenseViewModel = viewModel()
+    val viewModel: ExpenseViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
 

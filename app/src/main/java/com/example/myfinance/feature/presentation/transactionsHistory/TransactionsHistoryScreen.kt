@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
@@ -39,7 +40,7 @@ import java.util.Locale
 fun TransactionsHistoryScreen(
     onBackArrowClicked: () -> Unit
 ) {
-    val viewModel: TransactionsHistoryViewModel = viewModel()
+    val viewModel: TransactionsHistoryViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     state.dialogType?.let {
