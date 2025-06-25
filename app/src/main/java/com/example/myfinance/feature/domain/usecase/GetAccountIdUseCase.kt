@@ -1,6 +1,6 @@
 package com.example.myfinance.feature.domain.usecase
 
-import com.example.myfinance.data.api.account.AccountRepository
+import com.example.myfinance.feature.domain.repository.AccountRepository
 import com.example.myfinance.feature.utils.NetworkError
 import javax.inject.Inject
 
