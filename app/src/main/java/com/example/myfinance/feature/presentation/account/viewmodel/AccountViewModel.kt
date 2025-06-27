@@ -25,10 +25,10 @@ class AccountViewModel @Inject constructor(
     val state: StateFlow<AccountState> = _state
 
     init {
-        getExpenses()
+        getAccount()
     }
 
-    fun getExpenses() {
+    fun getAccount() {
         viewModelScope.launch {
             _state.update { it.copy(
                 screenState = ScreenState.LOADING,

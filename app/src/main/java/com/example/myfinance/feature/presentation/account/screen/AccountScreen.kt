@@ -54,7 +54,7 @@ fun AccountScreen() {
             ScreenState.ERROR -> {
                 ErrorState(
                     message = state.errorMessage ?: "Неизвестная ошибка",
-                    onRetry = viewModel::getExpenses,
+                    onRetry = viewModel::getAccount,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
