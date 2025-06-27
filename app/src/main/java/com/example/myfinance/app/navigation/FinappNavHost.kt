@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.myfinance.data.MockData.articles
 import com.example.myfinance.data.MockData.settings
-import com.example.myfinance.feature.presentation.account.AccountScreen
+import com.example.myfinance.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.feature.presentation.articles.ArticlesScreen
 import com.example.myfinance.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.feature.presentation.incomes.screen.IncomesScreen

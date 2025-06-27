@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Хранит состояние экрана доходов
+ */
+
 @HiltViewModel
 class IncomesViewModel @Inject constructor(
     private val getTodayTransactionsUseCase: GetTodayTransactionsUseCase
@@ -26,24 +30,19 @@ class IncomesViewModel @Inject constructor(
 
     fun getExpenses() {
         viewModelScope.launch {
-            _state.update { it.copy(screenState = ScreenState.LOADING) }
+            _state.update { it.copy(
+                screenState = ScreenState.LOADING,
+                errorMessage = null
+            ) }
 
             try {
-                val transactionsResult = getTodayTransactionsUseCase()
+                val incomesResult = getTodayTransactionsUseCase(isIncomes = true)
 
-                when (transactionsResult) {
+                when (incomesResult) {
                     is NetworkResult.Success -> {
-                        val transactions = transactionsResult.data ?: emptyList()
-
-                        val sortedTransactions = transactions
-                            .filter { it.category.isIncome == true }
-                            .sortedByDescending { it.date }
-
-                        val totalSum = sortedTransactions.sumOf { it.amount }
-
                         _state.update { it.copy(
-                            sortedTransactions,
-                            totalSum = totalSum,
+                            incomes = incomesResult.data?.transactions ?: emptyList(),
+                            totalSum = incomesResult.data?.transactionsSum ?: 0.0,
                             screenState = ScreenState.SUCCESS
                         ) }
                     }
@@ -51,13 +50,11 @@ class IncomesViewModel @Inject constructor(
                     is NetworkResult.Error -> {
                         _state.update {
                             it.copy(
-                                errorMessage = transactionsResult.errorMessage,
+                                errorMessage = incomesResult.errorMessage,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-
-                    is NetworkResult.Loading -> {}
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(

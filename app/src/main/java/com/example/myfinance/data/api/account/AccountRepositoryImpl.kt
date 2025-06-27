@@ -31,6 +31,15 @@ class AccountRepositoryImpl @Inject constructor(
         id = id,
         name = name,
         balance = balance.toDouble(),
-        currency = currency
+        currency = getCurrencySymbol(currency)
     )
+
+    private fun getCurrencySymbol(currencyCode: String): String {
+        return when (currencyCode.uppercase()) {
+            "RUB" -> "₽"
+            "USD" -> "$"
+            "EUR" -> "€"
+            else -> currencyCode
+        }
+    }
 }

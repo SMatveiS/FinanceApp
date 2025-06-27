@@ -1,6 +1,5 @@
 package com.example.myfinance.feature.domain.usecase
 
-import com.example.myfinance.feature.domain.repository.AccountRepository
 import com.example.myfinance.feature.utils.NetworkResult
 import com.example.myfinance.feature.utils.NetworkResult.*
 import javax.inject.Inject
@@ -10,17 +9,17 @@ import javax.inject.Inject
  */
 
 class GetAccountIdUseCase @Inject constructor(
-    private val accountRepository: AccountRepository
+    private val getAccountUseCase: GetAccountUseCase
 ) {
     suspend operator fun invoke():  NetworkResult<Int> {
-        return when (val accounts = accountRepository.getAllAccounts()) {
+        return when (val account = getAccountUseCase()) {
             is Success ->  {
-                if (accounts.data?.firstOrNull() != null) {
-                    Success(accounts.data.first().id)
+                if (account.data != null) {
+                    Success(account.data.id)
                 } else Error(errorMessage = "Ошибка: Нет доступных аккаунтов")
             }
 
-            is Error -> Error(accounts.errorMessage)
+            is Error -> Error(account.errorMessage)
         }
     }
 }

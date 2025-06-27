@@ -17,6 +17,10 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+/**
+ * Хранит состояние экрана истории транзакций
+ */
+
 @HiltViewModel
 class TransactionsHistoryViewModel @Inject constructor(
     private val getTransactionsForPeriodUseCase: GetTransactionsForPeriodUseCase,
@@ -47,21 +51,24 @@ class TransactionsHistoryViewModel @Inject constructor(
 
     fun onDateSelected(dateInMillis: Long?) {
         if (dateInMillis != null) {
-            val newDate = Instant.ofEpochMilli(dateInMillis).atZone(ZoneId.of("UTC")).toLocalDate()
+            val newDate = Instant.ofEpochMilli(dateInMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
 
-            _state.update { state ->
-                val updated = when (_state.value.dialogType) {
-                    DialogType.START_DATE ->
-                        if (newDate.isAfter(state.endDate)) state
-                        else state.copy(startDate = newDate)
-
-                    DialogType.END_DATE ->
-                        if (newDate.isBefore(state.startDate)) state
-                        else state.copy(endDate = newDate)
-
-                    null -> state
+            _state.update { currentState ->
+                val (newStart, newEnd) = when (currentState.dialogType) {
+                    DialogType.START_DATE -> newDate to currentState.endDate
+                    DialogType.END_DATE -> currentState.startDate to newDate
+                    null -> return
                 }
-                updated.copy(dialogType = null)
+
+                if (newStart.isAfter(newEnd)) return@update currentState
+
+                currentState.copy(
+                    startDate = newStart,
+                    endDate = newEnd,
+                    dialogType = null
+                )
             }
 
             getTransactions()
@@ -70,26 +77,26 @@ class TransactionsHistoryViewModel @Inject constructor(
 
     fun getTransactions() {
         viewModelScope.launch {
-            _state.update { it.copy(screenState = ScreenState.LOADING) }
+            _state.update { it.copy(
+                screenState = ScreenState.LOADING,
+                errorMessage = null
+            ) }
 
             try {
                 val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
                 val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
 
-                val transactionsResult = getTransactionsForPeriodUseCase(startDate, endDate)
+                val transactionsResult = getTransactionsForPeriodUseCase(
+                    startDate = startDate,
+                    endDate = endDate,
+                    isIncomes = isIncomes
+                )
+
                 when (transactionsResult) {
                     is NetworkResult.Success -> {
-                        val transactions = transactionsResult.data ?: emptyList()
-
-                        val sortedTransactions = transactions
-                            .filter { it.category.isIncome == isIncomes }
-                            .sortedByDescending { it.date }
-
-                        var totalSum = sortedTransactions.sumOf {it.amount}
-
                         _state.update { it.copy(
-                            sortedTransactions,
-                            totalSum = totalSum,
+                            transactions = transactionsResult.data?.transactions ?: emptyList(),
+                            totalSum = transactionsResult.data?.transactionsSum ?: 0.0,
                             screenState = ScreenState.SUCCESS
                         ) }
                     }
@@ -102,8 +109,6 @@ class TransactionsHistoryViewModel @Inject constructor(
                             )
                         }
                     }
-
-                    is NetworkResult.Loading -> {}
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(

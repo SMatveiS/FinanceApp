@@ -1,4 +1,4 @@
-package com.example.myfinance.feature.presentation.expenses.screen
+package com.example.myfinance.feature.presentation.account.screen
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -11,31 +11,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
 import com.example.myfinance.feature.presentation.ScreenState
-import com.example.myfinance.feature.presentation.expenses.viewmodel.ExpenseViewModel
+import com.example.myfinance.feature.presentation.account.viewmodel.AccountViewModel
 import com.example.myfinance.ui.components.AppFAB
 import com.example.myfinance.ui.components.AppTopBar
 import com.example.myfinance.ui.components.ErrorState
 import com.example.myfinance.ui.components.LoadingState
 
 /**
- * Экран расходов
+ * Экран счёта
  *
  * В зависимости от состояния данных показывает соответствующий экран
  */
 
 @Composable
-fun ExpensesScreen(onHistoryClicked: () -> Unit) {
-    val viewModel: ExpenseViewModel = hiltViewModel()
+fun AccountScreen() {
+    val viewModel: AccountViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Scaffold (
+    Scaffold(
         topBar = {
             AppTopBar(
-                title = "Расходы сегодня",
-                rightButtonIcon = R.drawable.history,
-                rightButtonDescription = "История",
-                rightButtonAction = onHistoryClicked
-            ) },
+                title = "Мой счет",
+                rightButtonIcon = R.drawable.edit,
+                rightButtonDescription = "Изменить"
+            )
+        },
 
         floatingActionButton = { AppFAB() },
 
@@ -44,9 +44,9 @@ fun ExpensesScreen(onHistoryClicked: () -> Unit) {
 
         when (state.screenState) {
             ScreenState.SUCCESS -> {
-                ExpensesContent(
-                    expenses = state.expenses,
-                    totalSum = state.totalSum,
+                AccountContent(
+                    balance = state.account?.balance ?: 0.0,
+                    currency = state.account?.currency ?: "₽",
                     modifier = Modifier.padding(innerPadding)
                 )
             }
