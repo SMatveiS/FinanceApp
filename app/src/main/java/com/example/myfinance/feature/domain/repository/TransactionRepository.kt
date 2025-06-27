@@ -5,6 +5,10 @@ import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.utils.NetworkResult
 import retrofit2.Response
 
+/**
+ * Интерфейс репозитория транзакций для доменного слоя
+ */
+
 interface TransactionRepository {
 
     suspend fun getTransaction(id: Int): Response<TransactionDto>

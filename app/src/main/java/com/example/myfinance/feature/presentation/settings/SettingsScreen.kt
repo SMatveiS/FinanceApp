@@ -12,6 +12,10 @@ import androidx.compose.ui.Modifier
 import com.example.myfinance.feature.domain.model.Settings
 import com.example.myfinance.ui.components.AppTopBar
 
+/**
+ * Экран настроек
+ */
+
 @Composable
 fun SettingsScreen(settings: List<Settings>){
     Scaffold (

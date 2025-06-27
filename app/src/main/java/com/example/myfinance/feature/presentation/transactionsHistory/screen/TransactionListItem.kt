@@ -8,6 +8,10 @@ import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.ui.components.AppListItem
 import com.example.myfinance.feature.utils.formatNumber
 
+/**
+ * Элемент списка истории транзакций
+ */
+
 @Composable
 fun TransactionListItem(transaction: Transaction) {
     AppListItem(

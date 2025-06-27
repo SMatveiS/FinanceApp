@@ -15,6 +15,24 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Верхняя панель
+ *
+ * title - текст по центру
+ *
+ * rightButtonIcon - иконка правой кнопки
+ *
+ *  leftButtonIcon - иконка левой кнопки
+ *
+ *  rightButtonDescription - описание правой кнопки
+ *
+ *  leftButtonDescription - описание левой кнопки
+ *
+ *  rightButtonAction - действие при нажатии на правую кнопку
+ *
+ *  leftButtonAction - действие при нажатии на левую кнопку
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(

@@ -8,6 +8,10 @@ import com.example.myfinance.feature.utils.NetworkResult
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Возвращает информацию об аккаунтах внутри NetworkResult независимо от источника
+ */
+
 @Singleton
 class AccountRepositoryImpl @Inject constructor(
     private val accountRemoteDataSource: AccountRemoteDataSource
@@ -20,8 +24,6 @@ class AccountRepositoryImpl @Inject constructor(
                 NetworkResult.Success(accounts.data?.map { it.toDomain() })
 
             is NetworkResult.Error -> NetworkResult.Error(errorMessage = accounts.errorMessage)
-
-            is NetworkResult.Loading -> NetworkResult.Loading()
         }
     }
 

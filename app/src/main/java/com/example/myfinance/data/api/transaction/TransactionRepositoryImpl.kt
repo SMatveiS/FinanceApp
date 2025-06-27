@@ -9,6 +9,10 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
+/**
+ * Возвращает информацию о транзакциях внутри NetworkResult независимо от источника
+ */
+
 class TransactionRepositoryImpl @Inject constructor(
     private val transactionRemoteDataSource: TransactionRemoteDataSource
 ): TransactionRepository, BaseApiResponse() {
@@ -44,8 +48,6 @@ class TransactionRepositoryImpl @Inject constructor(
                 NetworkResult.Success(transactions.data?.map { it.toDomain() })
 
             is NetworkResult.Error -> NetworkResult.Error(errorMessage = transactions.errorMessage)
-
-            is NetworkResult.Loading -> NetworkResult.Loading()
         }
 
     }

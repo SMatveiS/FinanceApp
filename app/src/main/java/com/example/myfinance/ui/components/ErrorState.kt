@@ -15,6 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/**
+ * Экран при ошибке
+ *
+ * message - сообщение ошибки
+ *
+ * onRetry - действие при нажатии на кнопку Повторить попытку
+ */
+
 @Composable
 fun ErrorState(
     message: String,

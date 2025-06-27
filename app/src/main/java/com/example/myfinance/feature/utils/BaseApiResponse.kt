@@ -2,6 +2,12 @@ package com.example.myfinance.feature.utils
 
 import retrofit2.Response
 
+/**
+ * Абстрактный класс с функцией безопасного похода в сеть
+ *
+ * Возвращает NetworkResult.Error(errorMessage) в случае ошибки, иначе - NetworkResult.Success(data)
+ */
+
 abstract class BaseApiResponse {
     suspend fun <T> safeApiCall(api: suspend () -> Response<T>): NetworkResult<T> {
         try {

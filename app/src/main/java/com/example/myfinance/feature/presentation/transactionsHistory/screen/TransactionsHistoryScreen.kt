@@ -17,6 +17,12 @@ import com.example.myfinance.ui.components.AppTopBar
 import com.example.myfinance.ui.components.ErrorState
 import com.example.myfinance.ui.components.LoadingState
 
+/**
+ * Экран истории транзакций
+ *
+ * В зависимости от состояния данных показывает соответствующий экран
+ */
+
 @Composable
 fun TransactionsHistoryScreen(
     onBackArrowClicked: () -> Unit

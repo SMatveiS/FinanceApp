@@ -25,9 +25,12 @@ fun AccountScreen() {
                 rightButtonIcon = R.drawable.edit,
                 rightButtonDescription = "Изменить"
             ) },
+
         floatingActionButton = { AppFAB() },
+
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
+
         Column(modifier = Modifier.padding(innerPadding)) {
             AppListItem(
                 leftTitle = "Баланс",
@@ -40,7 +43,9 @@ fun AccountScreen() {
                 clickable = true,
                 onClick = { /* Действие */ }
             )
+
             HorizontalDivider()
+
             AppListItem(
                 leftTitle = "Валюта",
                 rightTitle = "₽",

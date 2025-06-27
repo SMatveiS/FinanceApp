@@ -3,6 +3,10 @@ package com.example.myfinance.data.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Модель для получения информации об аккаунте с сервера
+ */
+
 @Serializable
 data class AccountDto(
     @SerialName("id")

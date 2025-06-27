@@ -3,6 +3,10 @@ package com.example.myfinance.data.api.transaction
 import com.example.myfinance.data.model.TransactionDto
 import javax.inject.Inject
 
+/**
+ * Удалённый источник данных, связанных с транзакциями
+ */
+
 class TransactionRemoteDataSource @Inject constructor(
     private val transactionApi: TransactionApi
 ) {

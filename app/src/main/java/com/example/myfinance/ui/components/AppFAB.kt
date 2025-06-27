@@ -13,6 +13,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.myfinance.R
 
+/**
+ * Плавающая кнопка
+ *
+ * onClick - действие при нажатии
+ */
+
 @Composable
 fun AppFAB(onClick: () -> Unit = {}) {
     FloatingActionButton(

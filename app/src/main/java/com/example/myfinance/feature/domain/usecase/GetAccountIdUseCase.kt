@@ -5,6 +5,10 @@ import com.example.myfinance.feature.utils.NetworkResult
 import com.example.myfinance.feature.utils.NetworkResult.*
 import javax.inject.Inject
 
+/**
+ * Возвращает id счёта пользователя
+ */
+
 class GetAccountIdUseCase @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
@@ -17,8 +21,6 @@ class GetAccountIdUseCase @Inject constructor(
             }
 
             is Error -> Error(accounts.errorMessage)
-
-            is Loading -> Loading()
         }
     }
 }

@@ -12,6 +12,10 @@ import androidx.compose.ui.Modifier
 import com.example.myfinance.feature.domain.model.Article
 import com.example.myfinance.ui.components.AppTopBar
 
+/**
+ * Экран статей
+ */
+
 @Composable
 fun ArticlesScreen(articles: List<Article>){
     Scaffold (

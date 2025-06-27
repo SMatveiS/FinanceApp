@@ -17,6 +17,12 @@ import com.example.myfinance.ui.components.AppTopBar
 import com.example.myfinance.ui.components.ErrorState
 import com.example.myfinance.ui.components.LoadingState
 
+/**
+ * Экран доходов
+ *
+ * В зависимости от состояния данных показывает соответствующий экран
+ */
+
 @Composable
 fun IncomesScreen(onHistoryClicked: () -> Unit) {
     val viewModel: IncomesViewModel = hiltViewModel()
@@ -37,7 +43,7 @@ fun IncomesScreen(onHistoryClicked: () -> Unit) {
         when (state.screenState) {
             ScreenState.SUCCESS -> {
                 IncomesContent(
-                    incomes = state.expenses,
+                    incomes = state.incomes,
                     totalSum = state.totalSum,
                     modifier = Modifier.padding(innerPadding)
                 )

@@ -4,6 +4,10 @@ import com.example.myfinance.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
+/**
+ * Создаёт интерцептор для авторизации по токену
+ */
+
 class AuthInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()

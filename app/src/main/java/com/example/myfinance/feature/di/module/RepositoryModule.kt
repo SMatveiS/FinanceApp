@@ -15,6 +15,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Модуль для связи репозиториев в доменнном слое и их реализаций в слое данных
+ */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {

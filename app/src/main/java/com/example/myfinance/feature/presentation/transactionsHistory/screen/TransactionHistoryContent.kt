@@ -9,6 +9,10 @@ import androidx.compose.ui.Modifier
 import com.example.myfinance.feature.domain.model.Transaction
 import java.time.LocalDate
 
+/**
+ * Контент экрана истории транзакций
+ */
+
 @Composable
 fun TransactionsHistoryContent(
     transactions: List<Transaction>,

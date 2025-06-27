@@ -5,6 +5,10 @@ import com.example.myfinance.feature.presentation.transactionsHistory.viewmodel.
 import com.example.myfinance.feature.presentation.transactionsHistory.viewmodel.TransactionsState
 import java.time.ZoneId
 
+/**
+ * Открывает календарь выбора начала или конца даты периода в зависимости от действий пользователя
+ */
+
 @Composable
 fun OpenDatePicker(
     dialogType: DialogType,

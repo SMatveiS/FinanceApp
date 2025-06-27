@@ -15,6 +15,10 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+/**
+ * Модуль для подключения к серверу
+ */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
@@ -22,7 +26,6 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
-
 
     @Singleton
     @Provides

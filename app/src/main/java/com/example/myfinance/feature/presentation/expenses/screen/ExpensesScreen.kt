@@ -17,6 +17,11 @@ import com.example.myfinance.ui.components.AppTopBar
 import com.example.myfinance.ui.components.ErrorState
 import com.example.myfinance.ui.components.LoadingState
 
+/**
+ * Экран расходов
+ *
+ * В зависимости от состояния данных показывает соответствующий экран
+ */
 
 @Composable
 fun ExpensesScreen(onHistoryClicked: () -> Unit) {

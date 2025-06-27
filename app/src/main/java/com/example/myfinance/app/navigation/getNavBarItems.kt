@@ -2,6 +2,10 @@ package com.example.myfinance.app.navigation
 
 import com.example.myfinance.R
 
+/**
+ * Возвращает список элементов навигационной панели
+ */
+
 fun getNavBarItems(): List<NavBarItem> {
     return listOf(
         NavBarItem(

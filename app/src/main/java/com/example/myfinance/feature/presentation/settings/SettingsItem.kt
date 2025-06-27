@@ -7,6 +7,10 @@ import com.example.myfinance.R
 import com.example.myfinance.feature.domain.model.Settings
 import com.example.myfinance.ui.components.AppListItem
 
+/**
+ * Элемент списка настроек
+ */
+
 @Composable
 fun SettingsItem(settings: Settings) {
     AppListItem(

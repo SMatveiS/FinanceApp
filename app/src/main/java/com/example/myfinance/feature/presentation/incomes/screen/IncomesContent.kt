@@ -10,6 +10,10 @@ import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.utils.formatNumber
 import com.example.myfinance.ui.components.AppListItem
 
+/**
+ * Контент экрана доходов
+ */
+
 @Composable
 fun IncomesContent(
     incomes: List<Transaction>,

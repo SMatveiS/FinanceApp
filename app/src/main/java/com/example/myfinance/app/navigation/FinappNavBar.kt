@@ -25,7 +25,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun FinappNavBar(navController: NavHostController) {
-    // Список элементов навигационной панели
     val navBarItems = remember { getNavBarItems() }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
