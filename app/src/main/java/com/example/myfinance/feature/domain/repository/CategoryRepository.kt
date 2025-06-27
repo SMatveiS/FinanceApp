@@ -8,4 +8,5 @@ interface CategoryRepository {
     suspend fun getAllCategories(): Response<List<CategoryDto>>
 
     suspend fun getCategoryByType(isIncome: Boolean): Response<List<CategoryDto>>
+
 }

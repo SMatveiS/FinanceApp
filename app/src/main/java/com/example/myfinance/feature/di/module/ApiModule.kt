@@ -1,9 +1,8 @@
-package com.example.myfinance.feature.di.modules
+package com.example.myfinance.feature.di.module
 
 import com.example.myfinance.data.api.account.AccountApi
 import com.example.myfinance.data.api.category.CategoryApi
 import com.example.myfinance.data.api.transaction.TransactionApi
-import com.example.myfinance.data.network.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,7 +36,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit(okHttpClient: OkHttpClient) =
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://shmr-finance.ru/api/v1/")
             .client(okHttpClient)
@@ -48,16 +47,16 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun providesAccountApi(retrofit: Retrofit) =
+    fun providesAccountApi(retrofit: Retrofit): AccountApi =
         retrofit.create(AccountApi::class.java)
 
     @Singleton
     @Provides
-    fun providesCategoryApi(retrofit: Retrofit) =
+    fun providesCategoryApi(retrofit: Retrofit): CategoryApi =
         retrofit.create(CategoryApi::class.java)
 
     @Singleton
     @Provides
-    fun providesTransactionApi(retrofit: Retrofit) =
+    fun providesTransactionApi(retrofit: Retrofit): TransactionApi =
         retrofit.create(TransactionApi::class.java)
 }

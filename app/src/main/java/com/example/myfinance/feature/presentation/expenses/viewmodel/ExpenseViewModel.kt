@@ -1,10 +1,9 @@
-package com.example.myfinance.feature.presentation.incomes
+package com.example.myfinance.feature.presentation.expenses.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.domain.usecase.GetTodayTransactionsUseCase
-import com.example.myfinance.feature.presentation.transactionsHistory.ScreenState
+import com.example.myfinance.feature.presentation.ScreenState
 import com.example.myfinance.feature.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -14,12 +13,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class IncomesViewModel @Inject constructor(
+class ExpenseViewModel @Inject constructor(
     private val getTodayTransactionsUseCase: GetTodayTransactionsUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<IncomesState>(IncomesState())
-    val state: StateFlow<IncomesState> = _state
+    private val _state = MutableStateFlow<ExpensesState>(ExpensesState())
+    val state: StateFlow<ExpensesState> = _state
 
     init {
         getExpenses()
@@ -37,13 +36,13 @@ class IncomesViewModel @Inject constructor(
                         val transactions = transactionsResult.data ?: emptyList()
 
                         val sortedTransactions = transactions
-                            .filter { it.category.isIncome == true }
+                            .filter { it.category.isIncome == false }
                             .sortedByDescending { it.date }
 
                         val totalSum = sortedTransactions.sumOf { it.amount }
 
                         _state.update { it.copy(
-                            sortedTransactions,
+                            expenses = sortedTransactions,
                             totalSum = totalSum,
                             screenState = ScreenState.SUCCESS
                         ) }
@@ -69,10 +68,3 @@ class IncomesViewModel @Inject constructor(
         }
     }
 }
-
-data class IncomesState(
-    val expenses: List<Transaction> = emptyList(),
-    val totalSum: Double = 0.0,
-    val screenState: ScreenState = ScreenState.LOADING,
-    val errorMessage: String? = null
-)

@@ -28,10 +28,12 @@ fun AppTopBar(
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title, fontSize = 22.sp) },
+
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
+
         actions = {
             rightButtonIcon?.let {
                 IconButton(onClick = rightButtonAction) {
@@ -44,6 +46,7 @@ fun AppTopBar(
                 }
             }
         },
+
         navigationIcon = {
             leftButtonIcon?.let {
                 IconButton(onClick = leftButtonAction) {

@@ -11,19 +11,10 @@ import com.example.myfinance.data.MockData.articles
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.feature.presentation.account.AccountScreen
 import com.example.myfinance.feature.presentation.articles.ArticlesScreen
-import com.example.myfinance.feature.presentation.expenses.ExpensesScreen
-import com.example.myfinance.feature.presentation.incomes.IncomesScreen
+import com.example.myfinance.feature.presentation.expenses.screen.ExpensesScreen
+import com.example.myfinance.feature.presentation.incomes.screen.IncomesScreen
 import com.example.myfinance.feature.presentation.settings.SettingsScreen
-import com.example.myfinance.feature.presentation.transactionsHistory.TransactionsHistoryScreen
-
-sealed class NavRoutes(val route: String) {
-    object Expenses : NavRoutes("expenses")
-    object Incomes : NavRoutes("incomes")
-    object Account : NavRoutes("account")
-    object Articles : NavRoutes("articles")
-    object Settings : NavRoutes("settings")
-    object TransactionsHistory : NavRoutes("history")
-}
+import com.example.myfinance.feature.presentation.transactionsHistory.screen.TransactionsHistoryScreen
 
 @Composable
 fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifier) {

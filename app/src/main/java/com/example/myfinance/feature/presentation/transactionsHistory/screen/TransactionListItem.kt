@@ -1,4 +1,4 @@
-package com.example.myfinance.feature.presentation.transactionsHistory
+package com.example.myfinance.feature.presentation.transactionsHistory.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector

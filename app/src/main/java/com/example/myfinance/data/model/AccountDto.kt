@@ -19,4 +19,4 @@ data class AccountDto(
     val createdAt: String = "",
     @SerialName("updatedAt")
     val updatedAt: String = ""
-    )
+)

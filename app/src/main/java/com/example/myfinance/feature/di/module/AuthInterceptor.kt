@@ -1,4 +1,4 @@
-package com.example.myfinance.data.network
+package com.example.myfinance.feature.di.module
 
 import com.example.myfinance.BuildConfig
 import okhttp3.Interceptor

@@ -1,10 +1,11 @@
-package com.example.myfinance.feature.presentation.transactionsHistory
+package com.example.myfinance.feature.presentation.transactionsHistory.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.domain.usecase.GetTransactionsForPeriodUseCase
+import com.example.myfinance.feature.presentation.ScreenState
+import com.example.myfinance.feature.presentation.transactionsHistory.datepicker.DialogType
 import com.example.myfinance.feature.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -13,27 +14,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-
-enum class DialogType {
-    START_DATE, END_DATE
-}
-
-enum class ScreenState {
-    SUCCESS, ERROR, LOADING
-}
-
-data class TransactionsState(
-    val transactions: List<Transaction> = emptyList(),
-    val startDate: LocalDate = LocalDate.now().withDayOfMonth(1),
-    val endDate: LocalDate = LocalDate.now(),
-    val totalSum: Double = 0.0,
-    val screenState: ScreenState = ScreenState.LOADING,
-    val dialogType: DialogType? = null,
-    val errorMessage: String? = null
-)
 
 @HiltViewModel
 class TransactionsHistoryViewModel @Inject constructor(

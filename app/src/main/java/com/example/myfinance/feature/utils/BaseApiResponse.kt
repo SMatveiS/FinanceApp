@@ -3,7 +3,6 @@ package com.example.myfinance.feature.utils
 import retrofit2.Response
 
 abstract class BaseApiResponse {
-
     suspend fun <T> safeApiCall(api: suspend () -> Response<T>): NetworkResult<T> {
         try {
             val response = api()

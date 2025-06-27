@@ -13,4 +13,4 @@ data class CategoryDto(
     val emoji: String = "",
     @SerialName("isIncome")
     val isIncome: Boolean = false
-    )
+)

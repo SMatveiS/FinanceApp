@@ -37,7 +37,5 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
 
             is NetworkResult.Loading -> NetworkResult.Loading()
         }
-
     }
-
 }

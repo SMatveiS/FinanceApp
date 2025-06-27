@@ -20,4 +20,5 @@ interface TransactionRepository {
         startDate: String,
         endDate: String
     ): NetworkResult<List<Transaction>>
+
 }
