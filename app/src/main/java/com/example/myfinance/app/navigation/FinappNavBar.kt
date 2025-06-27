@@ -22,40 +22,10 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.myfinance.R
 
 @Composable
 fun FinappNavBar(navController: NavHostController) {
-    // Список элементов навигационной панели
-    val navBarItems = remember {
-        listOf(
-            BarItem(
-                title = "Расходы",
-                icon = R.drawable.expenses,
-                route ="expenses"
-            ),
-            BarItem(
-                title = "Доходы",
-                icon = R.drawable.incomes,
-                route = "incomes"
-            ),
-            BarItem(
-                title = "Счет",
-                icon = R.drawable.account,
-                route = "account"
-            ),
-            BarItem(
-                title = "Статьи",
-                icon = R.drawable.articles,
-                route = "articles"
-            ),
-            BarItem(
-                title = "Настройки",
-                icon = R.drawable.settings,
-                route = "settings"
-            )
-        )
-    }
+    val navBarItems = remember { getNavBarItems() }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -82,7 +52,9 @@ fun FinappNavBar(navController: NavHostController) {
                     unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     indicatorColor = MaterialTheme.colorScheme.secondary    // Фон выбранного элемента
                 ),
-                selected = currentDestination?.hierarchy?.any { it.route == navItem.route || navItem.route == source } == true,
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == navItem.route || navItem.route == source
+                } == true,
                 onClick = {
                     if (navItem.route != currentDestination?.route) {
                         navController.navigate(navItem.route) {
@@ -94,10 +66,3 @@ fun FinappNavBar(navController: NavHostController) {
         }
     }
 }
-
-// Элемент навигационной панели
-data class BarItem(
-    val title: String,
-    val icon: Int,
-    val route: String
-)

@@ -1,7 +1,12 @@
 package com.example.myfinance.feature.domain.model
 
+/**
+ * Доменная модель аккаунта
+ */
+
 data class Account(
     val id: Int,
-    val balance: Int,
-    val currency: String = "₽"
+    val name: String,
+    val balance: Double,
+    val currency: String
 )

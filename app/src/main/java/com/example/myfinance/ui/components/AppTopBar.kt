@@ -15,6 +15,24 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Верхняя панель
+ *
+ * title - текст по центру
+ *
+ * rightButtonIcon - иконка правой кнопки
+ *
+ *  leftButtonIcon - иконка левой кнопки
+ *
+ *  rightButtonDescription - описание правой кнопки
+ *
+ *  leftButtonDescription - описание левой кнопки
+ *
+ *  rightButtonAction - действие при нажатии на правую кнопку
+ *
+ *  leftButtonAction - действие при нажатии на левую кнопку
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
@@ -28,10 +46,12 @@ fun AppTopBar(
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title, fontSize = 22.sp) },
+
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
+
         actions = {
             rightButtonIcon?.let {
                 IconButton(onClick = rightButtonAction) {
@@ -44,6 +64,7 @@ fun AppTopBar(
                 }
             }
         },
+
         navigationIcon = {
             leftButtonIcon?.let {
                 IconButton(onClick = leftButtonAction) {

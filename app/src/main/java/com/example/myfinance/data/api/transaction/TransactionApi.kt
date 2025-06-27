@@ -10,6 +10,10 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/**
+ * Интерфейс для связанных с транзакциями запросов в сеть
+ */
+
 interface TransactionApi {
     @POST("transactions")
     suspend fun addTransaction(@Body transaction: TransactionDto): Response<TransactionDto>
