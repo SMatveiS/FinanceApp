@@ -1,4 +1,4 @@
-package com.example.myfinance.feature.presentation.expenses
+package com.example.myfinance.feature.presentation.incomes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ExpenseViewModel @Inject constructor(
+class IncomesViewModel @Inject constructor(
     private val getTodayTransactionsUseCase: GetTodayTransactionsUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<ExpensesState>(ExpensesState())
-    val state: StateFlow<ExpensesState> = _state
+    private val _state = MutableStateFlow<IncomesState>(IncomesState())
+    val state: StateFlow<IncomesState> = _state
 
     init {
         getExpenses()
@@ -37,13 +37,13 @@ class ExpenseViewModel @Inject constructor(
                         val transactions = transactionsResult.data ?: emptyList()
 
                         val sortedTransactions = transactions
-                            .filter { it.category.isIncome == false }
+                            .filter { it.category.isIncome == true }
                             .sortedByDescending { it.date }
 
                         val totalSum = sortedTransactions.sumOf { it.amount }
 
                         _state.update { it.copy(
-                            expenses = sortedTransactions,
+                            sortedTransactions,
                             totalSum = totalSum,
                             screenState = ScreenState.SUCCESS
                         ) }
@@ -70,7 +70,7 @@ class ExpenseViewModel @Inject constructor(
     }
 }
 
-data class ExpensesState(
+data class IncomesState(
     val expenses: List<Transaction> = emptyList(),
     val totalSum: Double = 0.0,
     val screenState: ScreenState = ScreenState.LOADING,

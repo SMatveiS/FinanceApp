@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CategoryDto(
     @SerialName("id")
-    val id: Int? = null,
+    val id: Int = 0,
     @SerialName("name")
-    val name: String? = null,
+    val name: String = "",
     @SerialName("emoji")
-    val emoji: String? = null,
+    val emoji: String = "",
     @SerialName("isIncome")
-    val isIncome: Boolean? = null
+    val isIncome: Boolean = false
     )

@@ -1,36 +1,27 @@
 package com.example.myfinance.feature.presentation.expenses
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
-import com.example.myfinance.feature.domain.model.Category
+import com.example.myfinance.feature.domain.model.Transaction
+import com.example.myfinance.feature.presentation.transactionsHistory.ScreenState
+import com.example.myfinance.feature.utils.formatNumber
 import com.example.myfinance.ui.components.AppFAB
 import com.example.myfinance.ui.components.AppListItem
 import com.example.myfinance.ui.components.AppTopBar
+import com.example.myfinance.ui.components.ErrorState
+import com.example.myfinance.ui.components.LoadingState
 
 
 @Composable
@@ -39,28 +30,6 @@ fun ExpensesScreen(onHistoryClicked: () -> Unit) {
     val viewModel: ExpenseViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-
-    when (val currentState = state) {
-        is ExpensesState.Success -> {
-            ExpensesContent(
-                expenses = currentState.expenses,
-                onHistoryClicked = onHistoryClicked,
-            )
-        }
-        is ExpensesState.Error -> {
-            ErrorState(
-                message = currentState.message,
-                onRetry = { viewModel.getExpenses() }
-            )
-        }
-        ExpensesState.Loading -> {
-            LoadingState()
-        }
-    }
-}
-
-@Composable
-fun ExpensesContent(expenses: List<Category>, onHistoryClicked: () -> Unit) {
     Scaffold (
         topBar = {
             AppTopBar(
@@ -72,73 +41,50 @@ fun ExpensesContent(expenses: List<Category>, onHistoryClicked: () -> Unit) {
         floatingActionButton = { AppFAB() },
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            item {
-                AppListItem(
-                    leftTitle = "Всего",
-                    rightTitle = "436 558 ₽",
-                    listBackground = MaterialTheme.colorScheme.secondary,
-                    listHeight = 56
+
+        when (state.screenState) {
+            ScreenState.SUCCESS -> {
+                ExpensesContent(
+                    expenses = state.expenses,
+                    totalSum = state.totalSum,
+                    modifier = Modifier.padding(innerPadding)
                 )
-                HorizontalDivider()
             }
-            items(expenses) { expense ->
-                ExpenseItem(expense)
-                HorizontalDivider()
+
+            ScreenState.ERROR -> {
+                ErrorState(
+                    message = state.errorMessage ?: "Неизвестная ошибка",
+                    onRetry = viewModel::getExpenses,
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
+
+            ScreenState.LOADING -> LoadingState(modifier = Modifier.padding(innerPadding))
         }
+
     }
 }
 
 @Composable
-fun LoadingState() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        CircularProgressIndicator()
-    }
-}
+fun ExpensesContent(
+    expenses: List<Transaction>,
+    totalSum: Double,
+    modifier: Modifier = Modifier
+ ) {
 
-@Composable
-fun ErrorState(message: String, onRetry: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = message,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
+    LazyColumn(modifier = modifier) {
+        item {
+            AppListItem(
+                leftTitle = "Всего",
+                rightTitle = formatNumber(totalSum),
+                listBackground = MaterialTheme.colorScheme.secondary,
+                listHeight = 56
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onRetry) {
-                Text("Повторить попытку")
-            }
+            HorizontalDivider()
+        }
+        items(expenses) { expense ->
+            ExpenseListItem(expense)
+            HorizontalDivider()
         }
     }
 }
-
-@Composable
-fun EmptyState(onRetry: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Данные не найдены")
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onRetry) {
-                Text("Загрузить снова")
-            }
-        }
-    }
-}
-

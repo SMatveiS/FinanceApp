@@ -21,5 +21,5 @@ abstract class BaseApiResponse {
     }
 
     private fun <T> errorMessage(message: String?): NetworkResult.Error<T> =
-        NetworkResult.Error(data = null, message = "Ошибка: $message")
+        NetworkResult.Error(errorMessage = "Ошибка: $message")
 }

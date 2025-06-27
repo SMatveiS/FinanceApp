@@ -1,4 +1,4 @@
-package com.example.myfinance.feature.presentation.transactionsHistory
+package com.example.myfinance.feature.presentation.incomes
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -9,13 +9,12 @@ import com.example.myfinance.ui.components.AppListItem
 import com.example.myfinance.feature.utils.formatNumber
 
 @Composable
-fun TransactionItem(transaction: Transaction) {
+fun IncomeListItem(income: Transaction) {
     AppListItem(
-        leftTitle = transaction.category,
-        leftSubtitle = transaction.comment,
-        rightTitle = formatNumber(transaction.amount),
-        rightSubtitle = transaction.date,
-        leftIcon = transaction.emoji,
+        leftTitle = income.category.name,
+        leftSubtitle = income.comment,
+        rightTitle = formatNumber(income.amount),
+        leftIcon = income.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,
         onClick = { /* Действие */}

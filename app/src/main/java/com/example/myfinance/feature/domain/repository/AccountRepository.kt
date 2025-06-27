@@ -1,10 +1,10 @@
 package com.example.myfinance.feature.domain.repository
 
-import com.example.myfinance.data.model.AccountDto
-import retrofit2.Response
+import com.example.myfinance.feature.domain.model.Account
+import com.example.myfinance.feature.utils.NetworkResult
 
 interface AccountRepository {
 
-    suspend fun getAllAccounts(): Response<List<AccountDto>>
+    suspend fun getAllAccounts(): NetworkResult<List<Account>>
 
 }

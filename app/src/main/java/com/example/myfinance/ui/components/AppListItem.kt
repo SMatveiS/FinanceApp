@@ -27,10 +27,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AppListItem(
     leftTitle: String,
-    leftSubtitle: String = "",
-    rightTitle: String = "",
-    rightSubtitle: String = "",
-    leftIcon: String = "",
+    leftSubtitle: String? = null,
+    rightTitle: String? = null,
+    rightSubtitle: String? = null,
+    leftIcon: String? = null,
     rightIcon: ImageVector? = null,
     listHeight: Int = 70,
     listBackground: Color = MaterialTheme.colorScheme.background,
@@ -49,7 +49,7 @@ fun AppListItem(
     ) {
         // Между spacer и следующим элементом будет отступ в 16dp
         Spacer(modifier = Modifier.width(0.dp))
-        if (leftIcon != "") {
+        if (leftIcon != null) {
             val regex = "^[a-zA-Zа-яА-ЯёЁ0-9]{2}".toRegex()
             // Если передан не emoji
             if (leftIcon.length >= 2 && regex.containsMatchIn(leftIcon)) {
@@ -92,7 +92,7 @@ fun AppListItem(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
-                if (leftSubtitle != "") {
+                if (leftSubtitle != null) {
                     Text(
                         leftSubtitle,
                         fontSize = 14.sp,
@@ -101,14 +101,14 @@ fun AppListItem(
                 }
             }
             Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
-                if (rightTitle != "") {
+                if (rightTitle != null) {
                     Text(
                         rightTitle,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
 
-                    if (rightSubtitle != "") {
+                    if (rightSubtitle != null) {
                         Text(
                             rightSubtitle,
                             fontSize = 14.sp,

@@ -1,40 +1,24 @@
 package com.example.myfinance.feature.domain.usecase
 
 import com.example.myfinance.feature.domain.repository.AccountRepository
-import com.example.myfinance.feature.utils.NetworkError
+import com.example.myfinance.feature.utils.NetworkResult
+import com.example.myfinance.feature.utils.NetworkResult.*
 import javax.inject.Inject
 
 class GetAccountIdUseCase @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
-    suspend operator fun invoke():  Result<Int> {
-        val response = accountRepository.getAllAccounts()
-        when {
-            response.isSuccessful -> {
-                val account = response.body()?.first()
-                    ?: return Result.failure(
-                        NetworkError(response.code(), message = "Нет доступных аккаунтов")
-                    )
-                val accountId = account.id ?: return Result.failure(
-                    NetworkError(response.code(), message = "Нет id аккаунта")
-                )
-                return Result.success(accountId)
+    suspend operator fun invoke():  NetworkResult<Int> {
+        return when (val accounts = accountRepository.getAllAccounts()) {
+            is Success ->  {
+                if (accounts.data?.firstOrNull() != null) {
+                    Success(accounts.data.first().id)
+                } else Error(errorMessage = "Ошибка: Нет доступных аккаунтов")
             }
 
-            else -> return Result.failure(NetworkError(response.code(), response.message()))
+            is Error -> Error(accounts.errorMessage)
+
+            is Loading -> Loading()
         }
     }
-
-//    suspend operator fun invoke(): Result<Int> = runCatching {
-//        val response = accountRepository.getAllAccounts()
-//        when {
-//            !response.isSuccessful -> throw Exception("${response.code()} ${response.message()}")
-//            response.body() == null -> throw Exception("Empty response body")
-//            else -> {
-//                val accounts = response.body()!!
-//                accounts.firstOrNull()?.id
-//                    ?: throw Exception("No accounts available")
-//            }
-//        }
-//    }
 }

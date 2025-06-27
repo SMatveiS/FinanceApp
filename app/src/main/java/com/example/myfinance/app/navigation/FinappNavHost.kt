@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.myfinance.data.MockData.articles
-import com.example.myfinance.data.MockData.incomes
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.feature.presentation.account.AccountScreen
 import com.example.myfinance.feature.presentation.articles.ArticlesScreen
@@ -38,7 +37,6 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
         }
         composable(NavRoutes.Incomes.route) { backStackEntry ->
             IncomesScreen(
-                incomes,
                 onHistoryClicked = {
                     navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Incomes.route}")
                 }

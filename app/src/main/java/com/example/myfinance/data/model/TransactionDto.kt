@@ -6,19 +6,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TransactionDto(
     @SerialName("id")
-    val id: Int? = null,
+    val id: Int = 0,
     @SerialName("account")
-    val account: AccountDto? = null,
+    val account: AccountDto = AccountDto(),
     @SerialName("category")
-    val category: CategoryDto? = null,
+    val category: CategoryDto = CategoryDto(),
     @SerialName("amount")
-    val amount: String? = null,
+    val amount: String = "",
     @SerialName("transactionDate")
-    val transactionDate: String? = null,
+    val transactionDate: String = "",
     @SerialName("comment")
     val comment: String? = null,
     @SerialName("createdAt")
-    val createdAt: String? = null,
+    val createdAt: String = "",
     @SerialName("updatedAt")
-    val updatedAt: String? = null
+    val updatedAt: String = ""
 )

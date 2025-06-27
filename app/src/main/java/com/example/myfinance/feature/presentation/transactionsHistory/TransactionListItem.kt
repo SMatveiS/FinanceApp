@@ -1,20 +1,21 @@
-package com.example.myfinance.feature.presentation.expenses
+package com.example.myfinance.feature.presentation.transactionsHistory
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
-import com.example.myfinance.feature.domain.model.Category
+import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.ui.components.AppListItem
 import com.example.myfinance.feature.utils.formatNumber
 
 @Composable
-fun ExpenseItem(expense: Category) {
+fun TransactionListItem(transaction: Transaction) {
     AppListItem(
-        leftTitle = expense.category,
-        leftSubtitle = expense.comment,
-        rightTitle = formatNumber(expense.amount),
-        leftIcon = expense.emoji,
+        leftTitle = transaction.category.name,
+        leftSubtitle = transaction.comment,
+        rightTitle = formatNumber(transaction.amount),
+        rightSubtitle = transaction.date,
+        leftIcon = transaction.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,
         onClick = { /* Действие */}

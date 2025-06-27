@@ -3,6 +3,7 @@ package com.example.myfinance.feature.presentation.account
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.feature.domain.usecase.GetAccountIdUseCase
+import com.example.myfinance.feature.utils.NetworkResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,16 +29,14 @@ class AccountViewModel(
     private fun loadAccountId() {
         viewModelScope.launch {
             _accountIdState.value = AccountIdState.Loading
-            getAccountIdUseCase().fold(
-                onSuccess = { id ->
-                    _accountIdState.value = AccountIdState.Success(id)
-                },
-                onFailure = { error ->
-                    _accountIdState.value = AccountIdState.Error(
-                        error.message ?: "Unknown error"
-                    )
-                }
-            )
+            val accountIdResult = getAccountIdUseCase()
+            when (accountIdResult) {
+                is NetworkResult.Success -> { _accountIdState.value = AccountIdState.Success(accountIdResult.data)}
+                is NetworkResult.Error -> { _accountIdState.value = AccountIdState.Error(
+                    accountIdResult.errorMessage ?: "Unknown error"
+                )}
+                is NetworkResult.Loading -> {}
+            }
         }
     }
 }

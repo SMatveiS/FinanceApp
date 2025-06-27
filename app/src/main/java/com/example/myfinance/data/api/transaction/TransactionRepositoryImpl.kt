@@ -1,15 +1,17 @@
 package com.example.myfinance.data.api.transaction
 
 import com.example.myfinance.data.model.TransactionDto
+import com.example.myfinance.feature.domain.model.Transaction
 import com.example.myfinance.feature.domain.repository.TransactionRepository
 import com.example.myfinance.feature.utils.BaseApiResponse
 import com.example.myfinance.feature.utils.NetworkResult
-import retrofit2.Response
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val transactionRemoteDataSource: TransactionRemoteDataSource
-): TransactionRepository {
+): TransactionRepository, BaseApiResponse() {
 
     override suspend fun getTransaction(id: Int) =
         transactionRemoteDataSource.getTransaction(id = id)
@@ -23,10 +25,39 @@ class TransactionRepositoryImpl @Inject constructor(
     override suspend fun deleteTransaction(id: Int) =
         transactionRemoteDataSource.deleteTransaction(id = id)
 
-    override suspend fun getTransactionForPeriod(id: Int, startDate: String, endDate: String) =
-        transactionRemoteDataSource.getTransactionsForPeriod(
-            id = id,
-            startDate = startDate,
-            endDate = endDate
-        )
+    override suspend fun getTransactionForPeriod(
+        id: Int,
+        startDate: String,
+        endDate: String
+    ): NetworkResult<List<Transaction>> {
+
+        val transactions = safeApiCall {
+            transactionRemoteDataSource.getTransactionsForPeriod(
+                id = id,
+                startDate = startDate,
+                endDate = endDate
+            )
+        }
+
+        return when (transactions) {
+            is NetworkResult.Success ->
+                NetworkResult.Success(transactions.data?.map { it.toDomain() })
+
+            is NetworkResult.Error -> NetworkResult.Error(errorMessage = transactions.errorMessage)
+
+            is NetworkResult.Loading -> NetworkResult.Loading()
+        }
+
+    }
+
+    private fun TransactionDto.toDomain() = Transaction(
+        id = id,
+        accountId = account.id,
+        category = category,
+        amount = amount.toDouble(),
+        date = OffsetDateTime.parse(transactionDate)
+            .format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")),
+        comment = if (comment == "") null else comment
+    )
+
 }

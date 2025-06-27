@@ -1,6 +1,8 @@
 package com.example.myfinance.feature.domain.repository
 
 import com.example.myfinance.data.model.TransactionDto
+import com.example.myfinance.feature.domain.model.Transaction
+import com.example.myfinance.feature.utils.NetworkResult
 import retrofit2.Response
 
 interface TransactionRepository {
@@ -17,5 +19,5 @@ interface TransactionRepository {
         id: Int,
         startDate: String,
         endDate: String
-    ): Response<List<TransactionDto>>
+    ): NetworkResult<List<Transaction>>
 }

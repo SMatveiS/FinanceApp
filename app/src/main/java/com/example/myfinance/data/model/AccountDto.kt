@@ -6,17 +6,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AccountDto(
     @SerialName("id")
-    val id: Int? = null,
+    val id: Int = 0,
     @SerialName("userId")
-    val userId: Int? = null,
+    val userId: Int = 0,
     @SerialName("name")
-    val name: String? = null,
+    val name: String = "",
     @SerialName("balance")
-    val balance: String? = null,
+    val balance: String = "",
     @SerialName("currency")
-    val currency: String? = null,
+    val currency: String = "",
     @SerialName("createdAt")
-    val createdAt: String? = null,
+    val createdAt: String = "",
     @SerialName("updatedAt")
-    val updatedAt: String? = null
+    val updatedAt: String = ""
     )
