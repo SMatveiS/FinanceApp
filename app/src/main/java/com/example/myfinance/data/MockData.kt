@@ -1,7 +1,7 @@
 package com.example.myfinance.data
 
-import com.example.myfinance.feature.domain.model.Article
-import com.example.myfinance.feature.domain.model.Settings
+import com.example.myfinance.domain.model.Article
+import com.example.myfinance.domain.model.Settings
 
 object MockData {
     val articles = listOf(

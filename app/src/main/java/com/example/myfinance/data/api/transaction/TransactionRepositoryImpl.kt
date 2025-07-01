@@ -1,12 +1,10 @@
 package com.example.myfinance.data.api.transaction
 
 import com.example.myfinance.data.model.TransactionDto
-import com.example.myfinance.feature.domain.model.Transaction
-import com.example.myfinance.feature.domain.repository.TransactionRepository
-import com.example.myfinance.feature.utils.BaseApiResponse
-import com.example.myfinance.feature.utils.NetworkResult
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
+import com.example.myfinance.domain.model.Transaction
+import com.example.myfinance.domain.repository.TransactionRepository
+import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.data.utils.safeApiCall
 import javax.inject.Inject
 
 /**
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val transactionRemoteDataSource: TransactionRemoteDataSource
-): TransactionRepository, BaseApiResponse() {
+): TransactionRepository {
 
     override suspend fun getTransaction(id: Int) =
         transactionRemoteDataSource.getTransaction(id = id)
@@ -45,21 +43,9 @@ class TransactionRepositoryImpl @Inject constructor(
 
         return when (transactions) {
             is NetworkResult.Success ->
-                NetworkResult.Success(transactions.data?.map { it.toDomain() })
+                NetworkResult.Success(transactions.data.map { it.toDomain() })
 
             is NetworkResult.Error -> NetworkResult.Error(errorMessage = transactions.errorMessage)
         }
-
     }
-
-    private fun TransactionDto.toDomain() = Transaction(
-        id = id,
-        accountId = account.id,
-        category = category,
-        amount = amount.toDouble(),
-        date = OffsetDateTime.parse(transactionDate)
-            .format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")),
-        comment = if (comment == "") null else comment
-    )
-
 }
