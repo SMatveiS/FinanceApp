@@ -8,7 +8,7 @@ import com.example.myfinance.data.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,7 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AccountState>(AccountState())
-    val state: StateFlow<AccountState> = _state
+    val state = _state.asStateFlow()
 
     init {
         getAccount()

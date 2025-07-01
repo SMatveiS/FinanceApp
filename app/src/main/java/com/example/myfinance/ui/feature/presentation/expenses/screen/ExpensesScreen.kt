@@ -24,8 +24,11 @@ import com.example.myfinance.ui.common.LoadingState
  */
 
 @Composable
-fun ExpensesScreen(onHistoryClicked: () -> Unit) {
-    val viewModel: ExpenseViewModel = hiltViewModel()
+fun ExpensesScreen(
+    viewModel: ExpenseViewModel = hiltViewModel(),
+    onHistoryClicked: () -> Unit
+) {
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold (

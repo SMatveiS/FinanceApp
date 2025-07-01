@@ -1,4 +1,4 @@
-package com.example.myfinance.domain.usecase
+package com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel
 
 import com.example.myfinance.domain.model.Transaction
 

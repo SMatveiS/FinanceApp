@@ -2,6 +2,7 @@ package com.example.myfinance.domain.usecase
 
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsResult
 import javax.inject.Inject
 
 /**

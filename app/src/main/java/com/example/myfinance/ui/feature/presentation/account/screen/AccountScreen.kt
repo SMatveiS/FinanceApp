@@ -24,8 +24,10 @@ import com.example.myfinance.ui.common.LoadingState
  */
 
 @Composable
-fun AccountScreen() {
-    val viewModel: AccountViewModel = hiltViewModel()
+fun AccountScreen(
+    viewModel: AccountViewModel = hiltViewModel()
+) {
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(

@@ -25,10 +25,10 @@ import com.example.myfinance.ui.common.LoadingState
 
 @Composable
 fun TransactionsHistoryScreen(
+    viewModel: TransactionsHistoryViewModel = hiltViewModel(),
     onBackArrowClicked: () -> Unit
 ) {
 
-    val viewModel: TransactionsHistoryViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     state.dialogType?.let {

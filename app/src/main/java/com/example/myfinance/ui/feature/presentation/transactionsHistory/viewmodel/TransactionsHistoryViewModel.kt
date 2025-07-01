@@ -10,7 +10,7 @@ import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -28,7 +28,7 @@ class TransactionsHistoryViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _state = MutableStateFlow(TransactionsState())
-    val state: StateFlow<TransactionsState> = _state
+    val state = _state.asStateFlow()
 
 
     private val isIncomes: Boolean = savedStateHandle.get<String>("source") != "expenses"
