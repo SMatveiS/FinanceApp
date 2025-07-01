@@ -104,8 +104,8 @@ fun AppListItem(
                     )
                 }
             }
-            Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
-                if (rightTitle != null) {
+            if (rightTitle != null) {
+                Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
                     Text(
                         rightTitle,
                         fontSize = 16.sp,

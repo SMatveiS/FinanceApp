@@ -7,10 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.myfinance.data.MockData.articles
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
-import com.example.myfinance.ui.feature.presentation.articles.ArticlesScreen
+import com.example.myfinance.ui.feature.presentation.category.screen.CategoryScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
 import com.example.myfinance.ui.feature.presentation.settings.SettingsScreen
@@ -38,7 +37,7 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
 
         composable(NavRoutes.Account.route) { AccountScreen() }
 
-        composable(NavRoutes.Articles.route) { ArticlesScreen(articles) }
+        composable(NavRoutes.Articles.route) { CategoryScreen() }
 
         composable(NavRoutes.Settings.route) { SettingsScreen(settings) }
 

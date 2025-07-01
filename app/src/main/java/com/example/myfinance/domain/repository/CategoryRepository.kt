@@ -1,7 +1,7 @@
 package com.example.myfinance.domain.repository
 
-import com.example.myfinance.data.model.CategoryDto
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.domain.model.Category
 
 /**
  * Интерфейс репозитория категорий для доменного слоя
@@ -9,8 +9,8 @@ import com.example.myfinance.data.utils.NetworkResult
 
 interface CategoryRepository {
 
-    suspend fun getAllCategories(): NetworkResult<List<CategoryDto>>
+    suspend fun getAllCategories(): NetworkResult<List<Category>>
 
-    suspend fun getCategoryByType(isIncome: Boolean): NetworkResult<List<CategoryDto>>
+    suspend fun getCategoryByType(isIncome: Boolean): NetworkResult<List<Category>>
 
 }

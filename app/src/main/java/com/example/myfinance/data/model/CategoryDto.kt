@@ -1,11 +1,11 @@
 package com.example.myfinance.data.model
 
+import com.example.myfinance.domain.model.Category
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
  * Модель для получения информации о категории с сервера
- * Для бизнес-логики модель была бы такой же, поэтому используется и в качестве доменной модели
  */
 
 @Serializable
@@ -19,5 +19,9 @@ data class CategoryDto(
     @SerialName("isIncome")
     val isIncome: Boolean = false
 ) {
-
+    fun toDomain() = Category(
+        id = id,
+        name = name,
+        emoji = emoji
+    )
 }

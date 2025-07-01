@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.articles
+package com.example.myfinance.ui.feature.presentation.category.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
