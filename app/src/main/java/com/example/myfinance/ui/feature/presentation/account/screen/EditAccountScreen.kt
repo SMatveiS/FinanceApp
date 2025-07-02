@@ -10,22 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
-import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountViewModel
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
-
-/**
- * Экран счёта
- *
- * В зависимости от состояния данных показывает соответствующий экран
- */
+import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountViewModel
 
 @Composable
-fun AccountScreen(
+fun EditAccountScreen(
     viewModel: AccountViewModel = hiltViewModel(),
-    onEditAccountClicked: () -> Unit
+    returnToAccountScreen: () -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -34,9 +28,12 @@ fun AccountScreen(
         topBar = {
             AppTopBar(
                 title = "Мой счет",
-                rightButtonIcon = R.drawable.edit,
-                rightButtonDescription = "Изменить",
-                rightButtonAction = onEditAccountClicked
+                rightButtonIcon = R.drawable.check,
+                rightButtonDescription = "Сохранить",
+                rightButtonAction = returnToAccountScreen,
+                leftButtonIcon = R.drawable.close,
+                leftButtonDescription = "Отменить",
+                leftButtonAction = returnToAccountScreen
             )
         },
 
@@ -45,7 +42,7 @@ fun AccountScreen(
 
         when (state.screenState) {
             ScreenState.SUCCESS -> {
-                AccountContent(
+                EditAccountContent(
                     balance = state.account?.balance ?: 0.0,
                     currency = state.account?.currency ?: "₽",
                     modifier = Modifier.padding(innerPadding)

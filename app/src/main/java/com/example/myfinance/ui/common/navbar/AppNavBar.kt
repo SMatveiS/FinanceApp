@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.common
+package com.example.myfinance.ui.common.navbar
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
@@ -22,7 +22,6 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.myfinance.ui.navigation.getNavBarItems
 
 @Composable
 fun FinappNavBar(navController: NavHostController) {

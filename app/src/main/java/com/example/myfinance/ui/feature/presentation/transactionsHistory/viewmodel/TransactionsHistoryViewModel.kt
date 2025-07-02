@@ -30,7 +30,6 @@ class TransactionsHistoryViewModel @Inject constructor(
     private val _state = MutableStateFlow(TransactionsState())
     val state = _state.asStateFlow()
 
-
     private val isIncomes: Boolean = savedStateHandle.get<String>("source") != "expenses"
 
     init {

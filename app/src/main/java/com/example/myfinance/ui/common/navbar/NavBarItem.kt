@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.navigation
+package com.example.myfinance.ui.common.navbar
 
 /**
  * Элемент навигационной панели
