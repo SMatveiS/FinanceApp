@@ -4,6 +4,7 @@ import com.example.myfinance.data.model.TransactionDto
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
 import javax.inject.Inject
 
@@ -41,11 +42,8 @@ class TransactionRepositoryImpl @Inject constructor(
             )
         }
 
-        return when (transactions) {
-            is NetworkResult.Success ->
-                NetworkResult.Success(transactions.data.map { it.toDomain() })
-
-            is NetworkResult.Error -> NetworkResult.Error(errorMessage = transactions.errorMessage)
+        return transactions.map { transaction ->
+            transaction.map { it.toDomain() }
         }
     }
 }

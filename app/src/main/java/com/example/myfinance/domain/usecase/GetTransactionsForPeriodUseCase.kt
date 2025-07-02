@@ -2,6 +2,7 @@ package com.example.myfinance.domain.usecase
 
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.data.utils.map
 import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsResult
 import javax.inject.Inject
 
@@ -28,10 +29,9 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
         isIncomes: Boolean
     ): NetworkResult<TransactionsResult> {
 
-        val accountIdResult = getAccountIdUseCase()
-        return when (accountIdResult) {
-
-            is NetworkResult.Error -> NetworkResult.Error(accountIdResult.errorMessage)
+        // Нельзя сделать через map, так как вернёт NetworkResult<NetworkResult<...>>
+        return when (val accountIdResult = getAccountIdUseCase()) {
+            is NetworkResult.Error -> NetworkResult.Error(errorMessage = accountIdResult.errorMessage)
 
             is NetworkResult.Success -> {
                 val transactionsResult = transactionRepository.getTransactionForPeriod(
@@ -40,21 +40,15 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
                     endDate = endDate
                 )
 
-                when (transactionsResult) {
-                    is NetworkResult.Success ->  {
-                        val transactions = transactionsResult.data.filter {
-                            it.category.isIncome == isIncomes
-                        }.sortedByDescending { it.date }
+                transactionsResult.map { transactions ->
+                    val sortedTransactions = transactions.filter {
+                        it.category.isIncome == isIncomes
+                    }.sortedByDescending { it.date }
 
-                        NetworkResult.Success(
-                            TransactionsResult(
-                                transactions = transactions,
-                                transactionsSum = transactions.sumOf { it.amount }
-                            )
-                        )
-                    }
-
-                    is NetworkResult.Error -> NetworkResult.Error(transactionsResult.errorMessage)
+                    TransactionsResult(
+                        transactions = sortedTransactions,
+                        transactionsSum = transactions.sumOf { it.amount }
+                    )
                 }
             }
         }

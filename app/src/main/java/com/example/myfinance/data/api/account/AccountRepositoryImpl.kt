@@ -3,6 +3,7 @@ package com.example.myfinance.data.api.account
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,11 +19,9 @@ class AccountRepositoryImpl @Inject constructor(
 
     override suspend fun getAllAccounts(): NetworkResult<List<Account>> {
         val accounts = safeApiCall { accountRemoteDataSource.getAllAccounts() }
-        return when (accounts) {
-            is NetworkResult.Success ->
-                NetworkResult.Success(accounts.data.map { it.toDomain() })
 
-            is NetworkResult.Error -> NetworkResult.Error(errorMessage = accounts.errorMessage)
+        return accounts.map { account ->
+            account.map { it.toDomain() }
         }
     }
 }
