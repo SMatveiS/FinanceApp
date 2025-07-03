@@ -34,6 +34,7 @@ data class TransactionDto(
         accountId = account.id,
         category = category,
         amount = amount.toDouble(),
+        currency = account.currency,
         date = OffsetDateTime.parse(transactionDate)
             .format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")),
         comment = if (comment == "") null else comment

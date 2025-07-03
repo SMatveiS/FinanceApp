@@ -50,6 +50,7 @@ fun ExpensesScreen(
                 ExpensesContent(
                     expenses = state.expenses,
                     totalSum = state.totalSum,
+                    currency = state.currency,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

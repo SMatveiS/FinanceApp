@@ -48,6 +48,7 @@ fun IncomesScreen(
                 IncomesContent(
                     incomes = state.incomes,
                     totalSum = state.totalSum,
+                    currency = state.currency,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

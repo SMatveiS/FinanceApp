@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -127,7 +128,7 @@ fun AppListItem(
             Icon(
                 rightIcon,
                 contentDescription = "Перейти",
-                modifier = Modifier.width(24.dp)
+                modifier = Modifier.size(24.dp)
             )
         }
         // Между spacer и предыдущим элементом будет отступ в 16dp

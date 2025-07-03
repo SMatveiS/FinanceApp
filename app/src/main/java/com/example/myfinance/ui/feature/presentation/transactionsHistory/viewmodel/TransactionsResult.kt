@@ -8,5 +8,6 @@ import com.example.myfinance.domain.model.Transaction
 
 data class TransactionsResult(
     val transactions: List<Transaction>,
-    val transactionsSum: Double
+    val transactionsSum: Double,
+    val currency: String
 )

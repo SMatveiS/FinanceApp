@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker.DialogType
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.ui.common.formatNumber
 import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,9 +95,12 @@ class TransactionsHistoryViewModel @Inject constructor(
 
                 when (transactionsResult) {
                     is NetworkResult.Success -> {
+                        val currency = getCurrencySymbol(transactionsResult.data.currency)
+
                         _state.update { it.copy(
                             transactions = transactionsResult.data.transactions,
                             totalSum = transactionsResult.data.transactionsSum,
+                            currency = currency,
                             screenState = ScreenState.SUCCESS
                         ) }
                     }

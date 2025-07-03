@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.GetAccountUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,11 +37,13 @@ class AccountViewModel @Inject constructor(
             ) }
 
             try {
-                val account = getAccountUseCase()
-                when (account) {
+                val accountResult = getAccountUseCase()
+                when (accountResult) {
                     is NetworkResult.Success -> {
                         _state.update { it.copy(
-                            account = account.data,
+                            account = accountResult.data.copy(
+                                currency = getCurrencySymbol(accountResult.data.currency)
+                            ),
                             screenState = ScreenState.SUCCESS
                         ) }
                     }
@@ -48,7 +51,7 @@ class AccountViewModel @Inject constructor(
                     is NetworkResult.Error -> {
                         _state.update {
                             it.copy(
-                                errorMessage = account.errorMessage,
+                                errorMessage = accountResult.errorMessage,
                                 screenState = ScreenState.ERROR
                             )
                         }

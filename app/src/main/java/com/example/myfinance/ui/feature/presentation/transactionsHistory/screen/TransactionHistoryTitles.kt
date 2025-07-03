@@ -4,7 +4,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.example.myfinance.ui.common.formatNumber
 import com.example.myfinance.ui.common.AppListItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -18,7 +17,7 @@ import java.util.Locale
 fun TransactionHistoryTitles(
     startDate: LocalDate,
     endDate: LocalDate,
-    totalSum: Double,
+    totalSum: String,
     onStartDatePickerOpen: () -> Unit,
     onEndDatePickerOpen: () -> Unit,
 ) {
@@ -49,7 +48,7 @@ fun TransactionHistoryTitles(
 
     AppListItem(
         leftTitle = "Сумма",
-        rightTitle = formatNumber(totalSum),
+        rightTitle = totalSum,
         listBackground = MaterialTheme.colorScheme.secondary,
         listHeight = 56
     )

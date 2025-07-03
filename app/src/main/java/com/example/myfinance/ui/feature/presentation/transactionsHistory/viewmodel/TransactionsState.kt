@@ -14,6 +14,7 @@ data class TransactionsState(
     val startDate: LocalDate = LocalDate.now().withDayOfMonth(1),
     val endDate: LocalDate = LocalDate.now(),
     val totalSum: Double = 0.0,
+    val currency: String = "₽",
     val screenState: ScreenState = ScreenState.LOADING,
     val dialogType: DialogType? = null,
     val errorMessage: String? = null

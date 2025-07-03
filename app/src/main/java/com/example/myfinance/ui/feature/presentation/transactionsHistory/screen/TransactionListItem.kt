@@ -13,11 +13,11 @@ import com.example.myfinance.ui.common.formatNumber
  */
 
 @Composable
-fun TransactionListItem(transaction: Transaction) {
+fun TransactionListItem(transaction: Transaction, currency: String) {
     AppListItem(
         leftTitle = transaction.category.name,
         leftSubtitle = transaction.comment,
-        rightTitle = formatNumber(transaction.amount),
+        rightTitle = formatNumber(transaction.amount, currency),
         rightSubtitle = transaction.date,
         leftIcon = transaction.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),

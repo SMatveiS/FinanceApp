@@ -60,6 +60,7 @@ fun TransactionsHistoryScreen(
                     startDate = state.startDate,
                     endDate = state.endDate,
                     totalSum = state.totalSum,
+                    currency = state.currency,
                     onStartDatePickerOpen = viewModel::onStartDatePickerOpen ,
                     onEndDatePickerOpen = viewModel::onEndDatePickerOpen,
                     modifier = Modifier.padding(innerPadding)

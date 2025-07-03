@@ -18,6 +18,7 @@ import com.example.myfinance.ui.common.AppListItem
 fun ExpensesContent(
     expenses: List<Transaction>,
     totalSum: Double,
+    currency: String,
     modifier: Modifier = Modifier
 ) {
 
@@ -25,14 +26,14 @@ fun ExpensesContent(
         item {
             AppListItem(
                 leftTitle = "Всего",
-                rightTitle = formatNumber(totalSum),
+                rightTitle = formatNumber(totalSum, currency),
                 listBackground = MaterialTheme.colorScheme.secondary,
                 listHeight = 56
             )
             HorizontalDivider()
         }
         items(expenses) { expense ->
-            ExpenseListItem(expense)
+            ExpenseListItem(expense, currency)
             HorizontalDivider()
         }
     }

@@ -3,6 +3,7 @@ package com.example.myfinance.domain.usecase
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.data.utils.map
+import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsResult
 import javax.inject.Inject
 
@@ -47,7 +48,8 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
 
                     TransactionsResult(
                         transactions = sortedTransactions,
-                        transactionsSum = transactions.sumOf { it.amount }
+                        transactionsSum = transactions.sumOf { it.amount },
+                        currency = transactions.firstOrNull()?.currency ?: "RUB"
                     )
                 }
             }

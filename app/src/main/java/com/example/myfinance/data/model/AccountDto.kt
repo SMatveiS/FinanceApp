@@ -1,6 +1,7 @@
 package com.example.myfinance.data.model
 
 import com.example.myfinance.domain.model.Account
+import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -30,16 +31,6 @@ data class AccountDto(
         id = id,
         name = name,
         balance = balance.toDouble(),
-        currency = getCurrencySymbol(currency)
+        currency = currency
     )
-
-    // Переделать
-    private fun getCurrencySymbol(currencyCode: String): String {
-        return when (currencyCode.uppercase()) {
-            "RUB" -> "₽"
-            "USD" -> "$"
-            "EUR" -> "€"
-            else -> currencyCode
-        }
-    }
 }

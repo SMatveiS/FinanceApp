@@ -9,11 +9,11 @@ import java.text.DecimalFormatSymbols
  * Пример: 12130,99 -> "12 130,99 ₽"
  */
 
-fun formatNumber(number: Double): String {
+fun formatNumber(number: Double, currency: String): String {
     val symbols = DecimalFormatSymbols().apply {
         groupingSeparator = ' '
         decimalSeparator = ','
     }
     val formatter = DecimalFormat("#,###.##", symbols)
-    return formatter.format(number) + " ₽"
+    return formatter.format(number) + " $currency"
 }

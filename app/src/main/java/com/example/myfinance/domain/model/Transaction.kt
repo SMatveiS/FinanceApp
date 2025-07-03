@@ -11,6 +11,7 @@ data class Transaction(
     val accountId: Int,
     val category: CategoryDto,
     val amount: Double,
+    val currency: String,
     val date: String,
     val comment: String? = null
 )
