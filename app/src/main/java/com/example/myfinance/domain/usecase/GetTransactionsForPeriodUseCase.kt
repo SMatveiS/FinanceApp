@@ -3,7 +3,6 @@ package com.example.myfinance.domain.usecase
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.data.utils.map
-import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsResult
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 class GetTransactionsForPeriodUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val getAccountIdUseCase: GetAccountIdUseCase
+    private val getAccountUseCase: GetAccountUseCase
 ) {
 
     suspend operator fun invoke(
@@ -31,12 +30,12 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
     ): NetworkResult<TransactionsResult> {
 
         // Нельзя сделать через map, так как вернёт NetworkResult<NetworkResult<...>>
-        return when (val accountIdResult = getAccountIdUseCase()) {
-            is NetworkResult.Error -> NetworkResult.Error(errorMessage = accountIdResult.errorMessage)
+        return when (val accountResult = getAccountUseCase()) {
+            is NetworkResult.Error -> NetworkResult.Error(errorMessage = accountResult.errorMessage)
 
             is NetworkResult.Success -> {
                 val transactionsResult = transactionRepository.getTransactionForPeriod(
-                    id = accountIdResult.data,
+                    id = accountResult.data.id,
                     startDate = startDate,
                     endDate = endDate
                 )
@@ -49,7 +48,7 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
                     TransactionsResult(
                         transactions = sortedTransactions,
                         transactionsSum = transactions.sumOf { it.amount },
-                        currency = transactions.firstOrNull()?.currency ?: "RUB"
+                        currency = accountResult.data.currency
                     )
                 }
             }

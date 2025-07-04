@@ -46,8 +46,7 @@ fun AccountScreen(
         when (state.screenState) {
             ScreenState.SUCCESS -> {
                 AccountContent(
-                    balance = state.account?.balance ?: 0.0,
-                    currency = state.account?.currency ?: "₽",
+                    account = state.account,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

@@ -6,6 +6,7 @@ import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.ui.common.AppListItem
+import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 
 /**
@@ -17,7 +18,7 @@ fun IncomeListItem(income: Transaction, currency: String) {
     AppListItem(
         leftTitle = income.category.name,
         leftSubtitle = income.comment,
-        rightTitle = formatNumber(income.amount, currency),
+        rightTitle = formatNumber(income.amount).addCurrency(currency),
         leftIcon = income.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,

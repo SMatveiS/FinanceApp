@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.account.screen
+package com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.bottomsheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,14 +50,3 @@ fun BottomSheetListItem(
         )
     }
 }
-
-fun getCurrencySymbol(currencyCode: String): String {
-    return when (currencyCode.uppercase()) {
-        "RUB" -> "₽"
-        "USD" -> "$"
-        "EUR" -> "€"
-        else -> currencyCode
-    }
-}
-
-// OkHttpCacheInterceptor

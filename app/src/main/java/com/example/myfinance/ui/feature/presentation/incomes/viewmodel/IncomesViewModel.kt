@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.GetTodayTransactionsUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +40,7 @@ class IncomesViewModel @Inject constructor(
 
                 when (incomesResult) {
                     is NetworkResult.Success -> {
-                        val currency = getCurrencySymbol(incomesResult.data.currency)
+                        val currency = incomesResult.data.currency
 
                         _state.update { it.copy(
                             incomes = incomesResult.data.transactions,

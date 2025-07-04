@@ -74,8 +74,6 @@ fun AppListItem(
                     leftIcon,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Clip,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier
                         .width(24.dp)

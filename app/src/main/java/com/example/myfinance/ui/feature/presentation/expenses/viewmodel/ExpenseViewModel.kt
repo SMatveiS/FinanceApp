@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.GetTodayTransactionsUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.ui.feature.presentation.account.screen.getCurrencySymbol
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +39,7 @@ class ExpenseViewModel @Inject constructor(
                 val expensesResult = getTodayTransactionsUseCase(isIncomes = false)
                 when (expensesResult) {
                     is NetworkResult.Success -> {
-                        val currency = getCurrencySymbol(expensesResult.data.currency)
+                        val currency = expensesResult.data.currency
 
                         _state.update { it.copy(
                             expenses = expensesResult.data.transactions,

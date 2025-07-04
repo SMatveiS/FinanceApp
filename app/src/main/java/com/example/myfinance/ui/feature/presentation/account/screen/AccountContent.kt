@@ -5,8 +5,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.myfinance.domain.model.Account
 import com.example.myfinance.ui.common.formatNumber
 import com.example.myfinance.ui.common.AppListItem
+import com.example.myfinance.ui.common.addCurrency
+import com.example.myfinance.ui.common.getCurrencySymbol
 
 /**
  * Контент экрана счёта
@@ -14,15 +17,14 @@ import com.example.myfinance.ui.common.AppListItem
 
 @Composable
 fun AccountContent(
-    balance: Double,
-    currency: String,
+    account: Account?,
     modifier: Modifier = Modifier
 ) {
 
     Column(modifier = modifier) {
         AppListItem(
-            leftTitle = "Баланс",
-            rightTitle = formatNumber(balance, currency),
+            leftTitle = account?.name ?: "Баланс",
+            rightTitle = formatNumber(account?.balance ?: 0.0).addCurrency(account?.currency ?: "RUB"),
             leftIcon = "\uD83D\uDCB0",
             leftIconBackground = MaterialTheme.colorScheme.background,
             listBackground = MaterialTheme.colorScheme.secondary,
@@ -33,7 +35,7 @@ fun AccountContent(
 
         AppListItem(
             leftTitle = "Валюта",
-            rightTitle = currency,
+            rightTitle = getCurrencySymbol(account?.currency ?: "RUB"),
             listBackground = MaterialTheme.colorScheme.secondary,
             listHeight = 56
         )

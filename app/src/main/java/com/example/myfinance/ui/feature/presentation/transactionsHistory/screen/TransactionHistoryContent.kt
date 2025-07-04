@@ -7,6 +7,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.myfinance.domain.model.Transaction
+import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 import java.time.LocalDate
 
@@ -32,7 +33,7 @@ fun TransactionsHistoryContent(
                 TransactionHistoryTitles(
                     startDate = startDate,
                     endDate = endDate,
-                    totalSum = formatNumber(totalSum, currency),
+                    totalSum = formatNumber(totalSum).addCurrency(currency),
                     onStartDatePickerOpen = onStartDatePickerOpen,
                     onEndDatePickerOpen = onEndDatePickerOpen
                 )

@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.account.screen
+package com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -30,7 +30,10 @@ fun EditAccountScreen(
                 title = "Мой счет",
                 rightButtonIcon = R.drawable.check,
                 rightButtonDescription = "Сохранить",
-                rightButtonAction = returnToAccountScreen,
+                rightButtonAction = {
+                    viewModel.updateAccount()
+                    returnToAccountScreen()
+                },
                 leftButtonIcon = R.drawable.close,
                 leftButtonDescription = "Отменить",
                 leftButtonAction = returnToAccountScreen
@@ -43,8 +46,10 @@ fun EditAccountScreen(
         when (state.screenState) {
             ScreenState.SUCCESS -> {
                 EditAccountContent(
-                    balance = state.account?.balance ?: 0.0,
-                    currency = state.account?.currency ?: "₽",
+                    account = state.account,
+                    onNameChanged = viewModel::updateTempName,
+                    onBalanceChanged = viewModel::updateTempBalance,
+                    onCurrencySelected = viewModel::updateTempCurrency,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

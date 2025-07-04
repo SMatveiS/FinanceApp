@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.ui.common.formatNumber
 import com.example.myfinance.ui.common.AppListItem
+import com.example.myfinance.ui.common.addCurrency
 
 /**
  * Контент экрана расходов
@@ -26,7 +27,7 @@ fun ExpensesContent(
         item {
             AppListItem(
                 leftTitle = "Всего",
-                rightTitle = formatNumber(totalSum, currency),
+                rightTitle = formatNumber(totalSum).addCurrency(currency),
                 listBackground = MaterialTheme.colorScheme.secondary,
                 listHeight = 56
             )
