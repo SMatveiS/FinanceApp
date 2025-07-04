@@ -5,6 +5,8 @@ import com.example.myfinance.domain.repository.AccountRepository
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.collections.map
@@ -19,18 +21,24 @@ class AccountRepositoryImpl @Inject constructor(
 ): AccountRepository {
 
     override suspend fun getAllAccounts(): NetworkResult<List<Account>> {
-        val accounts = safeApiCall { accountRemoteDataSource.getAllAccounts() }
+        return withContext(Dispatchers.IO) {
 
-        return accounts.map { accounts ->
-            accounts.map { it.toDomain() }
+            val accounts = safeApiCall { accountRemoteDataSource.getAllAccounts() }
+
+            accounts.map { accounts ->
+                accounts.map { it.toDomain() }
+            }
         }
     }
 
     override suspend fun updateAccount(id: Int, account: Account): NetworkResult<Account> {
-        val accounts = safeApiCall { accountRemoteDataSource.updateAccount(id, account.toDto()) }
+        return withContext(Dispatchers.IO) {
 
-        return accounts.map { account ->
-            account.toDomain()
+            val accounts = safeApiCall { accountRemoteDataSource.updateAccount(id, account.toDto()) }
+
+            accounts.map { account ->
+                account.toDomain()
+            }
         }
     }
 }
