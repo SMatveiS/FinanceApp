@@ -1,8 +1,11 @@
 package com.example.myfinance.ui.feature.presentation.category.screen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,23 +34,36 @@ fun CategoryScreen(
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->
 
-        when (state.screenState) {
-            ScreenState.SUCCESS -> {
-                CategoryContent(
-                    categories = state.categories,
-                    modifier = Modifier.padding(innerPadding)
-                )
-            }
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
 
-            ScreenState.ERROR -> {
-                ErrorState(
-                    message = state.errorMessage ?: "Неизвестная ошибка",
-                    onRetry = viewModel::getCategories,
-                    modifier = Modifier.padding(innerPadding)
-                )
-            }
+            SearchField(
+                searchText = state.searchText,
+                onSearchTextChanged = viewModel::onSearchTextChanged
+            )
 
-            ScreenState.LOADING -> LoadingState(modifier = Modifier.padding(innerPadding))
+            HorizontalDivider()
+
+            when (state.screenState) {
+                ScreenState.SUCCESS -> {
+                    CategoryContent(
+                        categories = state.categories
+                    )
+                }
+
+                ScreenState.ERROR -> {
+                    ErrorState(
+                        message = state.errorMessage ?: "Неизвестная ошибка",
+                        onRetry = viewModel::getCategories,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+
+                ScreenState.LOADING -> LoadingState(modifier = Modifier.padding(innerPadding))
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import com.example.myfinance.ui.feature.presentation.ScreenState
 
 data class CategoryState(
     val categories: List<Category> = emptyList(),
+    val searchText: String = "",
     val screenState: ScreenState = ScreenState.LOADING,
     val errorMessage: String? = null
 )

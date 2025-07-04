@@ -25,7 +25,11 @@ import com.example.myfinance.R
  */
 
 @Composable
-fun SearchField() {
+fun SearchField(
+    searchText: String,
+    onSearchTextChanged: (String) -> Unit
+) {
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -35,8 +39,10 @@ fun SearchField() {
             .padding(start = 4.dp)
     ) {
         TextField(
-            value = "",
-            onValueChange = {},
+            value = searchText,
+            onValueChange = { newValue ->
+                onSearchTextChanged(newValue)
+            },
             placeholder = {
                 Text(
                     "Найти статью",
