@@ -1,5 +1,6 @@
 package com.example.myfinance.data.model
 
+import com.example.myfinance.domain.model.Account
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,4 +24,12 @@ data class AccountDto(
     val createdAt: String = "",
     @SerialName("updatedAt")
     val updatedAt: String = ""
-)
+) {
+
+    fun toDomain() = Account(
+        id = id,
+        name = name,
+        balance = balance.toDouble(),
+        currency = currency
+    )
+}

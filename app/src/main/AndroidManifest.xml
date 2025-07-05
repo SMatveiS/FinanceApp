@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".feature.di.FinApp"
+        android:name=".app.FinApp"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"

@@ -1,7 +1,12 @@
 package com.example.myfinance.data.api.category
 
-import com.example.myfinance.feature.domain.repository.CategoryRepository
-import com.example.myfinance.feature.utils.BaseApiResponse
+import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.data.utils.map
+import com.example.myfinance.domain.repository.CategoryRepository
+import com.example.myfinance.data.utils.safeApiCall
+import com.example.myfinance.domain.model.Category
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -10,12 +15,29 @@ import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val categoryRemoteDataSource: CategoryRemoteDataSource
-): CategoryRepository, BaseApiResponse() {
+): CategoryRepository {
 
-    override suspend fun getAllCategories() =
-        categoryRemoteDataSource.getAllCategories()
+    override suspend fun getAllCategories(): NetworkResult<List<Category>> {
+        return withContext(Dispatchers.IO) {
 
-    override suspend fun getCategoryByType(isIncome: Boolean) =
-        categoryRemoteDataSource.getCategoryByType(isIncome = isIncome)
+            val categories = safeApiCall { categoryRemoteDataSource.getAllCategories() }
 
+            categories.map { category ->
+                category.map { it.toDomain() }
+            }
+        }
+    }
+
+    override suspend fun getCategoryByType(isIncome: Boolean): NetworkResult<List<Category>> {
+        return withContext(Dispatchers.IO) {
+
+            val categories = safeApiCall {
+                categoryRemoteDataSource.getCategoryByType(isIncome = isIncome)
+            }
+
+            categories.map { category ->
+                category.map { it.toDomain() }
+            }
+        }
+    }
 }
