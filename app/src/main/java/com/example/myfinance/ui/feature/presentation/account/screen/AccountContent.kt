@@ -19,7 +19,7 @@ fun AccountContent(
 
     Column(modifier = modifier) {
         AppListItem(
-            leftTitle = account?.name ?: "Баланс",
+            leftTitle = account?.name ?: "Счёт",
             rightTitle = formatNumber(account?.balance ?: 0.0).addCurrency(account?.currency ?: "RUB"),
             leftIcon = "\uD83D\uDCB0",
             leftIconBackground = MaterialTheme.colorScheme.background,

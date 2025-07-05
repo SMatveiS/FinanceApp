@@ -36,7 +36,7 @@ fun EditAccountContent(
 
         EditTextListItem(
             leftTitle = "Название счёта",
-            editTextInitialValue = account?.name ?: "Баланс",
+            editTextInitialValue = account?.name ?: "Счёт",
             onValueChange = onNameChanged,
             emoji = "\uD83D\uDCB0"
         )
