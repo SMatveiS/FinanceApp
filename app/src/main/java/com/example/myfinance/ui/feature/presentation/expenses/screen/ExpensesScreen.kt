@@ -17,12 +17,6 @@ import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 
-/**
- * Экран расходов
- *
- * В зависимости от состояния данных показывает соответствующий экран
- */
-
 @Composable
 fun ExpensesScreen(
     viewModel: ExpenseViewModel = hiltViewModel(),

@@ -9,10 +9,6 @@ import com.example.myfinance.ui.common.AppListItem
 import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 
-/**
- * Элемент списка истории транзакций
- */
-
 @Composable
 fun TransactionListItem(transaction: Transaction, currency: String) {
     AppListItem(

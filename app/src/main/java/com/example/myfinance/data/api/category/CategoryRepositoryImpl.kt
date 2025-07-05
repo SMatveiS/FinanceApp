@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 /**
  * Возвращает информацию о категориях внутри NetworkResult независимо от источника
  */

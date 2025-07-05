@@ -18,10 +18,6 @@ import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.category.viewmodel.CategoryViewModel
 
-/**
- * Экран статей
- */
-
 @Composable
 fun CategoryScreen(
     viewModel: CategoryViewModel = hiltViewModel()

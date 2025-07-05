@@ -20,10 +20,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.myfinance.R
 
-/**
- * Поисковая строка для экрана статей
- */
-
 @Composable
 fun SearchField(
     searchText: String,

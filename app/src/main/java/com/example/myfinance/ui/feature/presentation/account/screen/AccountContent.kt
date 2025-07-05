@@ -11,10 +11,6 @@ import com.example.myfinance.ui.common.AppListItem
 import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.getCurrencySymbol
 
-/**
- * Контент экрана счёта
- */
-
 @Composable
 fun AccountContent(
     account: Account?,

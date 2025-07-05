@@ -3,7 +3,7 @@ package com.example.myfinance.data.utils
 import retrofit2.Response
 
 /**
- * Абстрактный класс с функцией безопасного похода в сеть
+ * Функциея безопасного похода в сеть
  *
  * Возвращает NetworkResult.Error(errorMessage) в случае ошибки, иначе - NetworkResult.Success(data)
  */

@@ -11,10 +11,6 @@ import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 import java.time.LocalDate
 
-/**
- * Контент экрана истории транзакций
- */
-
 @Composable
 fun TransactionsHistoryContent(
     transactions: List<Transaction>,

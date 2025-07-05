@@ -15,6 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Хранит состояние экрана статей
+ */
+
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,

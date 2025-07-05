@@ -11,10 +11,6 @@ import com.example.myfinance.ui.common.formatNumber
 import com.example.myfinance.ui.common.AppListItem
 import com.example.myfinance.ui.common.addCurrency
 
-/**
- * Контент экрана доходов
- */
-
 @Composable
 fun IncomesContent(
     incomes: List<Transaction>,

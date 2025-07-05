@@ -4,6 +4,10 @@ import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository
 import javax.inject.Inject
 
+/**
+ * Обновляет данные о счёте
+ */
+
 class UpdateAccountUseCase @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
