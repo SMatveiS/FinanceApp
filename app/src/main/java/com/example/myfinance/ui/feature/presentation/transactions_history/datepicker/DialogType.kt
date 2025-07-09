@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker
+package com.example.myfinance.ui.feature.presentation.transactions_history.datepicker
 
 /**
  * START_DATE - пользователь хочет изменить дату начала периода в календаре

@@ -9,10 +9,11 @@ import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
 import com.example.myfinance.ui.feature.presentation.category.screen.CategoryScreen
+import com.example.myfinance.ui.feature.presentation.change_transaction.screen.ChangeTransactionScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
 import com.example.myfinance.ui.feature.presentation.settings.SettingsScreen
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.screen.TransactionsHistoryScreen
+import com.example.myfinance.ui.feature.presentation.transactions_history.screen.TransactionsHistoryScreen
 
 @Composable
 fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -22,14 +23,22 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
             ExpensesScreen(
                 onHistoryClicked = {
                     navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Expenses.route}")
-                }
+                },
+
+                onFabClicked = {
+                    navController.navigate("${NavRoutes.ChangeTransaction.route}/${NavRoutes.Expenses.route}")
+                },
             ) }
 
         composable(NavRoutes.Incomes.route) { backStackEntry ->
             IncomesScreen(
                 onHistoryClicked = {
                     navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Incomes.route}")
-                }
+                },
+
+                onFabClicked = {
+                    navController.navigate("${NavRoutes.ChangeTransaction.route}/${NavRoutes.Incomes.route}")
+                },
             ) }
 
         composable(NavRoutes.Account.route) {
@@ -59,5 +68,16 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
                     navController.navigate(source)
                 }
             ) }
+
+        composable(
+            NavRoutes.ChangeTransaction.route + "/{source}"
+        ) { backStackEntry ->
+            val source = backStackEntry.arguments?.getString("source") ?: NavRoutes.Expenses.route
+            ChangeTransactionScreen(
+                 returnToPreviousScreen = {
+                    navController.navigate(source)
+                }
+            )
+        }
     }
 }

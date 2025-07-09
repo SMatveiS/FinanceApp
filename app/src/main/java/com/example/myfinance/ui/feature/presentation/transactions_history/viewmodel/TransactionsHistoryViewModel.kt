@@ -1,14 +1,13 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel
+package com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.GetTransactionsForPeriodUseCase
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker.DialogType
+import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
+import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,6 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 /**
  * Хранит состояние экрана истории транзакций

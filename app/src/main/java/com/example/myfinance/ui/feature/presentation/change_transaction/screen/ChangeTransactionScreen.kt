@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen
+package com.example.myfinance.ui.feature.presentation.change_transaction.screen
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -14,12 +14,12 @@ import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountViewModel
+import com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel.ChangeTransactionViewModel
 
 @Composable
-fun EditAccountScreen(
-    viewModel: AccountViewModel = hiltViewModel(),
-    returnToAccountScreen: () -> Unit
+fun ChangeTransactionScreen(
+    viewModel: ChangeTransactionViewModel = hiltViewModel(),
+    returnToPreviousScreen: () -> Unit,
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -27,16 +27,16 @@ fun EditAccountScreen(
     Scaffold(
         topBar = {
             AppTopBar(
-                title = "Мой счет",
+                title = "Мои расходы/доходы",
                 rightButtonIcon = R.drawable.confirm,
                 rightButtonDescription = "Сохранить",
                 rightButtonAction = {
-                    viewModel.updateAccount()
-                    returnToAccountScreen()
+                    // TODO: add or update transaction
+                    returnToPreviousScreen()
                 },
                 leftButtonIcon = R.drawable.cancel,
                 leftButtonDescription = "Отменить",
-                leftButtonAction = returnToAccountScreen
+                leftButtonAction = returnToPreviousScreen
             )
         },
 
@@ -45,11 +45,8 @@ fun EditAccountScreen(
 
         when (state.screenState) {
             ScreenState.SUCCESS -> {
-                EditAccountContent(
-                    account = state.account,
-                    onNameChanged = viewModel::updateTempName,
-                    onBalanceChanged = viewModel::updateTempBalance,
-                    onCurrencySelected = viewModel::updateTempCurrency,
+                ChangeTransactionContent(
+                    transaction = state.transaction,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
@@ -57,7 +54,7 @@ fun EditAccountScreen(
             ScreenState.ERROR -> {
                 ErrorState(
                     message = state.errorMessage ?: "Неизвестная ошибка",
-                    onRetry = viewModel::getAccount,
+                    onRetry = viewModel::getTransaction,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

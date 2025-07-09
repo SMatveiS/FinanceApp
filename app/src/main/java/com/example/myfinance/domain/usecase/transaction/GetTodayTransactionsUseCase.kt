@@ -1,7 +1,7 @@
-package com.example.myfinance.domain.usecase
+package com.example.myfinance.domain.usecase.transaction
 
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsResult
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsResult
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject

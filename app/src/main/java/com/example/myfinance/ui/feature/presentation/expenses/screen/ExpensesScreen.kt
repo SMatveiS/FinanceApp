@@ -20,7 +20,8 @@ import com.example.myfinance.ui.common.LoadingState
 @Composable
 fun ExpensesScreen(
     viewModel: ExpenseViewModel = hiltViewModel(),
-    onHistoryClicked: () -> Unit
+    onHistoryClicked: () -> Unit,
+    onFabClicked: () -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -34,7 +35,7 @@ fun ExpensesScreen(
                 rightButtonAction = onHistoryClicked
             ) },
 
-        floatingActionButton = { AppFAB() },
+        floatingActionButton = { AppFAB(onClick = onFabClicked) },
 
         contentWindowInsets = WindowInsets.statusBars
     ) { innerPadding ->

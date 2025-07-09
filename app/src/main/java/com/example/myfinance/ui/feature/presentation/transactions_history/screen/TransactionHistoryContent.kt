@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.screen
+package com.example.myfinance.ui.feature.presentation.transactions_history.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn

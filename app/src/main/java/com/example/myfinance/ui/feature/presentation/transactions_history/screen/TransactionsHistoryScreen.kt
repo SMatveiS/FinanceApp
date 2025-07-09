@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.screen
+package com.example.myfinance.ui.feature.presentation.transactions_history.screen
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -11,8 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker.OpenDatePicker
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsHistoryViewModel
+import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.OpenDatePicker
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState

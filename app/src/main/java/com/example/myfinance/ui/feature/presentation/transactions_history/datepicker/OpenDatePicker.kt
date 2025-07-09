@@ -1,8 +1,8 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker
+package com.example.myfinance.ui.feature.presentation.transactions_history.datepicker
 
 import androidx.compose.runtime.Composable
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsHistoryViewModel
-import com.example.myfinance.ui.feature.presentation.transactionsHistory.viewmodel.TransactionsState
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsState
 import java.time.ZoneId
 
 /**

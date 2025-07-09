@@ -1,4 +1,4 @@
-package com.example.myfinance.domain.usecase
+package com.example.myfinance.domain.usecase.account
 
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository

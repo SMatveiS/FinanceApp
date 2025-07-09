@@ -1,4 +1,4 @@
-package com.example.myfinance.domain.usecase
+package com.example.myfinance.domain.usecase.category
 
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.data.utils.map

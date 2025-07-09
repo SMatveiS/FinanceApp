@@ -3,17 +3,17 @@ package com.example.myfinance.ui.feature.presentation.category.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.domain.usecase.GetAllCategoriesUseCase
-import com.example.myfinance.domain.usecase.GetCategoriesWithSubstringUseCase
+import com.example.myfinance.domain.usecase.category.GetAllCategoriesUseCase
+import com.example.myfinance.domain.usecase.category.GetCategoriesWithSubstringUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Хранит состояние экрана статей

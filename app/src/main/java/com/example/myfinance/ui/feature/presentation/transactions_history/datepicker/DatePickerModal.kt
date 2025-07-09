@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.transactionsHistory.datepicker
+package com.example.myfinance.ui.feature.presentation.transactions_history.datepicker
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog

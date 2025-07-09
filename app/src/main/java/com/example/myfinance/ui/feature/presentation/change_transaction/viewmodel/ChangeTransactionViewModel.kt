@@ -1,11 +1,12 @@
-package com.example.myfinance.ui.feature.presentation.account.viewmodel
+package com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.account.GetAccountUseCase
-import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.domain.usecase.account.UpdateAccountUseCase
+import com.example.myfinance.domain.usecase.transaction.AddTransactionUseCase
+import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCase
+import com.example.myfinance.domain.usecase.transaction.UpdateTransactionUseCase
+import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,24 +14,23 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * Хранит состояние экрана счёта
- */
-
 @HiltViewModel
-class AccountViewModel @Inject constructor(
-    private val getAccountUseCase: GetAccountUseCase,
-    private val updateAccountUseCase: UpdateAccountUseCase
-) : ViewModel() {
+class ChangeTransactionViewModel @Inject constructor(
+    private val getTransactionByIdUseCase: GetTransactionByIdUseCase,
+    private val addTransactionUseCase: AddTransactionUseCase,
+    private val updateTransactionUseCase: UpdateTransactionUseCase,
+): ViewModel() {
 
-    private val _state = MutableStateFlow<AccountState>(AccountState())
+    private val _state = MutableStateFlow(ChangeTransactionState())
     val state = _state.asStateFlow()
 
+    val id = 9
+
     init {
-        getAccount()
+        getTransaction()
     }
 
-    fun getAccount() {
+    fun getTransaction() {
         viewModelScope.launch {
             _state.update { it.copy(
                 screenState = ScreenState.LOADING,
@@ -38,11 +38,13 @@ class AccountViewModel @Inject constructor(
             ) }
 
             try {
-                val accountResult = getAccountUseCase()
-                when (accountResult) {
+                val transactionResult = getTransactionByIdUseCase(id = id)
+
+                when (transactionResult) {
                     is NetworkResult.Success -> {
+
                         _state.update { it.copy(
-                            account = accountResult.data,
+                            transaction = transactionResult.data,
                             screenState = ScreenState.SUCCESS
                         ) }
                     }
@@ -50,7 +52,7 @@ class AccountViewModel @Inject constructor(
                     is NetworkResult.Error -> {
                         _state.update {
                             it.copy(
-                                errorMessage = accountResult.errorMessage,
+                                errorMessage = transactionResult.errorMessage,
                                 screenState = ScreenState.ERROR
                             )
                         }
@@ -65,30 +67,27 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun updateTempName(name: String) {
-        _state.update { it.copy(
-            account = it.account?.copy(name = name)
-        ) }
-    }
-
-    fun updateTempBalance(balance: Double) {
-        _state.update { it.copy(
-            account = it.account?.copy(balance = balance)
-        ) }
-    }
-
-    fun updateTempCurrency(currency: String) {
-        _state.update { it.copy(
-            account = it.account?.copy(currency = currency)
-        ) }
-    }
-
-    fun updateAccount() {
+    fun addTransaction() {
         viewModelScope.launch {
-            val account = state.value.account ?: return@launch
+            val transaction = state.value.transaction ?: return@launch
 
             try {
-                updateAccountUseCase(account)
+                addTransactionUseCase(transaction)
+            } catch (e: Exception) {
+                _state.update { it.copy(
+                    errorMessage = "Ошибка сохранения: ${e.localizedMessage}",
+                    screenState = ScreenState.ERROR
+                ) }
+            }
+        }
+    }
+
+    fun updateTransaction() {
+        viewModelScope.launch {
+            val transaction = state.value.transaction ?: return@launch
+
+            try {
+                updateTransactionUseCase(transaction)
             } catch (e: Exception) {
                 _state.update { it.copy(
                     errorMessage = "Ошибка сохранения: ${e.localizedMessage}",

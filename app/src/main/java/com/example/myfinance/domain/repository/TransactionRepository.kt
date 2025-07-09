@@ -1,9 +1,7 @@
 package com.example.myfinance.domain.repository
 
-import com.example.myfinance.data.model.TransactionDto
-import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.data.utils.NetworkResult
-import retrofit2.Response
+import com.example.myfinance.domain.model.Transaction
 
 /**
  * Интерфейс репозитория транзакций для доменного слоя
@@ -11,13 +9,13 @@ import retrofit2.Response
 
 interface TransactionRepository {
 
-    suspend fun getTransaction(id: Int): Response<TransactionDto>
+    suspend fun getTransaction(id: Int): NetworkResult<Transaction>
 
-    suspend fun addTransaction(transaction: TransactionDto): Response<TransactionDto>
+    suspend fun addTransaction(transaction: Transaction): NetworkResult<Transaction>
 
-    suspend fun updateTransaction(id: Int, transaction: TransactionDto): Response<TransactionDto>
+    suspend fun updateTransaction(id: Int, transaction: Transaction): NetworkResult<Transaction>
 
-    suspend fun deleteTransaction(id: Int): Response<TransactionDto>
+    suspend fun deleteTransaction(id: Int): NetworkResult<Transaction>
 
     suspend fun getTransactionForPeriod(
         id: Int,

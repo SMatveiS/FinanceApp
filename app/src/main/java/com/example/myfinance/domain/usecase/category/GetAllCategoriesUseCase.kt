@@ -1,4 +1,4 @@
-package com.example.myfinance.domain.usecase
+package com.example.myfinance.domain.usecase.category
 
 import com.example.myfinance.domain.repository.CategoryRepository
 import javax.inject.Inject

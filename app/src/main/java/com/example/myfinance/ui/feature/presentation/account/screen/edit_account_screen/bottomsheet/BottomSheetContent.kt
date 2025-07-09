@@ -49,7 +49,7 @@ fun BottomSheetContent(
 
         BottomSheetListItem(
             title = "Отмена",
-            icon = ImageVector.vectorResource(R.drawable.cancel_icon),
+            icon = ImageVector.vectorResource(R.drawable.cancel_with_circle),
             textColor = MaterialTheme.colorScheme.onError,
             listBackground = MaterialTheme.colorScheme.error,
             onClick = onDismiss

@@ -1,6 +1,5 @@
 package com.example.myfinance.data.api.transaction
 
-import com.example.myfinance.data.model.TransactionDto
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.data.utils.NetworkResult
@@ -18,24 +17,52 @@ class TransactionRepositoryImpl @Inject constructor(
     private val transactionRemoteDataSource: TransactionRemoteDataSource
 ): TransactionRepository {
 
-    override suspend fun getTransaction(id: Int) = withContext(Dispatchers.IO) {
-        transactionRemoteDataSource.getTransaction(id = id)
+    override suspend fun getTransaction(id: Int): NetworkResult<Transaction> {
+        return withContext(Dispatchers.IO) {
+
+            val transaction = safeApiCall { transactionRemoteDataSource.getTransaction(id = id) }
+
+            transaction.map { it.toDomain() }
+        }
+
     }
 
-    override suspend fun addTransaction(transaction: TransactionDto) = withContext(Dispatchers.IO) {
-        transactionRemoteDataSource.addTransaction(transaction = transaction)
+    override suspend fun addTransaction(transaction: Transaction): NetworkResult<Transaction> {
+        return withContext(Dispatchers.IO) {
+
+            val transaction = safeApiCall {
+                transactionRemoteDataSource.addTransaction(transaction = transaction.toDto())
+            }
+
+            transaction.map { it.toDomain() }
+        }
+
     }
 
     override suspend fun updateTransaction(
         id: Int,
-        transaction: TransactionDto
-    ) = withContext(Dispatchers.IO) {
+        transaction: Transaction
+    ): NetworkResult<Transaction> {
 
-        transactionRemoteDataSource.updateTransaction(id = id, transaction = transaction)
+        return withContext(Dispatchers.IO) {
+
+            val transaction = safeApiCall {
+                transactionRemoteDataSource.updateTransaction(id = id, transaction = transaction.toDto())
+            }
+
+            transaction.map { it.toDomain() }
+        }
     }
 
-    override suspend fun deleteTransaction(id: Int) = withContext(Dispatchers.IO) {
-        transactionRemoteDataSource.deleteTransaction(id = id)
+    override suspend fun deleteTransaction(id: Int): NetworkResult<Transaction> {
+        return withContext(Dispatchers.IO) {
+
+            val transaction = safeApiCall {
+                transactionRemoteDataSource.deleteTransaction(id = id)
+            }
+
+            transaction.map { it.toDomain() }
+        }
     }
 
     override suspend fun getTransactionForPeriod(
