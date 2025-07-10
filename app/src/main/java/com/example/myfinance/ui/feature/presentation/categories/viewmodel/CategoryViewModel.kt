@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.category.viewmodel
+package com.example.myfinance.ui.feature.presentation.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

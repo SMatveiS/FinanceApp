@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.category.screen
+package com.example.myfinance.ui.feature.presentation.categories.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -17,7 +17,7 @@ import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.category.viewmodel.CategoryViewModel
+import com.example.myfinance.ui.feature.presentation.categories.viewmodel.CategoryViewModel
 
 @Composable
 fun CategoryScreen() {

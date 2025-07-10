@@ -29,7 +29,6 @@ fun FinappNavBar(navController: NavHostController) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val source = navBackStackEntry?.arguments?.getString("source")
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -52,14 +51,15 @@ fun FinappNavBar(navController: NavHostController) {
                     unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     indicatorColor = MaterialTheme.colorScheme.secondary    // Фон выбранного элемента
                 ),
-                selected = currentDestination?.hierarchy?.any {
-                    it.route == navItem.route || navItem.route == source
+                selected = currentDestination?.hierarchy?.any { destination ->
+                    destination.route?.contains(navItem.route::class.simpleName!!, ignoreCase = true) == true
                 } == true,
                 onClick = {
-                    if (navItem.route != currentDestination?.route) {
-                        navController.navigate(navItem.route) {
-                            popUpTo(navController.graph.findStartDestination().id)
+                    navController.navigate(navItem.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
                         }
+                        launchSingleTop = true
                     }
                 }
             )

@@ -1,16 +1,24 @@
 package com.example.myfinance.ui.navigation
 
+import kotlinx.serialization.Serializable
+
 /**
  * Хранит маршруты для навигации
  */
 
-sealed class NavRoutes(val route: String) {
-    object Expenses : NavRoutes("expenses")
-    object Incomes : NavRoutes("incomes")
-    object Account : NavRoutes("account")
-    object EditAccount : NavRoutes("edit_account")
-    object Articles : NavRoutes("articles")
-    object Settings : NavRoutes("settings")
-    object TransactionsHistory : NavRoutes("history")
-    object ChangeTransaction : NavRoutes("change_transaction")
+sealed class NavRoutes {
+    @Serializable object Expenses
+    @Serializable object Incomes
+    @Serializable object Account
+
+
+    @Serializable object Transactions
+    @Serializable object AccountStatistic
+    @Serializable object EditAccount
+    @Serializable object Categories
+    @Serializable object Settings
+    @Serializable object TransactionsHistory
+    @Serializable object ChangeTransaction
 }
+
+

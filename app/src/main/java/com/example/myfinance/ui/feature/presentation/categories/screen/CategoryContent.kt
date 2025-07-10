@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.category.screen
+package com.example.myfinance.ui.feature.presentation.categories.screen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize

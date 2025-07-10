@@ -5,10 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
-import com.example.myfinance.ui.feature.presentation.category.screen.CategoryScreen
+import com.example.myfinance.ui.feature.presentation.categories.screen.CategoryScreen
 import com.example.myfinance.ui.feature.presentation.change_transaction.screen.ChangeTransactionScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
@@ -17,67 +18,88 @@ import com.example.myfinance.ui.feature.presentation.transactions_history.screen
 
 @Composable
 fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
-    NavHost(navController, startDestination = NavRoutes.Expenses.route, modifier = modifier) {
+    NavHost(navController, startDestination = NavRoutes.Expenses, modifier = modifier) {
 
-        composable(NavRoutes.Expenses.route) { backStackEntry ->
-            ExpensesScreen(
-                onHistoryClicked = {
-                    navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Expenses.route}")
-                },
+        navigation<NavRoutes.Expenses>(startDestination = NavRoutes.Transactions) {
+            composable<NavRoutes.Transactions> { backStackEntry ->
+                ExpensesScreen(
+                    onHistoryClicked = {
+                        navController.navigate(route = NavRoutes.TransactionsHistory)
+                    },
 
-                onFabClicked = {
-                    navController.navigate("${NavRoutes.ChangeTransaction.route}/${NavRoutes.Expenses.route}")
-                },
-            ) }
+                    onFabClicked = {
+                        navController.navigate(route = NavRoutes.ChangeTransaction)
+                    },
+                )
+            }
 
-        composable(NavRoutes.Incomes.route) { backStackEntry ->
-            IncomesScreen(
-                onHistoryClicked = {
-                    navController.navigate("${NavRoutes.TransactionsHistory.route}/${NavRoutes.Incomes.route}")
-                },
+            composable<NavRoutes.TransactionsHistory> { backStackEntry ->
+                TransactionsHistoryScreen(
+                    onBackArrowClicked = {
+                        navController.navigate(route = NavRoutes.Transactions)
+                    }
+                )
+            }
 
-                onFabClicked = {
-                    navController.navigate("${NavRoutes.ChangeTransaction.route}/${NavRoutes.Incomes.route}")
-                },
-            ) }
-
-        composable(NavRoutes.Account.route) {
-            AccountScreen(
-                onEditAccountClicked = {
-                    navController.navigate("${NavRoutes.EditAccount.route}/${NavRoutes.Account.route}")
-                }
-            ) }
-
-        composable(
-            NavRoutes.EditAccount.route + "/{source}"
-        ) {
-            EditAccountScreen(
-                returnToAccountScreen = { navController.navigate(NavRoutes.Account.route)}
-            ) }
-
-        composable(NavRoutes.Articles.route) { CategoryScreen() }
-
-        composable(NavRoutes.Settings.route) { SettingsScreen(settings) }
-
-        composable(
-            NavRoutes.TransactionsHistory.route + "/{source}"
-        ) { backStackEntry ->
-            val source = backStackEntry.arguments?.getString("source") ?: NavRoutes.Expenses.route
-            TransactionsHistoryScreen(
-                onBackArrowClicked = {
-                    navController.navigate(source)
-                }
-            ) }
-
-        composable(
-            NavRoutes.ChangeTransaction.route + "/{source}"
-        ) { backStackEntry ->
-            val source = backStackEntry.arguments?.getString("source") ?: NavRoutes.Expenses.route
-            ChangeTransactionScreen(
-                 returnToPreviousScreen = {
-                    navController.navigate(source)
-                }
-            )
+            composable<NavRoutes.ChangeTransaction> { backStackEntry ->
+                ChangeTransactionScreen(
+                    returnToPreviousScreen = {
+                        navController.navigate(route = NavRoutes.Transactions)
+                    }
+                )
+            }
         }
+
+        navigation<NavRoutes.Incomes>(startDestination = NavRoutes.Transactions) {
+            composable<NavRoutes.Transactions> { backStackEntry ->
+                IncomesScreen (
+                    onHistoryClicked = {
+                        navController.navigate(route = NavRoutes.TransactionsHistory)
+                    },
+
+                    onFabClicked = {
+                        navController.navigate(route = NavRoutes.ChangeTransaction)
+                    },
+                )
+            }
+
+            composable<NavRoutes.TransactionsHistory> { backStackEntry ->
+                TransactionsHistoryScreen(
+                    onBackArrowClicked = {
+                        navController.navigate(route = NavRoutes.Transactions)
+                    }
+                )
+            }
+
+            composable<NavRoutes.ChangeTransaction> { backStackEntry ->
+                ChangeTransactionScreen(
+                    returnToPreviousScreen = {
+                        navController.navigate(route = NavRoutes.Transactions)
+                    }
+                )
+            }
+        }
+
+        navigation<NavRoutes.Account>(startDestination = NavRoutes.AccountStatistic) {
+            composable<NavRoutes.AccountStatistic> {
+                AccountScreen(
+                    onEditAccountClicked = {
+                        navController.navigate(route = NavRoutes.EditAccount)
+                    }
+                )
+            }
+
+            composable<NavRoutes.EditAccount> {
+                EditAccountScreen(
+                    returnToAccountScreen = { navController.navigate(route = NavRoutes.Account) }
+                )
+            }
+        }
+
+
+        composable<NavRoutes.Categories> { CategoryScreen() }
+
+        composable<NavRoutes.Settings> { SettingsScreen(settings) }
+
     }
 }

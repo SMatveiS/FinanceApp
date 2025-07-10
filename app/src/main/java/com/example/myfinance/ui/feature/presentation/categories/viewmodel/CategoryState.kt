@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.category.viewmodel
+package com.example.myfinance.ui.feature.presentation.categories.viewmodel
 
 import com.example.myfinance.domain.model.Category
 import com.example.myfinance.ui.feature.presentation.ScreenState
