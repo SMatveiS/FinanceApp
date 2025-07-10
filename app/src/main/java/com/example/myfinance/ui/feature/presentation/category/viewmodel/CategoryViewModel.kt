@@ -6,7 +6,6 @@ import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.category.GetAllCategoriesUseCase
 import com.example.myfinance.domain.usecase.category.GetCategoriesWithSubstringUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,6 @@ import javax.inject.Inject
  * Хранит состояние экрана статей
  */
 
-@HiltViewModel
 class CategoryViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoriesWithSubstringUseCase: GetCategoriesWithSubstringUseCase

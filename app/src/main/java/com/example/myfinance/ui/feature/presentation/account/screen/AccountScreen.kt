@@ -7,9 +7,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
+import com.example.myfinance.app.LocalViewModelFactory
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountViewModel
 import com.example.myfinance.ui.common.AppTopBar
@@ -18,9 +19,10 @@ import com.example.myfinance.ui.common.LoadingState
 
 @Composable
 fun AccountScreen(
-    viewModel: AccountViewModel = hiltViewModel(),
     onEditAccountClicked: () -> Unit
 ) {
+
+    val viewModel: AccountViewModel = viewModel(factory = LocalViewModelFactory.current)
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

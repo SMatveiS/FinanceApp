@@ -6,12 +6,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android)
+//    alias(libs.plugins.hilt.android)
 }
 
-hilt {
-    enableAggregatingTask = false
-}
+//hilt {
+//    enableAggregatingTask = false
+//}
 
 android {
     namespace = "com.example.myfinance"
@@ -77,11 +77,11 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
-    //implementation(libs.dagger)
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    //ksp(libs.dagger.compiler)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.dagger)
+//    implementation(libs.hilt.android)
+//    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.dagger.compiler)
+//    ksp(libs.hilt.android.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

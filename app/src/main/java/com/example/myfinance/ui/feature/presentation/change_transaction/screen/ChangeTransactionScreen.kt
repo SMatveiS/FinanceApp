@@ -7,9 +7,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
+import com.example.myfinance.app.LocalViewModelFactory
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
@@ -18,9 +19,10 @@ import com.example.myfinance.ui.feature.presentation.change_transaction.viewmode
 
 @Composable
 fun ChangeTransactionScreen(
-    viewModel: ChangeTransactionViewModel = hiltViewModel(),
     returnToPreviousScreen: () -> Unit,
 ) {
+
+    val viewModel: ChangeTransactionViewModel = viewModel(factory = LocalViewModelFactory.current)
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

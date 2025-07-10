@@ -8,15 +8,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.ui.common.navbar.FinappNavBar
 import com.example.myfinance.ui.navigation.FinappNavHost
 import com.example.myfinance.ui.theme.MyFinanceTheme
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +29,13 @@ class MainActivity : ComponentActivity() {
                     contentWindowInsets = WindowInsets(0.dp),
                     bottomBar = { FinappNavBar(navController) }
                 ) { innerPadding ->
-                    FinappNavHost(
-                        navController,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+                    CompositionLocalProvider(LocalViewModelFactory provides appComponent.viewModelProviderFactory()) {
+                        FinappNavHost(
+                            navController,
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
         }

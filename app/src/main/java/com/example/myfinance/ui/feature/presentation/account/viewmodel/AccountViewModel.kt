@@ -6,7 +6,6 @@ import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.account.UpdateAccountUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,7 +16,6 @@ import javax.inject.Inject
  * Хранит состояние экрана счёта
  */
 
-@HiltViewModel
 class AccountViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val updateAccountUseCase: UpdateAccountUseCase

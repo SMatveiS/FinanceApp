@@ -1,13 +1,11 @@
 package com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
-import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
 import com.example.myfinance.data.utils.NetworkResult
+import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,16 +19,16 @@ import javax.inject.Inject
  * Хранит состояние экрана истории транзакций
  */
 
-@HiltViewModel
 class TransactionsHistoryViewModel @Inject constructor(
     private val getTransactionsForPeriodUseCase: GetTransactionsForPeriodUseCase,
-    savedStateHandle: SavedStateHandle
+    //@Assisted savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val _state = MutableStateFlow(TransactionsState())
     val state = _state.asStateFlow()
 
-    private val isIncomes: Boolean = savedStateHandle.get<String>("source") != "expenses"
+    private val isIncomes: Boolean = true
+//        savedStateHandle.get<String>("source") != "expenses"
 
     init {
         getTransactions()

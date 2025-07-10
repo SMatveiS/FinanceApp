@@ -7,14 +7,12 @@ import com.example.myfinance.domain.usecase.transaction.AddTransactionUseCase
 import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCase
 import com.example.myfinance.domain.usecase.transaction.UpdateTransactionUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class ChangeTransactionViewModel @Inject constructor(
     private val getTransactionByIdUseCase: GetTransactionByIdUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,

@@ -1,4 +1,4 @@
-package com.example.myfinance.di
+package com.example.myfinance.di.module
 
 import com.example.myfinance.BuildConfig
 import com.example.myfinance.data.api.account.AccountApi
@@ -6,8 +6,6 @@ import com.example.myfinance.data.api.category.CategoryApi
 import com.example.myfinance.data.api.transaction.TransactionApi
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -22,7 +20,6 @@ import javax.inject.Singleton
  */
 
 @Module
-@InstallIn(SingletonComponent::class)
 object ApiModule {
 
     @Provides
