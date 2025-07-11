@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myfinance.di.module.ApiModule
 import com.example.myfinance.di.module.AppModule
 import com.example.myfinance.di.module.RepositoryModule
+import com.example.myfinance.di.module.viewmodel.AssistedTransactionsHistoryFactory
 import com.example.myfinance.di.module.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -20,6 +21,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun viewModelProviderFactory(): ViewModelProvider.Factory
+    fun assistedTransactionsHistoryFactory(): AssistedTransactionsHistoryFactory
 
     @Component.Factory
     interface Factory {

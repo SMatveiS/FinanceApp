@@ -7,7 +7,6 @@ import com.example.myfinance.ui.feature.presentation.categories.viewmodel.Catego
 import com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel.ChangeTransactionViewModel
 import com.example.myfinance.ui.feature.presentation.expenses.viewmodel.ExpenseViewModel
 import com.example.myfinance.ui.feature.presentation.incomes.viewmodel.IncomesViewModel
-import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -16,36 +15,32 @@ import dagger.multibindings.IntoMap
 interface ViewModelModule {
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @ViewModelKey(AccountViewModel::class)
-    abstract fun bindAccountViewModel(accountViewModel: AccountViewModel): ViewModel
+    fun bindAccountViewModel(accountViewModel: AccountViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(CategoryViewModel::class)
-    abstract fun bindCategoryViewModel(categoryViewModel: CategoryViewModel): ViewModel
+    fun bindCategoryViewModel(categoryViewModel: CategoryViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ExpenseViewModel::class)
-    abstract fun bindExpenseViewModel(expenseViewModel: ExpenseViewModel): ViewModel
+    fun bindExpenseViewModel(expenseViewModel: ExpenseViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(IncomesViewModel::class)
-    abstract fun bindIncomesViewModel(incomesViewModel: IncomesViewModel): ViewModel
+    fun bindIncomesViewModel(incomesViewModel: IncomesViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ChangeTransactionViewModel::class)
-    abstract fun bindChangeTransactionViewModel(changeTransactionViewModel: ChangeTransactionViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(TransactionsHistoryViewModel::class)
-    abstract fun bindTransactionHistoryViewModel(transactionsHistoryViewModel: TransactionsHistoryViewModel): ViewModel
+    fun bindChangeTransactionViewModel(changeTransactionViewModel: ChangeTransactionViewModel): ViewModel
 
 }
+

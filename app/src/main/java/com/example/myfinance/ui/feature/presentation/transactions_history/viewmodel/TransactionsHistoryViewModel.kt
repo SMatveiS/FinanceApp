@@ -6,6 +6,9 @@ import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,22 +16,23 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 
 /**
  * Хранит состояние экрана истории транзакций
  */
 
-class TransactionsHistoryViewModel @Inject constructor(
+class TransactionsHistoryViewModel @AssistedInject constructor(
     private val getTransactionsForPeriodUseCase: GetTransactionsForPeriodUseCase,
-    //@Assisted savedStateHandle: SavedStateHandle
+    @Assisted private val isIncome: Boolean
 ): ViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(isIncome: Boolean): TransactionsHistoryViewModel
+    }
 
     private val _state = MutableStateFlow(TransactionsState())
     val state = _state.asStateFlow()
-
-    private val isIncomes: Boolean = true
-//        savedStateHandle.get<String>("source") != "expenses"
 
     init {
         getTransactions()
@@ -86,7 +90,7 @@ class TransactionsHistoryViewModel @Inject constructor(
                 val transactionsResult = getTransactionsForPeriodUseCase(
                     startDate = startDate,
                     endDate = endDate,
-                    isIncomes = isIncomes
+                    isIncomes = isIncome
                 )
 
                 when (transactionsResult) {

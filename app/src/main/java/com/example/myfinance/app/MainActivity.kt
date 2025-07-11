@@ -30,7 +30,11 @@ class MainActivity : ComponentActivity() {
                     bottomBar = { FinappNavBar(navController) }
                 ) { innerPadding ->
 
-                    CompositionLocalProvider(LocalViewModelFactory provides appComponent.viewModelProviderFactory()) {
+                    CompositionLocalProvider(
+                        LocalViewModelFactory provides appComponent.viewModelProviderFactory(),
+                        LocalAssistedFactory provides appComponent.assistedTransactionsHistoryFactory()
+                    ) {
+
                         FinappNavHost(
                             navController,
                             modifier = Modifier.padding(innerPadding)

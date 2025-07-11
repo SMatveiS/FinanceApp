@@ -7,10 +7,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
-import com.example.myfinance.app.LocalViewModelFactory
+import com.example.myfinance.app.LocalAssistedFactory
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
@@ -20,10 +22,20 @@ import com.example.myfinance.ui.feature.presentation.transactions_history.viewmo
 
 @Composable
 fun TransactionsHistoryScreen(
+    isIncome: Boolean,
     onBackArrowClicked: () -> Unit
 ) {
 
-    val viewModel: TransactionsHistoryViewModel = viewModel(factory = LocalViewModelFactory.current)
+    val assistedFactory = LocalAssistedFactory.current
+
+    val viewModel: TransactionsHistoryViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(isIncome) as T
+            }
+        },
+        key = "TransactionsHistory_$isIncome"
+    )
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

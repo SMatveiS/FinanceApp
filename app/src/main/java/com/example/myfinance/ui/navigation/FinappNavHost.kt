@@ -35,6 +35,7 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
 
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
+                    isIncome = false,
                     onBackArrowClicked = {
                         navController.navigate(route = NavRoutes.Transactions)
                     }
@@ -65,6 +66,7 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
 
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
+                    isIncome = true,
                     onBackArrowClicked = {
                         navController.navigate(route = NavRoutes.Transactions)
                     }

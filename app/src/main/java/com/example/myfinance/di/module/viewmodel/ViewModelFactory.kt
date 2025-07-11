@@ -2,13 +2,14 @@ package com.example.myfinance.di.module.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
 class ViewModelFactory @Inject constructor(
-    private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+    private val viewModels: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -16,10 +17,16 @@ class ViewModelFactory @Inject constructor(
         val viewModelProvider = viewModels[modelClass]
             ?: throw IllegalArgumentException("Unknown model class $modelClass")
 
-        try {
-            return viewModelProvider.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+        return viewModelProvider.get() as T
+    }
+}
+
+@Singleton
+class AssistedTransactionsHistoryFactory @Inject constructor(
+    private val factory: TransactionsHistoryViewModel.Factory
+) {
+
+    fun create(isIncome: Boolean): TransactionsHistoryViewModel {
+        return factory.create(isIncome)
     }
 }
