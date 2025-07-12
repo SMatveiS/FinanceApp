@@ -6,16 +6,20 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
 import com.example.myfinance.app.LocalViewModelFactory
+import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppFAB
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 import com.example.myfinance.ui.feature.presentation.incomes.viewmodel.IncomesViewModel
 
 @Composable
@@ -25,7 +29,13 @@ fun IncomesScreen(
     onItemClicked: (Int) -> Unit
 ) {
 
-    val viewModel: IncomesViewModel = viewModel(factory = LocalViewModelFactory.current)
+    val context = LocalContext.current
+    val activity = context.findActivity() as MainActivity
+    val screenComponent = remember {
+        activity.activityComponent.screenComponentFactory().create()
+    }
+
+    val viewModel = screenComponent.incomesViewModel
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

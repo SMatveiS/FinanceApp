@@ -82,43 +82,4 @@ class CategoryViewModel @Inject constructor(
 
         getCategories()
     }
-
-//    fun getCategoriesWithSubstring() {
-//        if (state.value.searchText.trim() == "") {
-//            getCategories()
-//        } else {
-//            viewModelScope.launch {
-//                _state.update { it.copy(
-//                    screenState = ScreenState.LOADING,
-//                    errorMessage = null
-//                ) }
-//
-//                try {
-//                    val categories = getCategoriesWithSubstringUseCase(state.value.searchText)
-//                    when (categories) {
-//                        is NetworkResult.Success -> {
-//                            _state.update { it.copy(
-//                                categories = categories.data,
-//                                screenState = ScreenState.SUCCESS
-//                            ) }
-//                        }
-//
-//                        is NetworkResult.Error -> {
-//                            _state.update {
-//                                it.copy(
-//                                    errorMessage = categories.errorMessage,
-//                                    screenState = ScreenState.ERROR
-//                                )
-//                            }
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    _state.update { it.copy(
-//                        errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
-//                        screenState = ScreenState.ERROR
-//                    ) }
-//                }
-//            }
-//        }
-//    }
 }

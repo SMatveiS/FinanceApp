@@ -7,13 +7,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
 import com.example.myfinance.app.LocalAssistedChangeTransactionFactory
+import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.DatePickerModal
 import com.example.myfinance.ui.common.ErrorState
@@ -22,6 +25,7 @@ import com.example.myfinance.ui.common.OpenTimePicker
 import com.example.myfinance.ui.common.uiDateFormat
 import com.example.myfinance.ui.common.uiTimeFormat
 import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 import com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel.ChangeTransactionViewModel
 import java.time.ZoneId
 
@@ -33,16 +37,16 @@ fun ChangeTransactionScreen(
     returnToPreviousScreen: () -> Unit,
 ) {
 
-    val assistedFactory = LocalAssistedChangeTransactionFactory.current
+    val context = LocalContext.current
+    val activity = context.findActivity() as MainActivity
 
-    val viewModel: ChangeTransactionViewModel = viewModel(
-        factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(isIncome, transactionId) as T
-            }
-        },
-        key = "ChangeTransaction $isIncome $transactionId"
-    )
+    val assistedFactory = remember {
+        activity.activityComponent.assistedChangeTransactionFactory()
+    }
+
+    val viewModel: ChangeTransactionViewModel = remember(isIncome, transactionId) {
+        assistedFactory.create(isIncome, transactionId)
+    }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

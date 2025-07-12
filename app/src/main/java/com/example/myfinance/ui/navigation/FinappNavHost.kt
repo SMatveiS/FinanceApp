@@ -1,13 +1,16 @@
 package com.example.myfinance.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.example.myfinance.data.MockData.settings
+import com.example.myfinance.di.ScreenComponent
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
 import com.example.myfinance.ui.feature.presentation.categories.screen.CategoryScreen
@@ -19,12 +22,17 @@ import com.example.myfinance.ui.feature.presentation.transactions_history.screen
 import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 
 @Composable
-fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun FinappNavHost(
+    navController: NavHostController,
+    screenComponentFactory: ScreenComponent.Factory,
+    modifier: Modifier = Modifier
+) {
     NavHost(navController, startDestination = NavRoutes.Expenses, modifier = modifier) {
 
         navigation<NavRoutes.Expenses>(startDestination = NavRoutes.Transactions) {
             composable<NavRoutes.Transactions> { backStackEntry ->
                 ExpensesScreen(
+
                     onHistoryClicked = {
                         navController.navigate(route = NavRoutes.TransactionsHistory)
                     },

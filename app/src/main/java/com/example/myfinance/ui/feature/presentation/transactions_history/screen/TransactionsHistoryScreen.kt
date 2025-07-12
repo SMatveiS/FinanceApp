@@ -6,17 +6,21 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
 import com.example.myfinance.app.LocalAssistedTransactionsHistoryFactory
+import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.OpenDatePicker
 import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 
@@ -27,16 +31,16 @@ fun TransactionsHistoryScreen(
     onItemClicked: (Int) -> Unit
 ) {
 
-    val assistedFactory = LocalAssistedTransactionsHistoryFactory.current
+    val context = LocalContext.current
+    val activity = context.findActivity() as MainActivity
 
-    val viewModel: TransactionsHistoryViewModel = viewModel(
-        factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(isIncome) as T
-            }
-        },
-        key = "TransactionsHistory $isIncome"
-    )
+    val assistedFactory = remember {
+        activity.activityComponent.assistedTransactionsHistoryFactory()
+    }
+
+    val viewModel: TransactionsHistoryViewModel = remember(isIncome) {
+        assistedFactory.create(isIncome)
+    }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

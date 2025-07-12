@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.retrofit2.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.dagger)
+    implementation(libs.androidx.appcompat)
     ksp(libs.dagger.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

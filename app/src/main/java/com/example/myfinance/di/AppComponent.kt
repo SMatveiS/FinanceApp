@@ -10,6 +10,7 @@ import com.example.myfinance.di.module.viewmodel.AssistedTransactionsHistoryFact
 import com.example.myfinance.di.module.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Scope
 import javax.inject.Singleton
 
 @Singleton
@@ -17,13 +18,10 @@ import javax.inject.Singleton
     AppModule::class,
     ApiModule::class,
     RepositoryModule::class,
-    ViewModelModule::class,
+    ViewModelModule::class
 ])
 interface AppComponent {
-
-    fun viewModelProviderFactory(): ViewModelProvider.Factory
-    fun assistedTransactionsHistoryFactory(): AssistedTransactionsHistoryFactory
-    fun assistedChangeTransactionFactory(): AssistedChangeTransactionFactory
+    fun activityComponentFactory(): ActivityComponent.Factory
 
     @Component.Factory
     interface Factory {
@@ -31,3 +29,11 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 }
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ActivityScope
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ScreenScope

@@ -16,30 +16,5 @@ interface ViewModelModule {
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AccountViewModel::class)
-    fun bindAccountViewModel(accountViewModel: AccountViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(CategoryViewModel::class)
-    fun bindCategoryViewModel(categoryViewModel: CategoryViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ExpenseViewModel::class)
-    fun bindExpenseViewModel(expenseViewModel: ExpenseViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(IncomesViewModel::class)
-    fun bindIncomesViewModel(incomesViewModel: IncomesViewModel): ViewModel
-
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ChangeTransactionViewModel::class)
-//    fun bindChangeTransactionViewModel(changeTransactionViewModel: ChangeTransactionViewModel): ViewModel
-
 }
 
