@@ -49,9 +49,9 @@ fun EditAccountScreen(
             ScreenState.SUCCESS -> {
                 EditAccountContent(
                     account = state.account,
-                    onNameChanged = viewModel::updateTempName,
-                    onBalanceChanged = viewModel::updateTempBalance,
-                    onCurrencySelected = viewModel::updateTempCurrency,
+                    onNameChanged = viewModel::updateName,
+                    onBalanceChanged = viewModel::updateBalance,
+                    onCurrencySelected = viewModel::updateCurrency,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

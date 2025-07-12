@@ -63,19 +63,19 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun updateTempName(name: String) {
+    fun updateName(name: String) {
         _state.update { it.copy(
             account = it.account?.copy(name = name)
         ) }
     }
 
-    fun updateTempBalance(balance: Double) {
+    fun updateBalance(balance: Double) {
         _state.update { it.copy(
             account = it.account?.copy(balance = balance)
         ) }
     }
 
-    fun updateTempCurrency(currency: String) {
+    fun updateCurrency(currency: String) {
         _state.update { it.copy(
             account = it.account?.copy(currency = currency)
         ) }

@@ -37,8 +37,8 @@ fun AppListItem(
     rightSubtitle: String? = null,
     leftIcon: String? = null,
     rightIcon: ImageVector? = null,
-    listHeight: Int = 70,
-    listBackground: Color = MaterialTheme.colorScheme.background,
+    itemHeight: Int = 70,
+    itemBackground: Color = MaterialTheme.colorScheme.background,
     leftIconBackground: Color = MaterialTheme.colorScheme.secondary,
     clickable: Boolean = false,
     onClick: () -> Unit = {}
@@ -48,8 +48,8 @@ fun AppListItem(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .height(listHeight.dp)
-            .background(listBackground)
+            .height(itemHeight.dp)
+            .background(itemBackground)
             .clickable(clickable, onClick = onClick)
     ) {
         // Между spacer и следующим элементом будет отступ в 16dp
@@ -93,6 +93,8 @@ fun AppListItem(
                     leftTitle,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
 
                 if (leftSubtitle != null) {
@@ -100,6 +102,8 @@ fun AppListItem(
                         leftSubtitle,
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
@@ -109,6 +113,8 @@ fun AppListItem(
                         rightTitle,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     if (rightSubtitle != null) {
@@ -116,6 +122,8 @@ fun AppListItem(
                             rightSubtitle,
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }

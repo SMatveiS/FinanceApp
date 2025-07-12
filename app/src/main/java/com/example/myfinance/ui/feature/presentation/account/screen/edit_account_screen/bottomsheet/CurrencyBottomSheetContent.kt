@@ -9,7 +9,7 @@ import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 
 @Composable
-fun BottomSheetContent(
+fun CurrencyBottomSheetContent(
     onCurrencySelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {

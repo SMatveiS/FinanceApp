@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen
+package com.example.myfinance.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun EditTextListItem(
-    leftTitle: String,
+    title: String,
     editTextInitialValue: String,
+    itemHeight: Int = 56,
     onValueChange: (String) -> Unit,
     emoji: String? = null,
     trailText: String? = null
@@ -41,7 +42,7 @@ fun EditTextListItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(itemHeight.dp)
             .background(MaterialTheme.colorScheme.background)
     ) {
 
@@ -58,7 +59,7 @@ fun EditTextListItem(
         }
 
         Text(
-            leftTitle,
+            title,
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier

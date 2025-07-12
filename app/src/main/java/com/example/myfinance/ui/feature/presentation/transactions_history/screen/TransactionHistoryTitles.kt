@@ -3,11 +3,9 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.scree
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import com.example.myfinance.ui.common.AppListItem
+import com.example.myfinance.ui.common.uiDateFormat
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @Composable
 fun TransactionHistoryTitles(
@@ -18,15 +16,11 @@ fun TransactionHistoryTitles(
     onEndDatePickerOpen: () -> Unit,
 ) {
 
-    val dateFormatter = remember {
-        DateTimeFormatter.ofPattern("d MMMM y", Locale("ru"))
-    }
-
     AppListItem(
         leftTitle = "Начало",
-        rightTitle = startDate.format(dateFormatter),
-        listBackground = MaterialTheme.colorScheme.secondary,
-        listHeight = 56,
+        rightTitle = startDate.format(uiDateFormat),
+        itemBackground = MaterialTheme.colorScheme.secondary,
+        itemHeight = 56,
         clickable = true,
         onClick = onStartDatePickerOpen
     )
@@ -34,9 +28,9 @@ fun TransactionHistoryTitles(
 
     AppListItem(
         leftTitle = "Конец",
-        rightTitle = endDate.format(dateFormatter),
-        listBackground = MaterialTheme.colorScheme.secondary,
-        listHeight = 56,
+        rightTitle = endDate.format(uiDateFormat),
+        itemBackground = MaterialTheme.colorScheme.secondary,
+        itemHeight = 56,
         clickable = true,
         onClick = onEndDatePickerOpen
     )
@@ -45,7 +39,7 @@ fun TransactionHistoryTitles(
     AppListItem(
         leftTitle = "Сумма",
         rightTitle = totalSum,
-        listBackground = MaterialTheme.colorScheme.secondary,
-        listHeight = 56
+        itemBackground = MaterialTheme.colorScheme.secondary,
+        itemHeight = 56
     )
 }

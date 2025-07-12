@@ -48,7 +48,7 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
 
                     TransactionsResult(
                         transactions = sortedTransactions,
-                        transactionsSum = transactions.sumOf { it.amount },
+                        transactionsSum = sortedTransactions.sumOf { it.amount },
                         currency = accountResult.data.currency
                     )
                 }

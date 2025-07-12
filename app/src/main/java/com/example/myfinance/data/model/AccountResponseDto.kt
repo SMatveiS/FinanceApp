@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 
 @Serializable
-data class AccountDto(
+data class AccountResponseDto(
     @SerialName("id")
     val id: Int = 0,
     @SerialName("userId")

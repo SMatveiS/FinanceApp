@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 
 @Serializable
-data class CategoryDto(
+data class CategoryResponseDto(
     @SerialName("id")
     val id: Int = 0,
     @SerialName("name")
@@ -22,6 +22,7 @@ data class CategoryDto(
     fun toDomain() = Category(
         id = id,
         name = name,
-        emoji = emoji
+        emoji = emoji,
+        isIncome = isIncome
     )
 }

@@ -1,6 +1,6 @@
 package com.example.myfinance.data.api.transaction
 
-import com.example.myfinance.data.model.TransactionDto
+import com.example.myfinance.data.model.TransactionRequestDto
 import javax.inject.Inject
 
 /**
@@ -13,10 +13,10 @@ class TransactionRemoteDataSource @Inject constructor(
     suspend fun getTransaction(id: Int) =
         transactionApi.getTransaction(id = id)
 
-    suspend fun addTransaction(transaction: TransactionDto) =
+    suspend fun addTransaction(transaction: TransactionRequestDto) =
         transactionApi.addTransaction(transaction = transaction)
 
-    suspend fun updateTransaction(id: Int, transaction: TransactionDto) =
+    suspend fun updateTransaction(id: Int, transaction: TransactionRequestDto) =
         transactionApi.updateTransaction(id = id, transaction = transaction)
 
     suspend fun deleteTransaction(id: Int) =

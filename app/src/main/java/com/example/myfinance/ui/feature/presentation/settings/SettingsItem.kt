@@ -12,7 +12,7 @@ fun SettingsItem(settings: Settings) {
     AppListItem(
         leftTitle = settings.name,
         rightIcon = ImageVector.vectorResource(R.drawable.dark_arrow),
-        listHeight = 56,
+        itemHeight = 56,
         clickable = true,
         onClick = { /* Действие */}
     )

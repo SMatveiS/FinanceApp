@@ -24,8 +24,8 @@ fun IncomesContent(
             AppListItem(
                 leftTitle = "Всего",
                 rightTitle = formatNumber(totalSum).addCurrency(currency),
-                listBackground = MaterialTheme.colorScheme.secondary,
-                listHeight = 56
+                itemBackground = MaterialTheme.colorScheme.secondary,
+                itemHeight = 56
             )
             HorizontalDivider()
         }

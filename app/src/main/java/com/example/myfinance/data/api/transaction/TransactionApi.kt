@@ -1,6 +1,7 @@
 package com.example.myfinance.data.api.transaction
 
-import com.example.myfinance.data.model.TransactionDto
+import com.example.myfinance.data.model.TransactionRequestDto
+import com.example.myfinance.data.model.TransactionResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -16,24 +17,24 @@ import retrofit2.http.Query
 
 interface TransactionApi {
     @POST("transactions")
-    suspend fun addTransaction(@Body transaction: TransactionDto): Response<TransactionDto>
+    suspend fun addTransaction(@Body transaction: TransactionRequestDto): Response<TransactionResponseDto>
 
     @GET("transactions/{id}")
-    suspend fun getTransaction(@Path("id") id: Int): Response<TransactionDto>
+    suspend fun getTransaction(@Path("id") id: Int): Response<TransactionResponseDto>
 
     @PUT("transactions/{id}")
     suspend fun updateTransaction(
         @Path("id") id: Int,
-        @Body transaction: TransactionDto
-    ): Response<TransactionDto>
+        @Body transaction: TransactionRequestDto
+    ): Response<TransactionResponseDto>
 
     @DELETE("transactions/{id}")
-    suspend fun deleteTransaction(@Path("id") id: Int): Response<TransactionDto>
+    suspend fun deleteTransaction(@Path("id") id: Int): Response<TransactionResponseDto>
 
     @GET("transactions/account/{accountId}/period")
     suspend fun getTransactionsForPeriod(
         @Path("accountId") accountId: Int,
         @Query("startDate") startDate: String? = null,
         @Query("endDate") endDate: String? = null
-    ): Response<List<TransactionDto>>
+    ): Response<List<TransactionResponseDto>>
 }

@@ -3,13 +3,9 @@ package com.example.myfinance.domain.usecase.category
 import com.example.myfinance.domain.repository.CategoryRepository
 import javax.inject.Inject
 
-/**
- * Возвращает все категории
- */
-
-class GetAllCategoriesUseCase @Inject constructor(
+class GetCategoriesByType @Inject constructor(
     private val categoryRepository: CategoryRepository
 ) {
 
-    suspend operator fun invoke() = categoryRepository.getAllCategories()
+    suspend operator fun invoke(isIncome: Boolean) = categoryRepository.getCategoryByType(isIncome)
 }
