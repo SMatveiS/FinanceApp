@@ -69,11 +69,11 @@ fun ChangeTransactionScreen(
     Scaffold(
         topBar = {
             AppTopBar(
-                title = "Мои расходы/доходы",
+                title = if (isIncome) "Мои доходы" else "Мои расходы",
                 rightButtonIcon = R.drawable.confirm,
                 rightButtonDescription = "Сохранить",
                 rightButtonAction = {
-                    // TODO: add or update transaction
+                    viewModel.saveChanges()
                     returnToPreviousScreen()
                 },
                 leftButtonIcon = R.drawable.cancel,
@@ -89,6 +89,7 @@ fun ChangeTransactionScreen(
             ScreenState.SUCCESS -> {
                 ChangeTransactionContent(
                     transaction = state.transaction,
+                    account = state.accountName,
                     date = state.date.format(uiDateFormat),
                     time = state.time.format(uiTimeFormat),
                     categories = state.categories,
@@ -100,15 +101,14 @@ fun ChangeTransactionScreen(
                     onSumChanged = viewModel::updateSum,
                     onCommentChanged = viewModel::updateComment,
                     modifier = Modifier.padding(innerPadding),
-                    categoriesErrorMessage = state.errorMessage,
-                    account = "Сбербанк",
+                    categoriesErrorMessage = state.errorMessage
                 )
             }
 
             ScreenState.ERROR -> {
                 ErrorState(
                     message = state.errorMessage ?: "Неизвестная ошибка",
-                    onRetry = viewModel::getTransaction,
+                    onRetry = viewModel::getInitialInformation,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

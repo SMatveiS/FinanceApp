@@ -11,7 +11,7 @@ interface TransactionRepository {
 
     suspend fun getTransaction(id: Int): NetworkResult<Transaction>
 
-    suspend fun addTransaction(transaction: Transaction): NetworkResult<Transaction>
+    suspend fun addTransaction(transaction: Transaction)
 
     suspend fun updateTransaction(id: Int, transaction: Transaction): NetworkResult<Transaction>
 

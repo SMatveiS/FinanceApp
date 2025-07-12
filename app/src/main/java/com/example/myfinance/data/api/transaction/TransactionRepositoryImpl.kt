@@ -27,16 +27,15 @@ class TransactionRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun addTransaction(transaction: Transaction): NetworkResult<Transaction> {
-        return withContext(Dispatchers.IO) {
+    override suspend fun addTransaction(transaction: Transaction) {
+        withContext(Dispatchers.IO) {
 
-            val transaction = safeApiCall {
+            println(transaction.toString())
+            println(transaction.toDto().toString())
+            safeApiCall {
                 transactionRemoteDataSource.addTransaction(transaction = transaction.toDto())
             }
-
-            transaction.map { it.toDomain() }
         }
-
     }
 
     override suspend fun updateTransaction(

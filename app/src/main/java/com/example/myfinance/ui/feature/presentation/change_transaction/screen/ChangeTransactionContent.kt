@@ -34,7 +34,7 @@ import com.example.myfinance.ui.common.EditTextListItem
 
 @Composable
 fun ChangeTransactionContent(
-    transaction: Transaction?,
+    transaction: Transaction,
     date: String,
     time: String,
     categories: List<Category>,
@@ -51,8 +51,8 @@ fun ChangeTransactionContent(
 
 ) {
 
-    var sum by rememberSaveable { mutableStateOf(transaction?.amount.toString()) }
-    var comment by rememberSaveable { mutableStateOf(transaction?.comment ?: "") }
+    var sum by rememberSaveable { mutableStateOf(transaction.amount.toString()) }
+    var comment by rememberSaveable { mutableStateOf(transaction.comment ?: "") }
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier = modifier) {
@@ -66,7 +66,7 @@ fun ChangeTransactionContent(
 
         AppListItem(
             leftTitle = "Статья",
-            rightTitle = transaction?.category?.name,
+            rightTitle = transaction.category.name,
             rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
             itemHeight = 70,
             clickable = true,
@@ -89,7 +89,7 @@ fun ChangeTransactionContent(
                     }
                 }
             },
-            trailText = getCurrencySymbol(transaction?.currency ?: "RUB"),
+            trailText = getCurrencySymbol(transaction.currency),
             itemHeight = 70
         )
 

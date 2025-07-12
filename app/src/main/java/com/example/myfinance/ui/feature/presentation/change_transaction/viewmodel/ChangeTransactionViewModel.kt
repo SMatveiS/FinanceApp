@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.model.Category
+import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import com.example.myfinance.domain.usecase.category.GetCategoriesByType
 import com.example.myfinance.domain.usecase.transaction.AddTransactionUseCase
 import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCase
@@ -28,6 +29,7 @@ class ChangeTransactionViewModel @AssistedInject constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val getCategoriesByType: GetCategoriesByType,
+    private val getAccountUseCase: GetAccountUseCase,
     @Assisted private val isIncome: Boolean,
     @Assisted private val transactionId: Int?,
 
@@ -45,68 +47,134 @@ class ChangeTransactionViewModel @AssistedInject constructor(
         LocalDateTime.of(date, time).format(uiDateTimeFormat)
 
     init {
-        getTransaction()
+        getInitialInformation()
     }
 
-    fun getTransaction() {
+    fun getInitialInformation() {
 
-        if (transactionId == null) {
-            _state.update { it.copy(screenState = ScreenState.SUCCESS) }
-        } else {
+        if (!isIncome) {
+            _state.update {
+                it.copy(
+                    transaction = it.transaction.copy(
+                        category = Category(
+                            id = 8,
+                            name = "Продукты",
+                            emoji = "\uD83C\uDF4E",
+                            isIncome = false
+                        )
+                    )
+                )
+            }
+        }
 
-            viewModelScope.launch {
+        viewModelScope.launch {
 
+            _state.update {
+                it.copy(
+                    screenState = ScreenState.LOADING,
+                    errorMessage = null
+                )
+            }
+
+            try {
+                val accountResult = getAccountUseCase()
+
+                when (accountResult) {
+
+                    is NetworkResult.Success -> {
+                        _state.update {
+                            it.copy(
+                                accountName = accountResult.data.name,
+                                transaction = it.transaction.copy(
+                                    accountId = accountResult.data.id,
+                                    currency = accountResult.data.currency
+                                ))
+                        }
+                    }
+
+                    is NetworkResult.Error -> {
+                        _state.update {
+                            it.copy(
+                                errorMessage = accountResult.errorMessage,
+                                screenState = ScreenState.ERROR
+                            )
+                        }
+                    }
+                }
+            } catch (e: Exception) {
                 _state.update {
                     it.copy(
-                        screenState = ScreenState.LOADING,
-                        errorMessage = null
+                        errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                        screenState = ScreenState.ERROR
                     )
                 }
+            }
+        }
 
-                try {
-                    val transactionResult = getTransactionByIdUseCase(id = transactionId)
+        if (transactionId == null)
+            _state.update { it.copy(screenState = ScreenState.SUCCESS) }
+        else getTransaction()
+    }
 
-                    when (transactionResult) {
-                        is NetworkResult.Success -> {
+    private fun getTransaction() {
 
-                            val dateTime = uiDateTimeFormat.parse(transactionResult.data.date)
+        viewModelScope.launch {
 
-                            _state.update {
-                                it.copy(
-                                    transaction = transactionResult.data,
-                                    date = LocalDate.from(dateTime),
-                                    time = LocalTime.from(dateTime),
-                                    screenState = ScreenState.SUCCESS
-                                )
-                            }
-                        }
+            _state.update {
+                it.copy(
+                    screenState = ScreenState.LOADING,
+                    errorMessage = null
+                )
+            }
 
-                        is NetworkResult.Error -> {
-                            _state.update {
-                                it.copy(
-                                    errorMessage = transactionResult.errorMessage,
-                                    screenState = ScreenState.ERROR
-                                )
-                            }
+            try {
+                val transactionResult = getTransactionByIdUseCase(id = transactionId!!)
+
+                when (transactionResult) {
+                    is NetworkResult.Success -> {
+
+                        val dateTime = uiDateTimeFormat.parse(transactionResult.data.date)
+
+                        _state.update {
+                            it.copy(
+                                transaction = transactionResult.data,
+                                date = LocalDate.from(dateTime),
+                                time = LocalTime.from(dateTime),
+                                screenState = ScreenState.SUCCESS
+                            )
                         }
                     }
-                } catch (e: Exception) {
-                    _state.update {
-                        it.copy(
-                            errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
-                            screenState = ScreenState.ERROR
-                        )
+
+                    is NetworkResult.Error -> {
+                        _state.update {
+                            it.copy(
+                                errorMessage = transactionResult.errorMessage,
+                                screenState = ScreenState.ERROR
+                            )
+                        }
                     }
+                }
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(
+                        errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                        screenState = ScreenState.ERROR
+                    )
                 }
             }
         }
     }
 
-    fun addTransaction() {
+    fun saveChanges() {
+        if (transactionId == null) addTransaction()
+        else updateTransaction()
+    }
+
+    private fun addTransaction() {
         viewModelScope.launch {
-            val transaction = state.value.transaction?.copy(
+            val transaction = state.value.transaction.copy(
                 date = getTransactionDate(state.value.date, state.value.time)
-            ) ?: return@launch
+            )
 
             try {
                 addTransactionUseCase(transaction)
@@ -119,11 +187,11 @@ class ChangeTransactionViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateTransaction() {
+    private fun updateTransaction() {
         viewModelScope.launch {
-            val transaction = state.value.transaction?.copy(
+            val transaction = state.value.transaction.copy(
                 date = getTransactionDate(state.value.date, state.value.time)
-            ) ?: return@launch
+            )
 
             try {
                 updateTransactionUseCase(transaction)
@@ -168,13 +236,13 @@ class ChangeTransactionViewModel @AssistedInject constructor(
 
     fun updateSum(sum: Double) {
         _state.update { it.copy(
-            transaction = it.transaction?.copy(amount = sum)
+            transaction = it.transaction.copy(amount = sum)
         ) }
     }
 
     fun updateComment(comment: String) {
         _state.update { it.copy(
-            transaction = it.transaction?.copy(comment = if (comment.trim() == "") null else comment)
+            transaction = it.transaction.copy(comment = if (comment.trim() == "") null else comment)
         ) }
     }
 
@@ -212,11 +280,7 @@ class ChangeTransactionViewModel @AssistedInject constructor(
 
     fun selectCategory(category: Category) {
         _state.update {
-            it.transaction?.let { transaction ->
-                it.copy(
-                    transaction = transaction.copy(category = category)
-                )
-            } ?: it
+            it.copy( transaction = it.transaction.copy(category = category) )
         }
     }
 }
