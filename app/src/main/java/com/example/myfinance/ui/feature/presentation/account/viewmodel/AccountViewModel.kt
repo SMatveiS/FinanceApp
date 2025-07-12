@@ -2,22 +2,20 @@ package com.example.myfinance.ui.feature.presentation.account.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.GetAccountUseCase
+import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.domain.usecase.UpdateAccountUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import com.example.myfinance.domain.usecase.account.UpdateAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Хранит состояние экрана счёта
  */
 
-@HiltViewModel
 class AccountViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val updateAccountUseCase: UpdateAccountUseCase
@@ -65,19 +63,19 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun updateTempName(name: String) {
+    fun updateName(name: String) {
         _state.update { it.copy(
             account = it.account?.copy(name = name)
         ) }
     }
 
-    fun updateTempBalance(balance: Double) {
+    fun updateBalance(balance: Double) {
         _state.update { it.copy(
             account = it.account?.copy(balance = balance)
         ) }
     }
 
-    fun updateTempCurrency(currency: String) {
+    fun updateCurrency(currency: String) {
         _state.update { it.copy(
             account = it.account?.copy(currency = currency)
         ) }

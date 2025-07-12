@@ -16,7 +16,8 @@ import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.bottomsheet.BottomSheetContent
+import com.example.myfinance.ui.common.EditTextListItem
+import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.bottomsheet.CurrencyBottomSheetContent
 import com.example.myfinance.ui.common.getCurrencySymbol
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +36,7 @@ fun EditAccountContent(
     Column(modifier = modifier) {
 
         EditTextListItem(
-            leftTitle = "Название счёта",
+            title = "Название счёта",
             editTextInitialValue = account?.name ?: "Счёт",
             onValueChange = onNameChanged,
             emoji = "\uD83D\uDCB0"
@@ -44,16 +45,16 @@ fun EditAccountContent(
         HorizontalDivider()
 
         EditTextListItem(
-            leftTitle = "Баланс",
+            title = "Баланс",
             editTextInitialValue = balance,
             onValueChange = { newValue ->
-                    if (newValue.matches(Regex("^\\d*([.,]\\d{0,2})?$"))) {
-                        balance = newValue
-                        newValue.replace(",", ".").toDoubleOrNull()?.let { value ->
-                            onBalanceChanged(value)
-                        }
+                if (newValue.matches(Regex("^\\d*([.,]\\d{0,2})?$"))) {
+                    balance = newValue
+                    newValue.replace(",", ".").toDoubleOrNull()?.let { value ->
+                        onBalanceChanged(value)
                     }
-                },
+                }
+            },
             trailText = getCurrencySymbol(account?.currency ?: "RUB")
         )
 
@@ -63,7 +64,7 @@ fun EditAccountContent(
             leftTitle = "Валюта",
             rightTitle = getCurrencySymbol(account?.currency ?: "RUB"),
             rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
-            listHeight = 56,
+            itemHeight = 56,
             clickable = true,
             onClick = { isSheetOpen = true }
         )
@@ -72,7 +73,7 @@ fun EditAccountContent(
     }
 
     val sheetState = rememberModalBottomSheetState()
-    val onDismiss = { isSheetOpen = false}
+    val onDismiss = { isSheetOpen = false }
 
     if (isSheetOpen) {
         ModalBottomSheet(
@@ -80,7 +81,7 @@ fun EditAccountContent(
             onDismissRequest = onDismiss
         ) {
 
-            BottomSheetContent(
+            CurrencyBottomSheetContent(
                 onCurrencySelected = onCurrencySelected,
                 onDismiss = onDismiss
             )

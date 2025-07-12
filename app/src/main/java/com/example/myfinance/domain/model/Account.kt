@@ -1,6 +1,6 @@
 package com.example.myfinance.domain.model
 
-import com.example.myfinance.data.model.AccountDto
+import com.example.myfinance.data.model.AccountResponseDto
 
 /**
  * Доменная модель аккаунта
@@ -13,7 +13,7 @@ data class Account(
     val currency: String
 ) {
 
-    fun toDto() = AccountDto(
+    fun toDto() = AccountResponseDto(
         id = id,
         name = name,
         balance = balance.toString(),

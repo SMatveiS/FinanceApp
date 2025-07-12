@@ -1,6 +1,6 @@
 package com.example.myfinance.data.api.category
 
-import com.example.myfinance.data.model.CategoryDto
+import com.example.myfinance.data.model.CategoryResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,8 +11,8 @@ import retrofit2.http.Path
 
 interface CategoryApi {
     @GET("categories")
-    suspend fun getAllCategories(): Response<List<CategoryDto>>
+    suspend fun getAllCategories(): Response<List<CategoryResponseDto>>
 
     @GET("categories/type/{isIncome}")
-    suspend fun getCategoriesByType(@Path("isIncome") isIncome: Boolean): Response<List<CategoryDto>>
+    suspend fun getCategoriesByType(@Path("isIncome") isIncome: Boolean): Response<List<CategoryResponseDto>>
 }

@@ -16,6 +16,7 @@ fun ExpensesContent(
     expenses: List<Transaction>,
     totalSum: Double,
     currency: String,
+    onItemClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -24,13 +25,13 @@ fun ExpensesContent(
             AppListItem(
                 leftTitle = "Всего",
                 rightTitle = formatNumber(totalSum).addCurrency(currency),
-                listBackground = MaterialTheme.colorScheme.secondary,
-                listHeight = 56
+                itemBackground = MaterialTheme.colorScheme.secondary,
+                itemHeight = 56
             )
             HorizontalDivider()
         }
         items(expenses) { expense ->
-            ExpenseListItem(expense, currency)
+            ExpenseListItem(expense, currency, onItemClicked)
             HorizontalDivider()
         }
     }

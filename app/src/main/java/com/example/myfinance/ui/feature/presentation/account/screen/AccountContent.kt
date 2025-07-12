@@ -23,8 +23,8 @@ fun AccountContent(
             rightTitle = formatNumber(account?.balance ?: 0.0).addCurrency(account?.currency ?: "RUB"),
             leftIcon = "\uD83D\uDCB0",
             leftIconBackground = MaterialTheme.colorScheme.background,
-            listBackground = MaterialTheme.colorScheme.secondary,
-            listHeight = 56
+            itemBackground = MaterialTheme.colorScheme.secondary,
+            itemHeight = 56
         )
 
         HorizontalDivider()
@@ -32,8 +32,8 @@ fun AccountContent(
         AppListItem(
             leftTitle = "Валюта",
             rightTitle = getCurrencySymbol(account?.currency ?: "RUB"),
-            listBackground = MaterialTheme.colorScheme.secondary,
-            listHeight = 56
+            itemBackground = MaterialTheme.colorScheme.secondary,
+            itemHeight = 56
         )
     }
 }

@@ -10,7 +10,12 @@ import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 
 @Composable
-fun IncomeListItem(income: Transaction, currency: String) {
+fun IncomeListItem(
+    income: Transaction,
+    currency: String,
+    onClick: (Int) -> Unit
+) {
+
     AppListItem(
         leftTitle = income.category.name,
         leftSubtitle = income.comment,
@@ -18,6 +23,6 @@ fun IncomeListItem(income: Transaction, currency: String) {
         leftIcon = income.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,
-        onClick = { /* Действие */}
+        onClick = { onClick(income.id) }
     )
 }
