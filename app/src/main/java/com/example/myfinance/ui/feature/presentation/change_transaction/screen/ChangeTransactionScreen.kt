@@ -8,10 +8,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
-import com.example.myfinance.app.LocalViewModelFactory
+import com.example.myfinance.app.LocalAssistedChangeTransactionFactory
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.DatePickerModal
 import com.example.myfinance.ui.common.ErrorState
@@ -26,10 +28,21 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeTransactionScreen(
+    transactionId: Int?,
+    isIncome: Boolean,
     returnToPreviousScreen: () -> Unit,
 ) {
 
-    val viewModel: ChangeTransactionViewModel = viewModel(factory = LocalViewModelFactory.current)
+    val assistedFactory = LocalAssistedChangeTransactionFactory.current
+
+    val viewModel: ChangeTransactionViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(isIncome, transactionId) as T
+            }
+        },
+        key = "ChangeTransaction $isIncome $transactionId"
+    )
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

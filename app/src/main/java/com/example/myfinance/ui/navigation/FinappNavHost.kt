@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.example.myfinance.data.MockData.settings
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
@@ -15,6 +16,7 @@ import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScr
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
 import com.example.myfinance.ui.feature.presentation.settings.SettingsScreen
 import com.example.myfinance.ui.feature.presentation.transactions_history.screen.TransactionsHistoryScreen
+import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 
 @Composable
 fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -28,25 +30,32 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
                     },
 
                     onFabClicked = {
-                        navController.navigate(route = NavRoutes.ChangeTransaction)
+                        navController.navigate(ChangeTransaction(null))
                     },
+
+                    onItemClicked = { transactionId ->
+                        navController.navigate(ChangeTransaction(transactionId))
+                    }
                 )
             }
 
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
                     isIncome = false,
-                    onBackArrowClicked = {
-                        navController.navigate(route = NavRoutes.Transactions)
+                    onBackArrowClicked = { navController.popBackStack() },
+
+                    onItemClicked = { transactionId ->
+                        navController.navigate(ChangeTransaction(transactionId))
                     }
                 )
             }
 
-            composable<NavRoutes.ChangeTransaction> { backStackEntry ->
+            composable<ChangeTransaction> { backStackEntry ->
+                val args = backStackEntry.toRoute<ChangeTransaction>()
                 ChangeTransactionScreen(
-                    returnToPreviousScreen = {
-                        navController.navigate(route = NavRoutes.Transactions)
-                    }
+                    isIncome = false,
+                    transactionId = args.transactionId,
+                    returnToPreviousScreen = { navController.popBackStack() }
                 )
             }
         }
@@ -59,25 +68,32 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
                     },
 
                     onFabClicked = {
-                        navController.navigate(route = NavRoutes.ChangeTransaction)
+                        navController.navigate(ChangeTransaction(null))
                     },
+
+                    onItemClicked = { transactionId ->
+                        navController.navigate(ChangeTransaction(transactionId))
+                    }
                 )
             }
 
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
                     isIncome = true,
-                    onBackArrowClicked = {
-                        navController.navigate(route = NavRoutes.Transactions)
+                    onBackArrowClicked = { navController.popBackStack() },
+
+                    onItemClicked = { transactionId ->
+                        navController.navigate(ChangeTransaction(transactionId))
                     }
                 )
             }
 
-            composable<NavRoutes.ChangeTransaction> { backStackEntry ->
+            composable<ChangeTransaction> { backStackEntry ->
+                val args = backStackEntry.toRoute<ChangeTransaction>()
                 ChangeTransactionScreen(
-                    returnToPreviousScreen = {
-                        navController.navigate(route = NavRoutes.Transactions)
-                    }
+                    isIncome = true,
+                    transactionId = args.transactionId,
+                    returnToPreviousScreen = { navController.popBackStack() }
                 )
             }
         }
@@ -85,15 +101,13 @@ fun FinappNavHost(navController: NavHostController, modifier: Modifier = Modifie
         navigation<NavRoutes.Account>(startDestination = NavRoutes.AccountStatistic) {
             composable<NavRoutes.AccountStatistic> {
                 AccountScreen(
-                    onEditAccountClicked = {
-                        navController.navigate(route = NavRoutes.EditAccount)
-                    }
+                    onEditAccountClicked = { navController.navigate(route = NavRoutes.EditAccount) }
                 )
             }
 
             composable<NavRoutes.EditAccount> {
                 EditAccountScreen(
-                    returnToAccountScreen = { navController.navigate(route = NavRoutes.Account) }
+                    returnToAccountScreen = { navController.popBackStack() }
                 )
             }
         }

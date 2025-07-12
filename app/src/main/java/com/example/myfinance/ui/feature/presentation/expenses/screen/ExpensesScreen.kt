@@ -21,7 +21,8 @@ import com.example.myfinance.ui.feature.presentation.expenses.viewmodel.ExpenseV
 @Composable
 fun ExpensesScreen(
     onHistoryClicked: () -> Unit,
-    onFabClicked: () -> Unit
+    onFabClicked: () -> Unit,
+    onItemClicked: (Int) -> Unit
 ) {
 
     val viewModel: ExpenseViewModel = viewModel(factory = LocalViewModelFactory.current)
@@ -48,6 +49,7 @@ fun ExpensesScreen(
                     expenses = state.expenses,
                     totalSum = state.totalSum,
                     currency = state.currency,
+                    onItemClicked = onItemClicked,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

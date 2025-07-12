@@ -16,6 +16,7 @@ fun ExpensesContent(
     expenses: List<Transaction>,
     totalSum: Double,
     currency: String,
+    onItemClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -30,7 +31,7 @@ fun ExpensesContent(
             HorizontalDivider()
         }
         items(expenses) { expense ->
-            ExpenseListItem(expense, currency)
+            ExpenseListItem(expense, currency, onItemClicked)
             HorizontalDivider()
         }
     }

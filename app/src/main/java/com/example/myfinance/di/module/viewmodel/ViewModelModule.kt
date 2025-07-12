@@ -37,10 +37,10 @@ interface ViewModelModule {
     @ViewModelKey(IncomesViewModel::class)
     fun bindIncomesViewModel(incomesViewModel: IncomesViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(ChangeTransactionViewModel::class)
-    fun bindChangeTransactionViewModel(changeTransactionViewModel: ChangeTransactionViewModel): ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(ChangeTransactionViewModel::class)
+//    fun bindChangeTransactionViewModel(changeTransactionViewModel: ChangeTransactionViewModel): ViewModel
 
 }
 

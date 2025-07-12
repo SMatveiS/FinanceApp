@@ -10,6 +10,9 @@ import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCas
 import com.example.myfinance.domain.usecase.transaction.UpdateTransactionUseCase
 import com.example.myfinance.ui.common.uiDateTimeFormat
 import com.example.myfinance.ui.feature.presentation.ScreenState
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,14 +22,21 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
-import javax.inject.Inject
 
-class ChangeTransactionViewModel @Inject constructor(
+class ChangeTransactionViewModel @AssistedInject constructor(
     private val getTransactionByIdUseCase: GetTransactionByIdUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
-    private val getCategoriesByType: GetCategoriesByType
+    private val getCategoriesByType: GetCategoriesByType,
+    @Assisted private val isIncome: Boolean,
+    @Assisted private val transactionId: Int?,
+
 ): ViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(isIncome: Boolean, transactionId: Int?): ChangeTransactionViewModel
+    }
 
     private val _state = MutableStateFlow(ChangeTransactionState())
     val state = _state.asStateFlow()
@@ -34,50 +44,60 @@ class ChangeTransactionViewModel @Inject constructor(
     private fun getTransactionDate(date: LocalDate, time: LocalTime) =
         LocalDateTime.of(date, time).format(uiDateTimeFormat)
 
-    val id = 2593
-    val isIncome = true
-
     init {
         getTransaction()
     }
 
     fun getTransaction() {
-        viewModelScope.launch {
-            _state.update { it.copy(
-                screenState = ScreenState.LOADING,
-                errorMessage = null
-            ) }
 
-            try {
-                val transactionResult = getTransactionByIdUseCase(id = id)
+        if (transactionId == null) {
+            _state.update { it.copy(screenState = ScreenState.SUCCESS) }
+        } else {
 
-                when (transactionResult) {
-                    is NetworkResult.Success -> {
+            viewModelScope.launch {
 
-                        val dateTime = uiDateTimeFormat.parse(transactionResult.data.date)
+                _state.update {
+                    it.copy(
+                        screenState = ScreenState.LOADING,
+                        errorMessage = null
+                    )
+                }
 
-                        _state.update { it.copy(
-                            transaction = transactionResult.data,
-                            date = LocalDate.from(dateTime),
-                            time = LocalTime.from(dateTime),
-                            screenState = ScreenState.SUCCESS
-                        ) }
-                    }
+                try {
+                    val transactionResult = getTransactionByIdUseCase(id = transactionId)
 
-                    is NetworkResult.Error -> {
-                        _state.update {
-                            it.copy(
-                                errorMessage = transactionResult.errorMessage,
-                                screenState = ScreenState.ERROR
-                            )
+                    when (transactionResult) {
+                        is NetworkResult.Success -> {
+
+                            val dateTime = uiDateTimeFormat.parse(transactionResult.data.date)
+
+                            _state.update {
+                                it.copy(
+                                    transaction = transactionResult.data,
+                                    date = LocalDate.from(dateTime),
+                                    time = LocalTime.from(dateTime),
+                                    screenState = ScreenState.SUCCESS
+                                )
+                            }
+                        }
+
+                        is NetworkResult.Error -> {
+                            _state.update {
+                                it.copy(
+                                    errorMessage = transactionResult.errorMessage,
+                                    screenState = ScreenState.ERROR
+                                )
+                            }
                         }
                     }
+                } catch (e: Exception) {
+                    _state.update {
+                        it.copy(
+                            errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                            screenState = ScreenState.ERROR
+                        )
+                    }
                 }
-            } catch (e: Exception) {
-                _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
-                    screenState = ScreenState.ERROR
-                ) }
             }
         }
     }

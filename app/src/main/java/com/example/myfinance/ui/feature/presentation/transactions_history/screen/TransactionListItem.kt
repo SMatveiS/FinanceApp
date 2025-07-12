@@ -10,7 +10,11 @@ import com.example.myfinance.ui.common.addCurrency
 import com.example.myfinance.ui.common.formatNumber
 
 @Composable
-fun TransactionListItem(transaction: Transaction, currency: String) {
+fun TransactionListItem(
+    transaction: Transaction,
+    currency: String,
+    onClick: (Int) -> Unit
+) {
     AppListItem(
         leftTitle = transaction.category.name,
         leftSubtitle = transaction.comment,
@@ -19,6 +23,6 @@ fun TransactionListItem(transaction: Transaction, currency: String) {
         leftIcon = transaction.category.emoji,
         rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
         clickable = true,
-        onClick = { /* Действие */}
+        onClick = { onClick(transaction.id) }
     )
 }

@@ -32,7 +32,8 @@ class MainActivity : ComponentActivity() {
 
                     CompositionLocalProvider(
                         LocalViewModelFactory provides appComponent.viewModelProviderFactory(),
-                        LocalAssistedFactory provides appComponent.assistedTransactionsHistoryFactory()
+                        LocalAssistedTransactionsHistoryFactory provides appComponent.assistedTransactionsHistoryFactory(),
+                        LocalAssistedChangeTransactionFactory provides appComponent.assistedChangeTransactionFactory(),
                     ) {
 
                         FinappNavHost(

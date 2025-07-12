@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
-import com.example.myfinance.app.LocalAssistedFactory
+import com.example.myfinance.app.LocalAssistedTransactionsHistoryFactory
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
@@ -23,10 +23,11 @@ import com.example.myfinance.ui.feature.presentation.transactions_history.viewmo
 @Composable
 fun TransactionsHistoryScreen(
     isIncome: Boolean,
-    onBackArrowClicked: () -> Unit
+    onBackArrowClicked: () -> Unit,
+    onItemClicked: (Int) -> Unit
 ) {
 
-    val assistedFactory = LocalAssistedFactory.current
+    val assistedFactory = LocalAssistedTransactionsHistoryFactory.current
 
     val viewModel: TransactionsHistoryViewModel = viewModel(
         factory = object : ViewModelProvider.Factory {
@@ -34,7 +35,7 @@ fun TransactionsHistoryScreen(
                 return assistedFactory.create(isIncome) as T
             }
         },
-        key = "TransactionsHistory_$isIncome"
+        key = "TransactionsHistory $isIncome"
     )
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -71,6 +72,7 @@ fun TransactionsHistoryScreen(
                     currency = state.currency,
                     onStartDatePickerOpen = viewModel::onStartDatePickerOpen ,
                     onEndDatePickerOpen = viewModel::onEndDatePickerOpen,
+                    onItemClicked = onItemClicked,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

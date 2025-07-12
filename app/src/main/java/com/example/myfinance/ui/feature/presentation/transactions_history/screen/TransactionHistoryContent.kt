@@ -20,6 +20,7 @@ fun TransactionsHistoryContent(
     currency: String,
     onStartDatePickerOpen: () -> Unit,
     onEndDatePickerOpen: () -> Unit,
+    onItemClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -39,7 +40,7 @@ fun TransactionsHistoryContent(
         }
 
         items(transactions) { transaction ->
-            TransactionListItem(transaction, currency)
+            TransactionListItem(transaction, currency, onItemClicked)
             HorizontalDivider()
         }
     }

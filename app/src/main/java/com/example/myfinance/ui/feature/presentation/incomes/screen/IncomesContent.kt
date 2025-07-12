@@ -16,7 +16,8 @@ fun IncomesContent(
     incomes: List<Transaction>,
     totalSum: Double,
     currency: String,
-    modifier: Modifier = Modifier
+    onItemClicked: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     LazyColumn(modifier = modifier) {
@@ -30,7 +31,7 @@ fun IncomesContent(
             HorizontalDivider()
         }
         items(incomes) { income ->
-            IncomeListItem(income, currency)
+            IncomeListItem(income, currency, onItemClicked)
             HorizontalDivider()
         }
     }
