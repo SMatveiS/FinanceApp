@@ -55,7 +55,7 @@ class AccountViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                    errorMessage = e.message,
                     screenState = ScreenState.ERROR
                 ) }
             }
@@ -88,7 +88,7 @@ class AccountViewModel @Inject constructor(
                 updateAccountUseCase(account)
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка сохранения: ${e.localizedMessage}",
+                    errorMessage = "Save error: ${e.message}",
                     screenState = ScreenState.ERROR
                 ) }
             }

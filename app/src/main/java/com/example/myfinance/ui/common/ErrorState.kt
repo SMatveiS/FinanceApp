@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ErrorState(
-    message: String,
+    message: String?,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -37,7 +37,7 @@ fun ErrorState(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = message,
+                text = message ?: "Unknown error",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center

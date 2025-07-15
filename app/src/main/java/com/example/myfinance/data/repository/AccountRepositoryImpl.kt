@@ -2,7 +2,6 @@ package com.example.myfinance.data.repository
 
 import com.example.myfinance.data.local.datastore.AccountManager
 import com.example.myfinance.data.remote.account.AccountRemoteDataSource
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.data.utils.safeApiCall
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository
@@ -30,14 +29,13 @@ class AccountRepositoryImpl @Inject constructor(
                 Result.success(localAccount)
             } else {
 
-                val accounts = safeApiCall { accountRemoteDataSource.getAllAccounts() }
+                val accountsResult = safeApiCall { accountRemoteDataSource.getAllAccounts() }
 
-                when (accounts) {
-                    is NetworkResult.Error ->
-                        Result.failure(Throwable(accounts.errorMessage ?: "Unknown error"))
+                accountsResult.fold(
+                    onFailure = { Result.failure(it) },
 
-                    is NetworkResult.Success -> {
-                        val account = accounts.data.firstOrNull()?.toDomain()
+                    onSuccess = { accounts ->
+                        val account = accounts.firstOrNull()?.toDomain()
 
                         if (account == null) {
                             Result.failure(Throwable("No accounts available"))
@@ -46,7 +44,7 @@ class AccountRepositoryImpl @Inject constructor(
                             Result.success(account)
                         }
                     }
-                }
+                )
             }
         }
     }
@@ -57,16 +55,11 @@ class AccountRepositoryImpl @Inject constructor(
             val accountResult =
                 safeApiCall { accountRemoteDataSource.updateAccount(id, account.toDto()) }
 
-            when (accountResult) {
+            accountResult.map {
+                val updatedAccount = it.toDomain()
 
-                is NetworkResult.Error -> Result.failure(Throwable(accountResult.errorMessage))
-
-                is NetworkResult.Success -> {
-                    val updatedAccount = accountResult.data.toDomain()
-
-                    accountManager.updateAccount(updatedAccount)
-                    Result.success(updatedAccount)
-                }
+                accountManager.updateAccount(updatedAccount)
+                updatedAccount
             }
         }
     }

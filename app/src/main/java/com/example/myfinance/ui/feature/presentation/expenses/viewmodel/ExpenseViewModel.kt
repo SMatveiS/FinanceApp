@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.transaction.GetTodayTransactionsUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.data.utils.NetworkResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -35,30 +34,30 @@ class ExpenseViewModel @Inject constructor(
 
             try {
                 val expensesResult = getTodayTransactionsUseCase(isIncomes = false)
-                when (expensesResult) {
-                    is NetworkResult.Success -> {
-                        val currency = expensesResult.data.currency
+                expensesResult.fold(
+                    onSuccess = { expenses ->
+                        val currency = expenses.currency
 
                         _state.update { it.copy(
-                            expenses = expensesResult.data.transactions,
-                            totalSum = expensesResult.data.transactionsSum,
+                            expenses = expenses.transactions,
+                            totalSum = expenses.transactionsSum,
                             currency = currency,
                             screenState = ScreenState.SUCCESS
                         ) }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = expensesResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                    errorMessage = e.message,
                     screenState = ScreenState.ERROR
                 ) }
             }

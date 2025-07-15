@@ -2,7 +2,6 @@ package com.example.myfinance.ui.feature.presentation.change_transaction.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.model.Category
 import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import com.example.myfinance.domain.usecase.category.GetCategoriesByType
@@ -104,7 +103,7 @@ class ChangeTransactionViewModel @AssistedInject constructor(
             } catch (e: Exception) {
                 _state.update {
                     it.copy(
-                        errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                        errorMessage = e.message,
                         screenState = ScreenState.ERROR
                     )
                 }
@@ -130,34 +129,34 @@ class ChangeTransactionViewModel @AssistedInject constructor(
             try {
                 val transactionResult = getTransactionByIdUseCase(id = transactionId!!)
 
-                when (transactionResult) {
-                    is NetworkResult.Success -> {
+                transactionResult.fold(
+                    onSuccess = { transaction ->
 
-                        val dateTime = uiDateTimeFormat.parse(transactionResult.data.date)
+                        val dateTime = uiDateTimeFormat.parse(transaction.date)
 
                         _state.update {
                             it.copy(
-                                transaction = transactionResult.data,
+                                transaction = transaction,
                                 date = LocalDate.from(dateTime),
                                 time = LocalTime.from(dateTime),
                                 screenState = ScreenState.SUCCESS
                             )
                         }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = transactionResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update {
                     it.copy(
-                        errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                        errorMessage = e.message,
                         screenState = ScreenState.ERROR
                     )
                 }
@@ -180,7 +179,7 @@ class ChangeTransactionViewModel @AssistedInject constructor(
                 addTransactionUseCase(transaction)
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка сохранения: ${e.localizedMessage}",
+                    errorMessage = "Save error: ${e.message}",
                     screenState = ScreenState.ERROR
                 ) }
             }
@@ -197,7 +196,7 @@ class ChangeTransactionViewModel @AssistedInject constructor(
                 updateTransactionUseCase(transaction)
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка сохранения: ${e.localizedMessage}",
+                    errorMessage = "Save error: ${e.message}",
                     screenState = ScreenState.ERROR
                 ) }
             }
@@ -255,24 +254,25 @@ class ChangeTransactionViewModel @AssistedInject constructor(
 
             try {
                 val categoriesResult = getCategoriesByType(isIncome)
-                when (categoriesResult) {
-                    is NetworkResult.Success -> {
+                categoriesResult.fold(
+                    onSuccess = { categories ->
                         _state.update { it.copy(
-                            categories = categoriesResult.data,
+                            categories = categories,
                             categoriesState = ScreenState.SUCCESS
                         ) }
-                    }
-                    is NetworkResult.Error -> {
+                    },
+
+                    onFailure = { error ->
                         _state.update { it.copy(
                             categoriesState = ScreenState.ERROR,
-                            categoriesErrorMessage = categoriesResult.errorMessage
+                            categoriesErrorMessage = error.message
                         ) }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
                     categoriesState = ScreenState.ERROR,
-                    categoriesErrorMessage = "Ошибка: ${e.localizedMessage}"
+                    categoriesErrorMessage = e.message
                 ) }
             }
         }

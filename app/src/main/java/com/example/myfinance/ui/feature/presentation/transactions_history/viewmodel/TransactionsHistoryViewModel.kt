@@ -2,7 +2,6 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.viewm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
@@ -93,30 +92,30 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
                     isIncomes = isIncome
                 )
 
-                when (transactionsResult) {
-                    is NetworkResult.Success -> {
-                        val currency = transactionsResult.data.currency
+                transactionsResult.fold(
+                    onSuccess = { transactions ->
+                        val currency = transactions.currency
 
                         _state.update { it.copy(
-                            transactions = transactionsResult.data.transactions,
-                            totalSum = transactionsResult.data.transactionsSum,
+                            transactions = transactions.transactions,
+                            totalSum = transactions.transactionsSum,
                             currency = currency,
                             screenState = ScreenState.SUCCESS
                         ) }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = transactionsResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                    errorMessage = e.message,
                     screenState = ScreenState.ERROR
                 ) }
             }

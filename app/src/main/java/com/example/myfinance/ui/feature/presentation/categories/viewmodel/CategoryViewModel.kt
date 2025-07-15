@@ -2,7 +2,6 @@ package com.example.myfinance.ui.feature.presentation.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.category.GetAllCategoriesUseCase
 import com.example.myfinance.domain.usecase.category.GetCategoriesWithSubstringUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
@@ -47,30 +46,30 @@ class CategoryViewModel @Inject constructor(
             try {
                 val searchText = state.value.searchText.trim()
 
-                val categories =
+                val categoriesResult =
                     if (searchText == "") getAllCategoriesUseCase()
                     else getCategoriesWithSubstringUseCase(searchText)
 
-                when (categories) {
-                    is NetworkResult.Success -> {
+                categoriesResult.fold(
+                    onSuccess = { categories ->
                         _state.update { it.copy(
-                            categories = categories.data,
+                            categories = categories,
                             screenState = ScreenState.SUCCESS
                         ) }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = categories.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                    errorMessage = e.message,
                     screenState = ScreenState.ERROR
                 ) }
             }

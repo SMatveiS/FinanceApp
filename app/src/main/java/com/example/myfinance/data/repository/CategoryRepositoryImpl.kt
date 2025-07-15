@@ -2,8 +2,6 @@ package com.example.myfinance.data.repository
 
 import com.example.myfinance.data.local.database.CategoryDao
 import com.example.myfinance.data.remote.category.CategoryRemoteDataSource
-import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
 import com.example.myfinance.domain.model.Category
 import com.example.myfinance.domain.repository.CategoryRepository
@@ -20,7 +18,7 @@ class CategoryRepositoryImpl @Inject constructor(
     private val categoryDao: CategoryDao
 ): CategoryRepository {
 
-    override suspend fun getAllCategories(): NetworkResult<List<Category>> {
+    override suspend fun getAllCategories(): Result<List<Category>> {
         return withContext(Dispatchers.IO) {
 
             val categories = safeApiCall { categoryRemoteDataSource.getAllCategories() }
@@ -31,7 +29,7 @@ class CategoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCategoryByType(isIncome: Boolean): NetworkResult<List<Category>> {
+    override suspend fun getCategoryByType(isIncome: Boolean): Result<List<Category>> {
         return withContext(Dispatchers.IO) {
 
             val categories = safeApiCall {

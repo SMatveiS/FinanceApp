@@ -50,7 +50,7 @@ fun CategoryBottomSheet(
 
             ScreenState.ERROR -> {
                 ErrorState(
-                    message = errorMessage ?: "Неизвестная ошибка",
+                    message = errorMessage,
                     onRetry = retry
                 )
             }

@@ -2,8 +2,6 @@ package com.example.myfinance.data.repository
 
 import com.example.myfinance.data.local.database.TransactionDao
 import com.example.myfinance.data.remote.transaction.TransactionRemoteDataSource
-import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.domain.repository.TransactionRepository
@@ -20,7 +18,7 @@ class TransactionRepositoryImpl @Inject constructor(
     private val transactionDao: TransactionDao
 ): TransactionRepository {
 
-    override suspend fun getTransaction(id: Int): NetworkResult<Transaction> {
+    override suspend fun getTransaction(id: Int): Result<Transaction> {
         return withContext(Dispatchers.IO) {
 
             val transaction = safeApiCall { transactionRemoteDataSource.getTransaction(id = id) }
@@ -44,7 +42,7 @@ class TransactionRepositoryImpl @Inject constructor(
     override suspend fun updateTransaction(
         id: Int,
         transaction: Transaction
-    ): NetworkResult<Transaction> {
+    ): Result<Transaction> {
 
         return withContext(Dispatchers.IO) {
 
@@ -59,7 +57,7 @@ class TransactionRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteTransaction(id: Int): NetworkResult<Transaction> {
+    override suspend fun deleteTransaction(id: Int): Result<Transaction> {
         return withContext(Dispatchers.IO) {
 
             val transaction = safeApiCall {
@@ -74,7 +72,7 @@ class TransactionRepositoryImpl @Inject constructor(
         id: Int,
         startDate: String,
         endDate: String
-    ): NetworkResult<List<Transaction>> {
+    ): Result<List<Transaction>> {
 
         return withContext(Dispatchers.IO) {
 

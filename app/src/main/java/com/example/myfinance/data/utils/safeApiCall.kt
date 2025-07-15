@@ -4,23 +4,21 @@ import retrofit2.Response
 
 /**
  * Функциея безопасного похода в сеть
- *
- * Возвращает NetworkResult.Error(errorMessage) в случае ошибки, иначе - NetworkResult.Success(data)
- */
+  */
 
-suspend fun <T> safeApiCall(api: suspend () -> Response<T>): NetworkResult<T> {
+suspend fun <T> safeApiCall(api: suspend () -> Response<T>): Result<T> {
     try {
         val response = api()
         if (response.isSuccessful) {
             val body = response.body()
             body?.let {
-                return NetworkResult.Success(body)
-            } ?: return NetworkResult.Error(errorMessage = "Ошибка: пустое тело ответа")
+                return Result.success(body)
+            } ?: return Result.failure(Throwable("No response body"))
         } else {
-            return NetworkResult.Error(errorMessage = "Ошибка: ${response.code()} ${response.message()}")
+            return Result.failure(Throwable("${response.code()} ${response.message()}"))
         }
     } catch(e: Exception) {
-        return NetworkResult.Error(errorMessage = "Ошибка: ${e.message}")
+        return Result.failure(Throwable("${e.message}"))
     }
 }
 
