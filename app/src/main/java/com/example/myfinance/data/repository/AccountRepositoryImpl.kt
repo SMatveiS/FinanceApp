@@ -3,7 +3,6 @@ package com.example.myfinance.data.repository
 import com.example.myfinance.data.local.datastore.AccountManager
 import com.example.myfinance.data.remote.account.AccountRemoteDataSource
 import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.data.utils.map
 import com.example.myfinance.data.utils.safeApiCall
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository
@@ -43,6 +42,7 @@ class AccountRepositoryImpl @Inject constructor(
                         if (account == null) {
                             Result.failure(Throwable("No accounts available"))
                         } else {
+                            accountManager.updateAccount(account)
                             Result.success(account)
                         }
                     }
@@ -51,14 +51,22 @@ class AccountRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAccount(id: Int, account: Account): NetworkResult<Account> {
+    override suspend fun updateAccount(id: Int, account: Account): Result<Account> {
         return withContext(Dispatchers.IO) {
 
-            val accounts =
+            val accountResult =
                 safeApiCall { accountRemoteDataSource.updateAccount(id, account.toDto()) }
 
-            accounts.map { account ->
-                account.toDomain()
+            when (accountResult) {
+
+                is NetworkResult.Error -> Result.failure(Throwable(accountResult.errorMessage))
+
+                is NetworkResult.Success -> {
+                    val updatedAccount = accountResult.data.toDomain()
+
+                    accountManager.updateAccount(updatedAccount)
+                    Result.success(updatedAccount)
+                }
             }
         }
     }

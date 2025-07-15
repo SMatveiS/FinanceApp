@@ -2,9 +2,6 @@ package com.example.myfinance.domain.usecase.account
 
 import com.example.myfinance.domain.model.Account
 import com.example.myfinance.domain.repository.AccountRepository
-import com.example.myfinance.data.utils.NetworkResult
-import com.example.myfinance.data.utils.NetworkResult.Error
-import com.example.myfinance.data.utils.NetworkResult.Success
 import javax.inject.Inject
 
 /**

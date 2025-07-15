@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.account.UpdateAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
