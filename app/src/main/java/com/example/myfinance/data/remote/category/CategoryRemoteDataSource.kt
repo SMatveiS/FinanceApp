@@ -1,4 +1,4 @@
-package com.example.myfinance.data.api.category
+package com.example.myfinance.data.remote.category
 
 import javax.inject.Inject
 

@@ -30,13 +30,12 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
         isIncomes: Boolean
     ): NetworkResult<TransactionsResult> {
 
-        // Нельзя сделать через map, так как вернёт NetworkResult<NetworkResult<...>>
-        return when (val accountResult = getAccountUseCase()) {
-            is NetworkResult.Error -> NetworkResult.Error(errorMessage = accountResult.errorMessage)
-
-            is NetworkResult.Success -> {
+        val accountResult = getAccountUseCase()
+        return accountResult.fold(
+            onFailure =  { error -> NetworkResult.Error(errorMessage = error.message) },
+            onSuccess = { account ->
                 val transactionsResult = transactionRepository.getTransactionForPeriod(
-                    id = accountResult.data.id,
+                    id = account.id,
                     startDate = startDate,
                     endDate = endDate
                 )
@@ -49,10 +48,10 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
                     TransactionsResult(
                         transactions = sortedTransactions,
                         transactionsSum = sortedTransactions.sumOf { it.amount },
-                        currency = accountResult.data.currency
+                        currency = account.currency
                     )
                 }
             }
-        }
+        )
     }
 }

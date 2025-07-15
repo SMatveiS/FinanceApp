@@ -37,23 +37,23 @@ class AccountViewModel @Inject constructor(
 
             try {
                 val accountResult = getAccountUseCase()
-                when (accountResult) {
-                    is NetworkResult.Success -> {
+                accountResult.fold (
+                    onSuccess = { account ->
                         _state.update { it.copy(
-                            account = accountResult.data,
+                            account = account,
                             screenState = ScreenState.SUCCESS
                         ) }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = accountResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
                     errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",

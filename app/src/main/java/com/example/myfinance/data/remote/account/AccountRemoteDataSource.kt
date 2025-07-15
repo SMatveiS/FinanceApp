@@ -1,6 +1,6 @@
-package com.example.myfinance.data.api.account
+package com.example.myfinance.data.remote.account
 
-import com.example.myfinance.data.model.AccountResponseDto
+import com.example.myfinance.data.model.AccountRequestDto
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,5 +14,5 @@ class AccountRemoteDataSource @Inject constructor(
 ) {
     suspend fun getAllAccounts() = accountApi.getAllAccounts()
 
-    suspend fun updateAccount(id: Int, account: AccountResponseDto) = accountApi.updateAccount(id, account)
+    suspend fun updateAccount(id: Int, account: AccountRequestDto) = accountApi.updateAccount(id, account)
 }

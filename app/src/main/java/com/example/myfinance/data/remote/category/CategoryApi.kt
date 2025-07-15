@@ -1,4 +1,4 @@
-package com.example.myfinance.data.api.category
+package com.example.myfinance.data.remote.category
 
 import com.example.myfinance.data.model.CategoryResponseDto
 import retrofit2.Response

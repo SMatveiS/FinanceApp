@@ -14,15 +14,6 @@ import javax.inject.Inject
 class GetAccountUseCase @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
-    suspend operator fun invoke():  NetworkResult<Account> {
-        return when (val accounts = accountRepository.getAllAccounts()) {
-            is Success ->  {
-                if (accounts.data.firstOrNull() != null) {
-                    Success(accounts.data.first())
-                } else Error(errorMessage = "Ошибка: Нет доступных аккаунтов")
-            }
 
-            is Error -> Error(accounts.errorMessage)
-        }
-    }
+    suspend operator fun invoke():  Result<Account> = accountRepository.getAccount()
 }

@@ -1,4 +1,4 @@
-package com.example.myfinance.data.api.transaction
+package com.example.myfinance.data.remote.transaction
 
 import com.example.myfinance.data.model.TransactionRequestDto
 import com.example.myfinance.data.model.TransactionResponseDto

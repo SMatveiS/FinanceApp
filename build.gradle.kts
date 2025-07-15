@@ -4,11 +4,4 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.ksp) apply false
-//    alias(libs.plugins.hilt.android) apply false
 }
-
-//buildscript {
-//    dependencies {
-//        classpath("com.google.dagger:hilt-android-gradle-plugin:2.56.2")
-//    }
-//}

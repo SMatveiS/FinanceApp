@@ -79,28 +79,28 @@ class ChangeTransactionViewModel @AssistedInject constructor(
             try {
                 val accountResult = getAccountUseCase()
 
-                when (accountResult) {
+                 accountResult.fold (
 
-                    is NetworkResult.Success -> {
+                    onSuccess =  { account ->
                         _state.update {
                             it.copy(
-                                accountName = accountResult.data.name,
+                                accountName = account.name,
                                 transaction = it.transaction.copy(
-                                    accountId = accountResult.data.id,
-                                    currency = accountResult.data.currency
+                                    accountId = account.id,
+                                    currency = account.currency
                                 ))
                         }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = accountResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update {
                     it.copy(

@@ -1,5 +1,6 @@
-package com.example.myfinance.data.api.account
+package com.example.myfinance.data.remote.account
 
+import com.example.myfinance.data.model.AccountRequestDto
 import com.example.myfinance.data.model.AccountResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -18,7 +19,7 @@ interface AccountApi {
     @PUT("accounts/{id}")
     suspend fun updateAccount(
         @Path("id") id: Int,
-        @Body account: AccountResponseDto
+        @Body account: AccountRequestDto
     ): Response<AccountResponseDto>
 
 }

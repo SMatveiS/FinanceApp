@@ -5,12 +5,12 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideApplicationContext(context: Context): Context {
-        return context.applicationContext
-    }
-}
+//@Module
+//object AppModule {
+//
+//    @Singleton
+//    @Provides
+//    fun provideApplicationContext(context: Context): Context {
+//        return context.applicationContext
+//    }
+//}
