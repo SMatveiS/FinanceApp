@@ -16,36 +16,35 @@ import javax.inject.Singleton
 
 @Singleton
 class AccountRepositoryImpl @Inject constructor(
-    private val accountRemoteDataSource: AccountRemoteDataSource,
-    private val accountManager: AccountManager
+    private val remoteDataSource: AccountRemoteDataSource,
+    private val localDataSource: AccountManager
 ): AccountRepository {
 
     override suspend fun getAccount(): Result<Account> {
         return withContext(Dispatchers.IO) {
 
-            val localAccount = accountManager.getAccount()
-
+            val localAccount = localDataSource.getAccount()
             if (localAccount != null){
-                Result.success(localAccount)
-            } else {
-
-                val accountsResult = safeApiCall { accountRemoteDataSource.getAllAccounts() }
-
-                accountsResult.fold(
-                    onFailure = { Result.failure(it) },
-
-                    onSuccess = { accounts ->
-                        val account = accounts.firstOrNull()?.toDomain()
-
-                        if (account == null) {
-                            Result.failure(Throwable("No accounts available"))
-                        } else {
-                            accountManager.updateAccount(account)
-                            Result.success(account)
-                        }
-                    }
-                )
+                return@withContext Result.success(localAccount)
             }
+
+            // Если в DataStore нет информации о счёте, то делаем запрос на сервер
+            val accountsResult = safeApiCall { remoteDataSource.getAllAccounts() }
+
+            accountsResult.fold(
+                onFailure = { Result.failure(it) },
+
+                onSuccess = { accounts ->
+                    val account = accounts.firstOrNull()?.toDomain()
+
+                    if (account == null) {
+                        Result.failure(Throwable("No accounts available"))
+                    } else {
+                        localDataSource.updateAccount(account)
+                        Result.success(account)
+                    }
+                }
+            )
         }
     }
 
@@ -53,12 +52,13 @@ class AccountRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
 
             val accountResult =
-                safeApiCall { accountRemoteDataSource.updateAccount(id, account.toDto()) }
+                safeApiCall { remoteDataSource.updateAccount(id, account.toDto()) }
 
+            // Записываем данные в бд, только если удалось записать на сервер
             accountResult.map {
                 val updatedAccount = it.toDomain()
 
-                accountManager.updateAccount(updatedAccount)
+                localDataSource.updateAccount(updatedAccount)
                 updatedAccount
             }
         }

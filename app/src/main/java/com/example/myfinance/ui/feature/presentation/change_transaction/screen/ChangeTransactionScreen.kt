@@ -89,7 +89,8 @@ fun ChangeTransactionScreen(
             ScreenState.SUCCESS -> {
                 ChangeTransactionContent(
                     transaction = state.transaction,
-                    account = state.accountName,
+                    accountName = state.accountName,
+                    currency = state.currency,
                     date = state.date.format(uiDateFormat),
                     time = state.time.format(uiTimeFormat),
                     categories = state.categories,

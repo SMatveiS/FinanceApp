@@ -36,12 +36,10 @@ class ExpenseViewModel @Inject constructor(
                 val expensesResult = getTodayTransactionsUseCase(isIncomes = false)
                 expensesResult.fold(
                     onSuccess = { expenses ->
-                        val currency = expenses.currency
-
                         _state.update { it.copy(
                             expenses = expenses.transactions,
                             totalSum = expenses.transactionsSum,
-                            currency = currency,
+                            currency = expenses.currency,
                             screenState = ScreenState.SUCCESS
                         ) }
                     },

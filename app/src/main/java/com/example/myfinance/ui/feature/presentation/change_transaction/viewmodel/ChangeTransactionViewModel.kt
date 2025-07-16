@@ -83,11 +83,10 @@ class ChangeTransactionViewModel @AssistedInject constructor(
                     onSuccess =  { account ->
                         _state.update {
                             it.copy(
+                                transaction = it.transaction.copy(accountId = account.id),
                                 accountName = account.name,
-                                transaction = it.transaction.copy(
-                                    accountId = account.id,
-                                    currency = account.currency
-                                ))
+                                currency = account.currency
+                            )
                         }
                     },
 

@@ -37,6 +37,8 @@ fun ChangeTransactionContent(
     transaction: Transaction,
     date: String,
     time: String,
+    accountName: String,
+    currency: String,
     categories: List<Category>,
     categoriesState: ScreenState,
     getCategories: () -> Unit,
@@ -46,9 +48,7 @@ fun ChangeTransactionContent(
     onSumChanged: (Double) -> Unit,
     onCommentChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
-    categoriesErrorMessage: String? = null,
-    account: String
-
+    categoriesErrorMessage: String? = null
 ) {
 
     var sum by rememberSaveable { mutableStateOf(transaction.amount.toString()) }
@@ -58,7 +58,7 @@ fun ChangeTransactionContent(
     Column(modifier = modifier) {
         AppListItem(
             leftTitle = "Счет",
-            rightTitle = account,
+            rightTitle = accountName,
             itemHeight = 70
         )
 
@@ -89,7 +89,7 @@ fun ChangeTransactionContent(
                     }
                 }
             },
-            trailText = getCurrencySymbol(transaction.currency),
+            trailText = getCurrencySymbol(currency),
             itemHeight = 70
         )
 

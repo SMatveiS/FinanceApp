@@ -37,6 +37,57 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
         getTransactions()
     }
 
+    fun getTransactions() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    screenState = ScreenState.LOADING,
+                    errorMessage = null
+                )
+            }
+
+            try {
+                val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
+                val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
+
+                val transactionsResult = getTransactionsForPeriodUseCase(
+                    startDate = startDate,
+                    endDate = endDate,
+                    isIncomes = isIncome
+                )
+
+                transactionsResult.fold(
+                    onSuccess = { transactions ->
+                        _state.update {
+                            it.copy(
+                                transactions = transactions.transactions,
+                                totalSum = transactions.transactionsSum,
+                                currency = transactions.currency,
+                                screenState = ScreenState.SUCCESS
+                            )
+                        }
+                    },
+
+                    onFailure = { error ->
+                        _state.update {
+                            it.copy(
+                                errorMessage = error.message,
+                                screenState = ScreenState.ERROR
+                            )
+                        }
+                    }
+                )
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(
+                        errorMessage = e.message,
+                        screenState = ScreenState.ERROR
+                    )
+                }
+            }
+        }
+    }
+
     fun onStartDatePickerOpen() = openDialog(DialogType.START_DATE)
 
     fun onEndDatePickerOpen() = openDialog(DialogType.END_DATE)
@@ -72,53 +123,6 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
             }
 
             getTransactions()
-        }
-    }
-
-    fun getTransactions() {
-        viewModelScope.launch {
-            _state.update { it.copy(
-                screenState = ScreenState.LOADING,
-                errorMessage = null
-            ) }
-
-            try {
-                val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
-                val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
-
-                val transactionsResult = getTransactionsForPeriodUseCase(
-                    startDate = startDate,
-                    endDate = endDate,
-                    isIncomes = isIncome
-                )
-
-                transactionsResult.fold(
-                    onSuccess = { transactions ->
-                        val currency = transactions.currency
-
-                        _state.update { it.copy(
-                            transactions = transactions.transactions,
-                            totalSum = transactions.transactionsSum,
-                            currency = currency,
-                            screenState = ScreenState.SUCCESS
-                        ) }
-                    },
-
-                    onFailure = { error ->
-                        _state.update {
-                            it.copy(
-                                errorMessage = error.message,
-                                screenState = ScreenState.ERROR
-                            )
-                        }
-                    }
-                )
-            } catch (e: Exception) {
-                _state.update { it.copy(
-                    errorMessage = e.message,
-                    screenState = ScreenState.ERROR
-                ) }
-            }
         }
     }
 }

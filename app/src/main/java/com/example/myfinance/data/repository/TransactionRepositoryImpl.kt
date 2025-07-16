@@ -4,6 +4,7 @@ import com.example.myfinance.data.local.database.TransactionDao
 import com.example.myfinance.data.remote.transaction.TransactionRemoteDataSource
 import com.example.myfinance.data.utils.safeApiCall
 import com.example.myfinance.domain.model.Transaction
+import com.example.myfinance.domain.model.TransactionBrief
 import com.example.myfinance.domain.repository.TransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,57 +15,76 @@ import javax.inject.Inject
  */
 
 class TransactionRepositoryImpl @Inject constructor(
-    private val transactionRemoteDataSource: TransactionRemoteDataSource,
-    private val transactionDao: TransactionDao
+    private val remoteDataSource: TransactionRemoteDataSource,
+    private val localDataSource: TransactionDao
 ): TransactionRepository {
 
     override suspend fun getTransaction(id: Int): Result<Transaction> {
         return withContext(Dispatchers.IO) {
 
-            val transaction = safeApiCall { transactionRemoteDataSource.getTransaction(id = id) }
+            localDataSource.getTransactionWithCategory(id)?.let {
+                return@withContext Result.success(it.toDomain())
+            }
 
-            transaction.map { it.toDomain() }
+            // Если транзакции нет в бд, то делаем запрос на сервер
+            val transactionResult = safeApiCall { remoteDataSource.getTransaction(id = id) }
+            transactionResult.map { transaction ->
+                localDataSource.addTransactions( listOf(transaction.toEntity()) )
+                transaction.toDomain()
+            }
         }
 
     }
 
-    override suspend fun addTransaction(transaction: Transaction) {
-        withContext(Dispatchers.IO) {
+    override suspend fun addTransaction(transaction: Transaction): Result<TransactionBrief> {
+        return withContext(Dispatchers.IO) {
 
-            println(transaction.toString())
-            println(transaction.toDto().toString())
-            safeApiCall {
-                transactionRemoteDataSource.addTransaction(transaction = transaction.toDto())
+            val transactionResult = safeApiCall {
+                remoteDataSource.addTransaction(transaction = transaction.toDto())
+            }
+
+            // Записываем данные в бд, только если удалось записать на сервер
+            transactionResult.map { transaction ->
+                localDataSource.addTransactions( listOf(transaction.toEntity()) )
+                transaction.toDomain()
             }
         }
     }
 
     override suspend fun updateTransaction(
         id: Int,
-        transaction: Transaction
+        newTransaction: Transaction
     ): Result<Transaction> {
 
         return withContext(Dispatchers.IO) {
 
-            val transaction = safeApiCall {
-                transactionRemoteDataSource.updateTransaction(
+            val transactionResult = safeApiCall {
+                remoteDataSource.updateTransaction(
                     id = id,
-                    transaction = transaction.toDto()
+                    transaction = newTransaction.toDto()
                 )
             }
 
-            transaction.map { it.toDomain() }
+            // Обновляем данные в бд, только если удалось обновить на сервере
+            transactionResult.map { transaction->
+                localDataSource.updateTransaction(transaction.toEntity())
+                transaction.toDomain()
+            }
         }
     }
 
-    override suspend fun deleteTransaction(id: Int): Result<Transaction> {
+    override suspend fun deleteTransaction(id: Int): Result<Void> {
         return withContext(Dispatchers.IO) {
 
-            val transaction = safeApiCall {
-                transactionRemoteDataSource.deleteTransaction(id = id)
+            val deleteResult = safeApiCall {
+                remoteDataSource.deleteTransaction(id = id)
             }
 
-            transaction.map { it.toDomain() }
+            // Удаляем данные в бд, только если удалось удалить на сервере
+            deleteResult.map {
+                localDataSource.deleteTransaction(id)
+                it
+            }
         }
     }
 
@@ -76,16 +96,23 @@ class TransactionRepositoryImpl @Inject constructor(
 
         return withContext(Dispatchers.IO) {
 
-            val transactions = safeApiCall {
-                transactionRemoteDataSource.getTransactionsForPeriod(
+            val localTransactions = localDataSource
+                .getTransactionsWithCategoryForPeriod(startDate, endDate)
+            if (localTransactions.isNotEmpty()) {
+                return@withContext Result.success(localTransactions.map { it.toDomain() })
+            }
+
+            // Если транзакций нет в бд, то делаем запрос на сервер
+            val transactionsResult = safeApiCall {
+                remoteDataSource.getTransactionsForPeriod(
                     id = id,
                     startDate = startDate,
                     endDate = endDate
                 )
             }
-
-            transactions.map { transaction ->
-                transaction.map { it.toDomain() }
+            transactionsResult.map { transactions ->
+                localDataSource.addTransactions( transactions.map { it.toEntity() })
+                transactions.map { it.toDomain() }
             }
         }
     }

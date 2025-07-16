@@ -37,12 +37,10 @@ class IncomesViewModel @Inject constructor(
 
                 incomesResult.fold(
                     onSuccess = { incomes ->
-                        val currency = incomes.currency
-
                         _state.update { it.copy(
                             incomes = incomes.transactions,
                             totalSum = incomes.transactionsSum,
-                            currency = currency,
+                            currency = incomes.currency,
                             screenState = ScreenState.SUCCESS
                         ) }
                     },

@@ -8,23 +8,30 @@ import com.example.myfinance.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.collections.map
 
 /**
  * Возвращает информацию о категориях внутри NetworkResult независимо от источника
  */
 
 class CategoryRepositoryImpl @Inject constructor(
-    private val categoryRemoteDataSource: CategoryRemoteDataSource,
-    private val categoryDao: CategoryDao
+    private val remoteDataSource: CategoryRemoteDataSource,
+    private val localDataSource: CategoryDao
 ): CategoryRepository {
 
     override suspend fun getAllCategories(): Result<List<Category>> {
         return withContext(Dispatchers.IO) {
 
-            val categories = safeApiCall { categoryRemoteDataSource.getAllCategories() }
+            val localCategories = localDataSource.getAllCategories()
+            if (localCategories.isNotEmpty()) {
+                return@withContext Result.success(localCategories.map { it.toDomain() })
+            }
 
-            categories.map { category ->
-                category.map { it.toDomain() }
+            // Если списка категорий нет в бд, то делаем запрос на сервер
+            val categoriesResult = safeApiCall { remoteDataSource.getAllCategories() }
+            categoriesResult.map { categories ->
+                localDataSource.addCategories(categories.map { it.toEntity() })
+                categories.map { it.toDomain() }
             }
         }
     }
@@ -32,12 +39,19 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun getCategoryByType(isIncome: Boolean): Result<List<Category>> {
         return withContext(Dispatchers.IO) {
 
-            val categories = safeApiCall {
-                categoryRemoteDataSource.getCategoryByType(isIncome = isIncome)
+            val localCategories = localDataSource.getCategoriesByType(isIncome)
+            if (localCategories.isNotEmpty()) {
+                return@withContext Result.success(localCategories.map { it.toDomain() })
             }
 
-            categories.map { category ->
-                category.map { it.toDomain() }
+            // Если списка категорий нет в бд, то делаем запрос на сервер
+            val categoriesResult = safeApiCall {
+                remoteDataSource.getCategoryByType(isIncome = isIncome)
+            }
+
+            categoriesResult.map { categories ->
+                localDataSource.addCategories(categories.map { it.toEntity() })
+                categories.map { it.toDomain() }
             }
         }
     }
