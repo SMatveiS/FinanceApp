@@ -2,6 +2,7 @@ package com.example.myfinance.di
 
 import android.content.Context
 import com.example.myfinance.app.FinApp
+import com.example.myfinance.app.NetworkMonitor
 import com.example.myfinance.di.module.ApiModule
 //import com.example.myfinance.di.module.AppModule
 import com.example.myfinance.di.module.DatabaseModule
@@ -26,6 +27,7 @@ import javax.inject.Singleton
 interface AppComponent {
     fun activityComponentFactory(): ActivityComponent.Factory
     fun workerFactory(): WorkerFactory
+    fun networkMonitor(): NetworkMonitor
 
     @Component.Factory
     interface Factory {

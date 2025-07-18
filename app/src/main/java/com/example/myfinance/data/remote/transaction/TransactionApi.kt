@@ -30,7 +30,7 @@ interface TransactionApi {
     ): Response<TransactionResponseDto>
 
     @DELETE("transactions/{id}")
-    suspend fun deleteTransaction(@Path("id") id: Int): Response<Void>
+    suspend fun deleteTransaction(@Path("id") id: Int): Response<Void?>
 
     @GET("transactions/account/{accountId}/period")
     suspend fun getTransactionsForPeriod(

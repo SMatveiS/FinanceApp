@@ -41,6 +41,7 @@ data class TransactionShortResponseDto(
         categoryId = categoryId,
         amount = amount,
         transactionDate = transactionDate,
-        comment = if (comment == "") null else comment
+        comment = if (comment == "") null else comment,
+        updatedAt = updatedAt
     )
 }

@@ -12,4 +12,6 @@ interface CategoryRepository {
 
     suspend fun getCategoryByType(isIncome: Boolean): Result<List<Category>>
 
+    suspend fun syncCategories(): Result<Unit>
+
 }

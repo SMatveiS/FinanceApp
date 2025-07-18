@@ -1,6 +1,7 @@
 package com.example.myfinance.di.module.workmanager
 
-import com.example.myfinance.data.workmanager.SyncWorker
+import com.example.myfinance.data.workmanager.SyncOperationsWorker
+import com.example.myfinance.data.workmanager.SyncDbWorker
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -10,6 +11,11 @@ abstract class WorkerModule {
 
     @Binds
     @IntoMap
-    @WorkerKey(SyncWorker::class)
-    abstract fun bindSyncWorkerFactory(factory: SyncWorker.Factory): ChildWorkerFactory
+    @WorkerKey(SyncDbWorker::class)
+    abstract fun bindSyncDbWorkerFactory(factory: SyncDbWorker.Factory): ChildWorkerFactory
+
+    @Binds
+    @IntoMap
+    @WorkerKey(SyncOperationsWorker::class)
+    abstract fun bindSyncOperationsWorkerFactory(factory: SyncOperationsWorker.Factory): ChildWorkerFactory
 }

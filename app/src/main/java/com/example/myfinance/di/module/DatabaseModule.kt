@@ -25,4 +25,8 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideCategoryDao(appDatabase: AppDatabase) = appDatabase.categoryDao()
+
+    @Provides
+    @Singleton
+    fun providePendingOperationDao(appDatabase: AppDatabase) = appDatabase.pendingOperationDao()
 }

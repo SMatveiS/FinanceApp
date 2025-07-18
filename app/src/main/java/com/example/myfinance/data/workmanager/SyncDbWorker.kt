@@ -5,20 +5,20 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.example.myfinance.di.module.workmanager.ChildWorkerFactory
-import com.example.myfinance.domain.usecase.transaction.SyncTransactionsUseCase
+import com.example.myfinance.domain.usecase.SyncDbUseCase
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class SyncWorker @Inject constructor(
+class SyncDbWorker @Inject constructor(
     appContext: Context,
     params: WorkerParameters,
-    private val syncTransactionsUseCase: SyncTransactionsUseCase
+    private val syncDbUseCase: SyncDbUseCase
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
 
-        val result = syncTransactionsUseCase()
+        val result = syncDbUseCase()
         result.fold(
             onSuccess = { return Result.success() },
 
@@ -37,14 +37,14 @@ class SyncWorker @Inject constructor(
     }
 
     class Factory @Inject constructor(
-        private val syncTransactionsUseCase: SyncTransactionsUseCase
+        private val syncDbUseCase: SyncDbUseCase
     ) : ChildWorkerFactory {
 
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
-            return SyncWorker(
+            return SyncDbWorker(
                 appContext,
                 params,
-                syncTransactionsUseCase
+                syncDbUseCase
             )
         }
     }

@@ -20,5 +20,6 @@ data class TransactionEntity(
     @ColumnInfo("category_id") val categoryId: Int,
     val amount: String,
     @ColumnInfo("transaction_date") val transactionDate: String,
-    val comment: String?
+    val comment: String?,
+    @ColumnInfo("updated_at") val updatedAt: String
 )

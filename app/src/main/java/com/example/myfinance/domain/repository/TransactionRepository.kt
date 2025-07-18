@@ -1,5 +1,6 @@
 package com.example.myfinance.domain.repository
 
+import com.example.myfinance.data.model.TransactionRequestDto
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.domain.model.TransactionBrief
 
@@ -15,7 +16,7 @@ interface TransactionRepository {
 
     suspend fun updateTransaction(id: Int, transaction: Transaction): Result<Transaction>
 
-    suspend fun deleteTransaction(id: Int): Result<Void>
+    suspend fun deleteTransaction(id: Int): Result<Void?>
 
     suspend fun getTransactionForPeriod(
         id: Int,
@@ -28,4 +29,12 @@ interface TransactionRepository {
         startDate: String,
         endDate: String
     ): Result<Unit>
+
+    suspend fun addTransactionOnServer(transaction: TransactionRequestDto): Result<TransactionBrief>
+
+    suspend fun updateTransactionOnServer(id: Int, transaction: TransactionRequestDto): Result<Transaction>
+
+    suspend fun deleteTransactionOnServer(id: Int): Result<Void?>
+
+    suspend fun deleteTransactionOnDb(id: Int)
 }

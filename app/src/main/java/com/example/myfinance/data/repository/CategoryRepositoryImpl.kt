@@ -55,4 +55,16 @@ class CategoryRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun syncCategories(): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+
+            val categoriesResult = safeApiCall { remoteDataSource.getAllCategories() }
+
+            categoriesResult.map { categories ->
+                localDataSource.addCategories(categories.map { it.toEntity() })
+                return@map
+            }
+        }
+    }
 }

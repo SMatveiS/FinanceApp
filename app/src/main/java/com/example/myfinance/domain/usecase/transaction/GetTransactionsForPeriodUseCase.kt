@@ -31,7 +31,7 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
         val accountResult = getAccountUseCase()
         // Нельзя сделать через map, так как вернёт Result<Result<...>>
         return accountResult.fold(
-            onFailure =  { error -> Result.failure(error) },
+            onFailure = { error -> Result.failure(error) },
             onSuccess = { account ->
                 val transactionsResult = transactionRepository.getTransactionForPeriod(
                     id = account.id,
