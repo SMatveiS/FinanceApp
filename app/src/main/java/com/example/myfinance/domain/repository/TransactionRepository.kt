@@ -23,4 +23,9 @@ interface TransactionRepository {
         endDate: String
     ): Result<List<Transaction>>
 
+    suspend fun syncTransactions(
+        id: Int,
+        startDate: String,
+        endDate: String
+    ): Result<Unit>
 }

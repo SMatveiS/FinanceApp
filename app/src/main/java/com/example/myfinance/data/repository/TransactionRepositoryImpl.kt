@@ -1,5 +1,6 @@
 package com.example.myfinance.data.repository
 
+import android.content.Context
 import com.example.myfinance.data.local.database.TransactionDao
 import com.example.myfinance.data.remote.transaction.TransactionRemoteDataSource
 import com.example.myfinance.data.utils.safeApiCall
@@ -113,6 +114,29 @@ class TransactionRepositoryImpl @Inject constructor(
             transactionsResult.map { transactions ->
                 localDataSource.addTransactions( transactions.map { it.toEntity() })
                 transactions.map { it.toDomain() }
+            }
+        }
+    }
+
+    override suspend fun syncTransactions(
+        id: Int,
+        startDate: String,
+        endDate: String
+    ): Result<Unit> {
+
+        return withContext(Dispatchers.IO) {
+
+            val transactionsResult = safeApiCall {
+                remoteDataSource.getTransactionsForPeriod(
+                    id = id,
+                    startDate = startDate,
+                    endDate = endDate
+                )
+            }
+            // Возвращаем Result.success() или Result.failure
+            transactionsResult.map { transactions ->
+                localDataSource.addTransactions( transactions.map { it.toEntity() })
+                return@map
             }
         }
     }

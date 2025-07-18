@@ -30,6 +30,7 @@ data class AccountResponseDto(
         id = id,
         name = name,
         balance = balance.toDouble(),
-        currency = currency
+        currency = currency,
+        createdAt = createdAt
     )
 }
