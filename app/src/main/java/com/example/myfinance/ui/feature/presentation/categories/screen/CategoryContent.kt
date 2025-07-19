@@ -19,7 +19,6 @@ fun CategoryContent(
 ) {
 
     if (categories.isNotEmpty()) {
-
         LazyColumn {
             items(categories) { category ->
                 CategoryItem(category)

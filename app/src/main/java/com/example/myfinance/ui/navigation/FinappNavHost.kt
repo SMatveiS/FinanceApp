@@ -1,18 +1,16 @@
 package com.example.myfinance.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.example.myfinance.data.MockData.settings
-import com.example.myfinance.di.ScreenComponent
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
+import com.example.myfinance.ui.feature.presentation.analysis.screen.AnalysisScreen
 import com.example.myfinance.ui.feature.presentation.categories.screen.CategoryScreen
 import com.example.myfinance.ui.feature.presentation.change_transaction.screen.ChangeTransactionScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
@@ -24,7 +22,6 @@ import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 @Composable
 fun FinappNavHost(
     navController: NavHostController,
-    screenComponentFactory: ScreenComponent.Factory,
     modifier: Modifier = Modifier
 ) {
     NavHost(navController, startDestination = NavRoutes.Expenses, modifier = modifier) {
@@ -47,10 +44,20 @@ fun FinappNavHost(
                 )
             }
 
+            composable<ChangeTransaction> { backStackEntry ->
+                val args = backStackEntry.toRoute<ChangeTransaction>()
+                ChangeTransactionScreen(
+                    isIncome = false,
+                    transactionId = args.transactionId,
+                    returnToPreviousScreen = { navController.popBackStack() }
+                )
+            }
+
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
                     isIncome = false,
                     onBackArrowClicked = { navController.popBackStack() },
+                    onAnalysisClicked = { navController.navigate(route = NavRoutes.Analysis)},
 
                     onItemClicked = { transactionId ->
                         navController.navigate(ChangeTransaction(transactionId))
@@ -58,12 +65,10 @@ fun FinappNavHost(
                 )
             }
 
-            composable<ChangeTransaction> { backStackEntry ->
-                val args = backStackEntry.toRoute<ChangeTransaction>()
-                ChangeTransactionScreen(
+            composable<NavRoutes.Analysis> { backStackEntry ->
+                AnalysisScreen(
                     isIncome = false,
-                    transactionId = args.transactionId,
-                    returnToPreviousScreen = { navController.popBackStack() }
+                    onBackArrowClicked = { navController.popBackStack() }
                 )
             }
         }
@@ -85,10 +90,20 @@ fun FinappNavHost(
                 )
             }
 
+            composable<ChangeTransaction> { backStackEntry ->
+                val args = backStackEntry.toRoute<ChangeTransaction>()
+                ChangeTransactionScreen(
+                    isIncome = true,
+                    transactionId = args.transactionId,
+                    returnToPreviousScreen = { navController.popBackStack() }
+                )
+            }
+
             composable<NavRoutes.TransactionsHistory> { backStackEntry ->
                 TransactionsHistoryScreen(
                     isIncome = true,
                     onBackArrowClicked = { navController.popBackStack() },
+                    onAnalysisClicked = { navController.navigate(route = NavRoutes.Analysis)},
 
                     onItemClicked = { transactionId ->
                         navController.navigate(ChangeTransaction(transactionId))
@@ -96,12 +111,10 @@ fun FinappNavHost(
                 )
             }
 
-            composable<ChangeTransaction> { backStackEntry ->
-                val args = backStackEntry.toRoute<ChangeTransaction>()
-                ChangeTransactionScreen(
+            composable<NavRoutes.Analysis> { backStackEntry ->
+                AnalysisScreen(
                     isIncome = true,
-                    transactionId = args.transactionId,
-                    returnToPreviousScreen = { navController.popBackStack() }
+                    onBackArrowClicked = { navController.popBackStack() }
                 )
             }
         }

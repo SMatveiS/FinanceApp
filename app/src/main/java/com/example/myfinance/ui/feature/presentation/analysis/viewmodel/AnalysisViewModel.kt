@@ -1,10 +1,10 @@
-package com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel
+package com.example.myfinance.ui.feature.presentation.analysis.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.domain.usecase.transaction.GetCategoryStatisticForPeriodUseCase
 import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
+import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,28 +16,24 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-/**
- * Хранит состояние экрана истории транзакций
- */
-
-class TransactionsHistoryViewModel @AssistedInject constructor(
-    private val getTransactionsForPeriodUseCase: GetTransactionsForPeriodUseCase,
+class AnalysisViewModel @AssistedInject constructor(
+    private val getCategoryStatisticForPeriodUseCase: GetCategoryStatisticForPeriodUseCase,
     @Assisted private val isIncome: Boolean
 ): ViewModel() {
 
     @AssistedFactory
     interface Factory {
-        fun create(isIncome: Boolean): TransactionsHistoryViewModel
+        fun create(isIncome: Boolean): AnalysisViewModel
     }
 
-    private val _state = MutableStateFlow(TransactionsState())
+    private val _state = MutableStateFlow(AnalysisState())
     val state = _state.asStateFlow()
 
     init {
-        getTransactions()
+        getStatistic()
     }
 
-    fun getTransactions() {
+    fun getStatistic() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -50,19 +46,19 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
                 val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
                 val endDate = state.value.endDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
 
-                val transactionsResult = getTransactionsForPeriodUseCase(
+                val statisticInfoResult = getCategoryStatisticForPeriodUseCase(
                     startDate = startDate,
                     endDate = endDate,
                     isIncomes = isIncome
                 )
 
-                transactionsResult.fold(
-                    onSuccess = { transactions ->
+                statisticInfoResult.fold(
+                    onSuccess = { statisticInfo ->
                         _state.update {
                             it.copy(
-                                transactions = transactions.transactions,
-                                totalSum = transactions.transactionsSum,
-                                currency = transactions.currency,
+                                categoriesStatistic = statisticInfo.categoryStatistics,
+                                totalSum = statisticInfo.totalSum,
+                                currency = statisticInfo.currency,
                                 screenState = ScreenState.SUCCESS
                             )
                         }
@@ -122,7 +118,7 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
                 )
             }
 
-            getTransactions()
+            getStatistic()
         }
     }
 }

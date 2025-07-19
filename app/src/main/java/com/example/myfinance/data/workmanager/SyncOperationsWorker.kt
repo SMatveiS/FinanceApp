@@ -10,6 +10,10 @@ import com.example.myfinance.di.module.workmanager.ChildWorkerFactory
 import com.example.myfinance.domain.repository.TransactionRepository
 import javax.inject.Inject
 
+/**
+ * Создаёт workManager, который производит все операции добавления, обновления, удаления, которые произошли, пока был выключен интернет
+ */
+
 class SyncOperationsWorker @Inject constructor(
     appContext: Context,
     params: WorkerParameters,
@@ -21,8 +25,6 @@ class SyncOperationsWorker @Inject constructor(
         while (true) {
             val operation = pendingOperationsDataSource.getNextOperation() ?: break
 
-            pendingOperationsDataSource.removeOperation()
-
             val result = when (operation) {
                 is PendingOperation.Add -> {
                     val result = transactionRepository.addTransactionOnServer(operation.transaction)
@@ -33,7 +35,7 @@ class SyncOperationsWorker @Inject constructor(
                 is PendingOperation.Update ->
                     transactionRepository.updateTransactionOnServer(operation.id, operation.transaction)
                 is PendingOperation.Delete ->
-                    transactionRepository.deleteTransaction(operation.id)
+                    transactionRepository.deleteTransactionOnServer(operation.id)
             }
 
             result.fold(

@@ -63,4 +63,25 @@ class AccountRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun syncAccount(): Result<Account> {
+        return withContext(Dispatchers.IO) {
+            val accountsResult = safeApiCall { remoteDataSource.getAllAccounts() }
+
+            accountsResult.fold(
+                onFailure = { Result.failure(it) },
+
+                onSuccess = { accounts ->
+                    val account = accounts.firstOrNull()?.toDomain()
+
+                    if (account == null) {
+                        Result.failure(Throwable("No accounts available"))
+                    } else {
+                        localDataSource.updateAccount(account)
+                        Result.success(account)
+                    }
+                }
+            )
+        }
+    }
 }

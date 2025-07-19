@@ -22,19 +22,37 @@ class PendingOperationsDataSource @Inject constructor(
                 )
             )
 
-            // Если эта операция была создана без интернета (id < 0) то обновляем все поля, кроме type
-            is PendingOperation.Update -> pendingOperationDao.updateOperation(
-                PendingOperationEntity(
-                    type = if (operation.id > 0) "UPDATE" else "ADD",
-                    id = operation.id,
-                    accountId = operation.transaction.accountId,
-                    categoryId = operation.transaction.categoryId,
-                    amount = operation.transaction.amount.toString(),
-                    transactionDate = operation.transaction.transactionDate,
-                    comment = operation.transaction.comment,
-                    updatedAt = System.currentTimeMillis()
-                )
-            )
+
+            is PendingOperation.Update -> {
+                if (operation.id > 0) {
+                    pendingOperationDao.addOperation(
+                        PendingOperationEntity(
+                            type = "UPDATE",
+                            id = operation.id,
+                            accountId = operation.transaction.accountId,
+                            categoryId = operation.transaction.categoryId,
+                            amount = operation.transaction.amount.toString(),
+                            transactionDate = operation.transaction.transactionDate,
+                            comment = operation.transaction.comment,
+                            updatedAt = System.currentTimeMillis()
+                        )
+                    )
+                } else { // Если эта операция была создана без интернета (id < 0) то обновляем все поля, кроме type
+
+                    pendingOperationDao.updateOperation(
+                        PendingOperationEntity(
+                            type = "ADD",
+                            id = operation.id,
+                            accountId = operation.transaction.accountId,
+                            categoryId = operation.transaction.categoryId,
+                            amount = operation.transaction.amount.toString(),
+                            transactionDate = operation.transaction.transactionDate,
+                            comment = operation.transaction.comment,
+                            updatedAt = System.currentTimeMillis()
+                        )
+                    )
+                }
+            }
 
             // Если операция была создана без интернета (id > 0), то удаляем её из очереди
             is PendingOperation.Delete -> {

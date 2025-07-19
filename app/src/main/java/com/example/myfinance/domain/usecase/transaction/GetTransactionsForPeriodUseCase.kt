@@ -2,7 +2,7 @@ package com.example.myfinance.domain.usecase.transaction
 
 import com.example.myfinance.domain.repository.TransactionRepository
 import com.example.myfinance.domain.usecase.account.GetAccountUseCase
-import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsResult
+import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsInfo
 import javax.inject.Inject
 
 /**
@@ -26,7 +26,7 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
         startDate: String,
         endDate: String,
         isIncomes: Boolean
-    ): Result<TransactionsResult> {
+    ): Result<TransactionsInfo> {
 
         val accountResult = getAccountUseCase()
         // Нельзя сделать через map, так как вернёт Result<Result<...>>
@@ -44,7 +44,7 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
                         it.category.isIncome == isIncomes
                     }.sortedByDescending { it.date }
 
-                    TransactionsResult(
+                    TransactionsInfo(
                         transactions = sortedTransactions,
                         transactionsSum = sortedTransactions.sumOf { it.amount },
                         currency = account.currency

@@ -11,4 +11,6 @@ interface AccountRepository {
     suspend fun getAccount(): Result<Account>
 
     suspend fun updateAccount(id: Int, account: Account): Result<Account>
+
+    suspend fun syncAccount(): Result<Account>
 }

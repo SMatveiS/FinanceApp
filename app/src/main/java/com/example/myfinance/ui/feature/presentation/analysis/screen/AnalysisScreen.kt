@@ -1,8 +1,9 @@
-package com.example.myfinance.ui.feature.presentation.transactions_history.screen
+package com.example.myfinance.ui.feature.presentation.analysis.screen
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,27 +16,24 @@ import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
-import com.example.myfinance.ui.common.datepicker.OpenDatePicker
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
-import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
+import com.example.myfinance.ui.feature.presentation.analysis.viewmodel.AnalysisViewModel
+import com.example.myfinance.ui.common.datepicker.OpenDatePicker
 
 @Composable
-fun TransactionsHistoryScreen(
+fun AnalysisScreen(
     isIncome: Boolean,
-    onBackArrowClicked: () -> Unit,
-    onAnalysisClicked: () -> Unit,
-    onItemClicked: (Int) -> Unit
+    onBackArrowClicked: () -> Unit
 ) {
-
     val context = LocalContext.current
     val activity = context.findActivity() as MainActivity
 
     val assistedFactory = remember {
-        activity.activityComponent.assistedTransactionsHistoryFactory()
+        activity.activityComponent.assistedAnalysisFactory()
     }
 
-    val viewModel: TransactionsHistoryViewModel = remember(isIncome) {
+    val viewModel: AnalysisViewModel = remember(isIncome) {
         assistedFactory.create(isIncome)
     }
 
@@ -54,12 +52,10 @@ fun TransactionsHistoryScreen(
     Scaffold (
         topBar = {
             AppTopBar(
-                title = "Моя история",
-                rightButtonIcon = R.drawable.analytic_button,
+                title = "Анализ",
+                backgroundColor = MaterialTheme.colorScheme.background,
                 leftButtonIcon = R.drawable.back_arrow,
-                rightButtonDescription = "Аналитика",
                 leftButtonDescription = "Назад",
-                rightButtonAction = onAnalysisClicked,
                 leftButtonAction = onBackArrowClicked
             ) },
         contentWindowInsets = WindowInsets.statusBars
@@ -67,15 +63,14 @@ fun TransactionsHistoryScreen(
 
         when (state.screenState) {
             ScreenState.SUCCESS -> {
-                TransactionsHistoryContent(
-                    transactions = state.transactions,
+                AnalysisContent(
+                    categoryStatistics = state.categoriesStatistic,
+                    currency = state.currency,
+                    totalSum = state.totalSum,
                     startDate = state.startDate,
                     endDate = state.endDate,
-                    totalSum = state.totalSum,
-                    currency = state.currency,
                     onStartDatePickerOpen = viewModel::onStartDatePickerOpen,
                     onEndDatePickerOpen = viewModel::onEndDatePickerOpen,
-                    onItemClicked = onItemClicked,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
@@ -83,7 +78,7 @@ fun TransactionsHistoryScreen(
             ScreenState.ERROR -> {
                 ErrorState(
                     message = state.errorMessage,
-                    onRetry = viewModel::getTransactions,
+                    onRetry = viewModel::getStatistic,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

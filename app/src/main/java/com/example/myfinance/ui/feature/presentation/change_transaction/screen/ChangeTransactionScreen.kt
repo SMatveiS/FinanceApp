@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
 import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
-import com.example.myfinance.ui.common.DatePickerModal
+import com.example.myfinance.ui.common.datepicker.DatePickerModal
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.common.OpenTimePicker

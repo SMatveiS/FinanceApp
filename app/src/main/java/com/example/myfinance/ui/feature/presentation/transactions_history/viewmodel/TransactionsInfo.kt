@@ -6,7 +6,7 @@ import com.example.myfinance.domain.model.Transaction
  * Хранит список транзакций и их сумму
  */
 
-data class TransactionsResult(
+data class TransactionsInfo(
     val transactions: List<Transaction>,
     val transactionsSum: Double,
     val currency: String

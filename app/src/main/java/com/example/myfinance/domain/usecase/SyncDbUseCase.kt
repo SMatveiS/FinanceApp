@@ -1,21 +1,25 @@
 package com.example.myfinance.domain.usecase
 
+import com.example.myfinance.domain.repository.AccountRepository
 import com.example.myfinance.domain.repository.CategoryRepository
 import com.example.myfinance.domain.repository.TransactionRepository
-import com.example.myfinance.domain.usecase.account.GetAccountUseCase
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
+/**
+ * Синхронизирует данные с сервера с локальными данными (локальные данные принимают значения данных с сервера)
+ */
+
 class SyncDbUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: CategoryRepository,
-    private val getAccountUseCase: GetAccountUseCase
+    private val accountRepository: AccountRepository
 ) {
 
     suspend operator fun invoke(): Result<Unit> {
-        val accountResult = getAccountUseCase()
+        val accountResult = accountRepository.syncAccount()
 
         // Нельзя сделать через map, так как вернёт Result<Result<...>>
         return accountResult.fold(

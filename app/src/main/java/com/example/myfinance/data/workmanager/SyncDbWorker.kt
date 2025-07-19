@@ -10,6 +10,10 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * Создаёт workManager, который синхронизирует данные с сервера с локальными данными
+ */
+
 class SyncDbWorker @Inject constructor(
     appContext: Context,
     params: WorkerParameters,

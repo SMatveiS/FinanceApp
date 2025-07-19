@@ -1,16 +1,12 @@
-package com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel
+package com.example.myfinance.ui.feature.presentation.analysis.viewmodel
 
-import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.myfinance.domain.model.CategoryStatistic
 import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
+import com.example.myfinance.ui.feature.presentation.ScreenState
 import java.time.LocalDate
 
-/**
- * Состояние экрана истории транзакций
- */
-
-data class TransactionsState(
-    val transactions: List<Transaction> = emptyList(),
+data class AnalysisState(
+    val categoriesStatistic: List<CategoryStatistic> = emptyList(),
     val startDate: LocalDate = LocalDate.now().withDayOfMonth(1),
     val endDate: LocalDate = LocalDate.now(),
     val totalSum: Double = 0.0,

@@ -2,6 +2,7 @@ package com.example.myfinance.di.module.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.myfinance.ui.feature.presentation.analysis.viewmodel.AnalysisViewModel
 import com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel.ChangeTransactionViewModel
 import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 import javax.inject.Inject
@@ -39,5 +40,15 @@ class AssistedChangeTransactionFactory @Inject constructor(
 
     fun create(isIncome: Boolean, transactionId: Int?): ChangeTransactionViewModel {
         return factory.create(isIncome, transactionId)
+    }
+}
+
+@Singleton
+class AssistedAnalysisFactory @Inject constructor(
+    private val factory: AnalysisViewModel.Factory
+) {
+
+    fun create(isIncome: Boolean): AnalysisViewModel {
+        return factory.create(isIncome)
     }
 }

@@ -13,6 +13,10 @@ import com.example.myfinance.data.workmanager.SyncOperationsWorker
 import com.example.myfinance.data.workmanager.SyncDbWorker
 import javax.inject.Inject
 
+/**
+ * При появлении интернета синхронизирует данные с базы дыннх и с сервера
+ */
+
 class NetworkMonitor @Inject constructor(
     private val context: Context
 ) {

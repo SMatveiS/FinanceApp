@@ -18,6 +18,7 @@ sealed class NavRoutes {
     @Serializable object Categories
     @Serializable object Settings
     @Serializable object TransactionsHistory
+    @Serializable object Analysis
 
     @Serializable
     data class ChangeTransaction(val transactionId: Int? = null) : NavRoutes()
