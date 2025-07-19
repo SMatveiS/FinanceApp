@@ -1,8 +1,8 @@
 package com.example.myfinance.di.module
 
-import com.example.myfinance.data.api.account.AccountRepositoryImpl
-import com.example.myfinance.data.api.category.CategoryRepositoryImpl
-import com.example.myfinance.data.api.transaction.TransactionRepositoryImpl
+import com.example.myfinance.data.repository.AccountRepositoryImpl
+import com.example.myfinance.data.repository.CategoryRepositoryImpl
+import com.example.myfinance.data.repository.TransactionRepositoryImpl
 import com.example.myfinance.domain.repository.AccountRepository
 import com.example.myfinance.domain.repository.CategoryRepository
 import com.example.myfinance.domain.repository.TransactionRepository

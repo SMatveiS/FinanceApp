@@ -9,25 +9,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
-import com.example.myfinance.app.LocalAssistedTransactionsHistoryFactory
 import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
+import com.example.myfinance.ui.common.datepicker.OpenDatePicker
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
-import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.OpenDatePicker
 import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
 
 @Composable
 fun TransactionsHistoryScreen(
     isIncome: Boolean,
     onBackArrowClicked: () -> Unit,
+    onAnalysisClicked: () -> Unit,
     onItemClicked: (Int) -> Unit
 ) {
 
@@ -44,11 +41,13 @@ fun TransactionsHistoryScreen(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    state.dialogType?.let {
+    state.datePickerDialogType?.let {
         OpenDatePicker(
             dialogType = it,
-            state = state,
-            viewModel = viewModel
+            startDate = state.startDate,
+            endDate = state.endDate,
+            onDateSelected = viewModel::onDateSelected,
+            onDatePickerDismiss = viewModel::onDatePickerDismiss
         )
     }
 
@@ -60,7 +59,7 @@ fun TransactionsHistoryScreen(
                 leftButtonIcon = R.drawable.back_arrow,
                 rightButtonDescription = "Аналитика",
                 leftButtonDescription = "Назад",
-                rightButtonAction = {/* Действие */},
+                rightButtonAction = onAnalysisClicked,
                 leftButtonAction = onBackArrowClicked
             ) },
         contentWindowInsets = WindowInsets.statusBars
@@ -74,7 +73,7 @@ fun TransactionsHistoryScreen(
                     endDate = state.endDate,
                     totalSum = state.totalSum,
                     currency = state.currency,
-                    onStartDatePickerOpen = viewModel::onStartDatePickerOpen ,
+                    onStartDatePickerOpen = viewModel::onStartDatePickerOpen,
                     onEndDatePickerOpen = viewModel::onEndDatePickerOpen,
                     onItemClicked = onItemClicked,
                     modifier = Modifier.padding(innerPadding)
@@ -83,7 +82,7 @@ fun TransactionsHistoryScreen(
 
             ScreenState.ERROR -> {
                 ErrorState(
-                    message = state.errorMessage ?: "Неизвестная ошибка",
+                    message = state.errorMessage,
                     onRetry = viewModel::getTransactions,
                     modifier = Modifier.padding(innerPadding)
                 )

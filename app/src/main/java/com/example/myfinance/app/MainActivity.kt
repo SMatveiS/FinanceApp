@@ -8,19 +8,15 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.di.ActivityComponent
-import com.example.myfinance.di.ScreenComponent
 import com.example.myfinance.ui.common.navbar.FinappNavBar
 import com.example.myfinance.ui.navigation.FinappNavHost
 import com.example.myfinance.ui.theme.MyFinanceTheme
-import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var screenComponentFactory: ScreenComponent.Factory
     internal lateinit var activityComponent: ActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
                     FinappNavHost(
                         navController,
-                        screenComponentFactory,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

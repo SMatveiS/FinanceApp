@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AppTopBar(
     title: String,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     rightButtonIcon: Int? = null,
     leftButtonIcon: Int? = null,
     rightButtonDescription: String? = null,
@@ -48,7 +50,7 @@ fun AppTopBar(
         title = { Text(title, fontSize = 22.sp) },
 
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = backgroundColor,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
 

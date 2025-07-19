@@ -1,0 +1,92 @@
+package com.example.myfinance.ui.feature.presentation.analysis.screen
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.myfinance.R
+import com.example.myfinance.ui.common.AppListItem
+import com.example.myfinance.ui.common.addCurrency
+import com.example.myfinance.ui.common.formatNumber
+import com.example.myfinance.ui.common.uiDateFormat
+import com.example.myfinance.domain.model.CategoryStatistic
+import java.time.LocalDate
+
+@Composable
+fun AnalysisContent(
+    categoryStatistics: List<CategoryStatistic>,
+    currency: String,
+    totalSum: Double,
+    startDate: LocalDate,
+    endDate: LocalDate,
+    onStartDatePickerOpen: () -> Unit,
+    onEndDatePickerOpen: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    Column(modifier = modifier.fillMaxSize()) {
+        AnalysisDatePickerElement(
+            leftTitle = "Период: начало",
+            rightTitle = startDate.format(uiDateFormat),
+            onClick = onStartDatePickerOpen
+        )
+        HorizontalDivider()
+
+        AnalysisDatePickerElement(
+            leftTitle = "Период: конец",
+            rightTitle = endDate.format(uiDateFormat),
+            onClick = onEndDatePickerOpen
+        )
+        HorizontalDivider()
+
+        AppListItem(
+            leftTitle = "Сумма",
+            rightTitle = formatNumber(totalSum).addCurrency(currency),
+            itemHeight = 56
+        )
+        HorizontalDivider()
+
+        if (categoryStatistics.isNotEmpty()) {
+            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                item {
+                    Image(
+                        painter = painterResource(id = R.drawable.round),
+                        contentDescription = "Аналитика",
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .size(150.dp)
+                            .padding(top = 36.dp, bottom = 20.dp)
+                    )
+                    HorizontalDivider()
+                }
+
+                items(categoryStatistics) { categoryStatistic ->
+                    CategoryStatisticListItem(categoryStatistic, currency)
+                    HorizontalDivider()
+                }
+            }
+        } else {
+
+            Text(
+                "Нет транзакций за выбранный период",
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)
+            )
+        }
+    }
+}

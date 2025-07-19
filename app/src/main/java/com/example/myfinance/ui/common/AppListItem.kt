@@ -35,6 +35,7 @@ fun AppListItem(
     leftSubtitle: String? = null,
     rightTitle: String? = null,
     rightSubtitle: String? = null,
+    rightSubtitleSize: Int = 14,
     leftIcon: String? = null,
     rightIcon: ImageVector? = null,
     itemHeight: Int = 70,
@@ -120,7 +121,7 @@ fun AppListItem(
                     if (rightSubtitle != null) {
                         Text(
                             rightSubtitle,
-                            fontSize = 14.sp,
+                            fontSize = rightSubtitleSize.sp,
                             color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis

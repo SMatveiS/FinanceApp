@@ -19,10 +19,10 @@ data class ChangeTransactionState(
             isIncome = true
         ),
         amount = 0.0,
-        currency = "RUB",
         date = LocalDateTime.now().format(uiDateFormat),
         comment = null
     ),
+    val currency: String = "RUB",
     val accountName: String = "Сбербанк",
     val date: LocalDate = LocalDate.now(),
     val time: LocalTime = LocalTime.now(),

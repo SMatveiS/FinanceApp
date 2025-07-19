@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.viewm
 
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
+import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
 import java.time.LocalDate
 
 /**
@@ -15,7 +15,7 @@ data class TransactionsState(
     val endDate: LocalDate = LocalDate.now(),
     val totalSum: Double = 0.0,
     val currency: String = "RUB",
-    val dialogType: DialogType? = null,
+    val datePickerDialogType: DatePickerDialogType? = null,
     val screenState: ScreenState = ScreenState.LOADING,
     val errorMessage: String? = null
 )

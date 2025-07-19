@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.domain.usecase.transaction.GetTodayTransactionsUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.data.utils.NetworkResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,10 +22,10 @@ class IncomesViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        getExpenses()
+        getIncomes()
     }
 
-    fun getExpenses() {
+    fun getIncomes() {
         viewModelScope.launch {
             _state.update { it.copy(
                 screenState = ScreenState.LOADING,
@@ -36,30 +35,28 @@ class IncomesViewModel @Inject constructor(
             try {
                 val incomesResult = getTodayTransactionsUseCase(isIncomes = true)
 
-                when (incomesResult) {
-                    is NetworkResult.Success -> {
-                        val currency = incomesResult.data.currency
-
+                incomesResult.fold(
+                    onSuccess = { incomes ->
                         _state.update { it.copy(
-                            incomes = incomesResult.data.transactions,
-                            totalSum = incomesResult.data.transactionsSum,
-                            currency = currency,
+                            incomes = incomes.transactions,
+                            totalSum = incomes.transactionsSum,
+                            currency = incomes.currency,
                             screenState = ScreenState.SUCCESS
                         ) }
-                    }
+                    },
 
-                    is NetworkResult.Error -> {
+                    onFailure = { error ->
                         _state.update {
                             it.copy(
-                                errorMessage = incomesResult.errorMessage,
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
                 _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
+                    errorMessage = e.message,
                     screenState = ScreenState.ERROR
                 ) }
             }

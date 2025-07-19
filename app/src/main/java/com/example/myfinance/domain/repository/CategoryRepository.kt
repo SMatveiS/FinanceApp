@@ -1,6 +1,5 @@
 package com.example.myfinance.domain.repository
 
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.model.Category
 
 /**
@@ -9,8 +8,10 @@ import com.example.myfinance.domain.model.Category
 
 interface CategoryRepository {
 
-    suspend fun getAllCategories(): NetworkResult<List<Category>>
+    suspend fun getAllCategories(): Result<List<Category>>
 
-    suspend fun getCategoryByType(isIncome: Boolean): NetworkResult<List<Category>>
+    suspend fun getCategoryByType(isIncome: Boolean): Result<List<Category>>
+
+    suspend fun syncCategories(): Result<Unit>
 
 }

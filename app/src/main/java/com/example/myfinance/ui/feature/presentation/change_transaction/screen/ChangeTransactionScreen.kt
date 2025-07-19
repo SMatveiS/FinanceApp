@@ -10,15 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myfinance.R
-import com.example.myfinance.app.LocalAssistedChangeTransactionFactory
 import com.example.myfinance.app.MainActivity
 import com.example.myfinance.ui.common.AppTopBar
-import com.example.myfinance.ui.common.DatePickerModal
+import com.example.myfinance.ui.common.datepicker.DatePickerModal
 import com.example.myfinance.ui.common.ErrorState
 import com.example.myfinance.ui.common.LoadingState
 import com.example.myfinance.ui.common.OpenTimePicker
@@ -93,7 +89,8 @@ fun ChangeTransactionScreen(
             ScreenState.SUCCESS -> {
                 ChangeTransactionContent(
                     transaction = state.transaction,
-                    account = state.accountName,
+                    accountName = state.accountName,
+                    currency = state.currency,
                     date = state.date.format(uiDateFormat),
                     time = state.time.format(uiTimeFormat),
                     categories = state.categories,
@@ -111,7 +108,7 @@ fun ChangeTransactionScreen(
 
             ScreenState.ERROR -> {
                 ErrorState(
-                    message = state.errorMessage ?: "Неизвестная ошибка",
+                    message = state.errorMessage,
                     onRetry = viewModel::getInitialInformation,
                     modifier = Modifier.padding(innerPadding)
                 )

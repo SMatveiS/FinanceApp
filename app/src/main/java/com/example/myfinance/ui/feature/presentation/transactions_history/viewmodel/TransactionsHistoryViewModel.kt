@@ -2,10 +2,9 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.viewm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.data.utils.NetworkResult
 import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.transactions_history.datepicker.DialogType
+import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -38,50 +37,14 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
         getTransactions()
     }
 
-    fun onStartDatePickerOpen() = openDialog(DialogType.START_DATE)
-
-    fun onEndDatePickerOpen() = openDialog(DialogType.END_DATE)
-
-    private fun openDialog(type: DialogType) {
-        _state.update { it.copy(dialogType = type) }
-    }
-
-    fun onDatePickerDismiss() {
-        _state.update { it. copy(dialogType = null) }
-    }
-
-    fun onDateSelected(dateInMillis: Long?) {
-        if (dateInMillis != null) {
-            val newDate = Instant.ofEpochMilli(dateInMillis)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-
-            _state.update { currentState ->
-                val (newStart, newEnd) = when (currentState.dialogType) {
-                    DialogType.START_DATE -> newDate to currentState.endDate
-                    DialogType.END_DATE -> currentState.startDate to newDate
-                    null -> return
-                }
-
-                if (newStart.isAfter(newEnd)) return@update currentState
-
-                currentState.copy(
-                    startDate = newStart,
-                    endDate = newEnd,
-                    dialogType = null
-                )
-            }
-
-            getTransactions()
-        }
-    }
-
     fun getTransactions() {
         viewModelScope.launch {
-            _state.update { it.copy(
-                screenState = ScreenState.LOADING,
-                errorMessage = null
-            ) }
+            _state.update {
+                it.copy(
+                    screenState = ScreenState.LOADING,
+                    errorMessage = null
+                )
+            }
 
             try {
                 val startDate = state.value.startDate.format(DateTimeFormatter.ofPattern("y-MM-dd"))
@@ -93,33 +56,73 @@ class TransactionsHistoryViewModel @AssistedInject constructor(
                     isIncomes = isIncome
                 )
 
-                when (transactionsResult) {
-                    is NetworkResult.Success -> {
-                        val currency = transactionsResult.data.currency
-
-                        _state.update { it.copy(
-                            transactions = transactionsResult.data.transactions,
-                            totalSum = transactionsResult.data.transactionsSum,
-                            currency = currency,
-                            screenState = ScreenState.SUCCESS
-                        ) }
-                    }
-
-                    is NetworkResult.Error -> {
+                transactionsResult.fold(
+                    onSuccess = { transactions ->
                         _state.update {
                             it.copy(
-                                errorMessage = transactionsResult.errorMessage,
+                                transactions = transactions.transactions,
+                                totalSum = transactions.transactionsSum,
+                                currency = transactions.currency,
+                                screenState = ScreenState.SUCCESS
+                            )
+                        }
+                    },
+
+                    onFailure = { error ->
+                        _state.update {
+                            it.copy(
+                                errorMessage = error.message,
                                 screenState = ScreenState.ERROR
                             )
                         }
                     }
-                }
+                )
             } catch (e: Exception) {
-                _state.update { it.copy(
-                    errorMessage = "Ошибка: ${e.localizedMessage ?: "Неизвестная ошибка"}",
-                    screenState = ScreenState.ERROR
-                ) }
+                _state.update {
+                    it.copy(
+                        errorMessage = e.message,
+                        screenState = ScreenState.ERROR
+                    )
+                }
             }
+        }
+    }
+
+    fun onStartDatePickerOpen() = openDialog(DatePickerDialogType.START_DATE)
+
+    fun onEndDatePickerOpen() = openDialog(DatePickerDialogType.END_DATE)
+
+    private fun openDialog(type: DatePickerDialogType) {
+        _state.update { it.copy(datePickerDialogType = type) }
+    }
+
+    fun onDatePickerDismiss() {
+        _state.update { it. copy(datePickerDialogType = null) }
+    }
+
+    fun onDateSelected(dateInMillis: Long?) {
+        if (dateInMillis != null) {
+            val newDate = Instant.ofEpochMilli(dateInMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+
+            _state.update { currentState ->
+                val (newStart, newEnd) = when (currentState.datePickerDialogType) {
+                    DatePickerDialogType.START_DATE -> newDate to currentState.endDate
+                    DatePickerDialogType.END_DATE -> currentState.startDate to newDate
+                    null -> return
+                }
+
+                if (newStart.isAfter(newEnd)) return@update currentState
+
+                currentState.copy(
+                    startDate = newStart,
+                    endDate = newEnd,
+                    datePickerDialogType = null
+                )
+            }
+
+            getTransactions()
         }
     }
 }

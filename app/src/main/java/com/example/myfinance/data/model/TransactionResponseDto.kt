@@ -1,10 +1,10 @@
 package com.example.myfinance.data.model
 
+import com.example.myfinance.data.local.database.TransactionEntity
+import com.example.myfinance.data.utils.formatDtoDateToUiDate
 import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.common.uiDateTimeFormat
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.time.OffsetDateTime
 
 /**
  * Модель для получения информации о транзакции с сервера
@@ -34,8 +34,17 @@ data class TransactionResponseDto(
         accountId = account.id,
         category = category.toDomain(),
         amount = amount.toDouble(),
-        currency = account.currency,
-        date = OffsetDateTime.parse(transactionDate).format(uiDateTimeFormat),
+        date = formatDtoDateToUiDate(transactionDate),
         comment = if (comment == "") null else comment
+    )
+
+    fun toEntity() = TransactionEntity(
+        id = id,
+        accountId = account.id,
+        categoryId = category.id,
+        amount = amount,
+        transactionDate = transactionDate,
+        comment = if (comment == "") null else comment,
+        updatedAt = updatedAt
     )
 }
