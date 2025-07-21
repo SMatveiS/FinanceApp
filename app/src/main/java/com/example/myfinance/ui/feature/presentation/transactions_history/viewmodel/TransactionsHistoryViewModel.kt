@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.viewm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.transaction.GetTransactionsForPeriodUseCase
+import com.example.domain.usecase.transaction.GetTransactionsForPeriodUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.ui.datepicker.DatePickerDialogType
 import dagger.assisted.Assisted

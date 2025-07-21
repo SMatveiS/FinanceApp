@@ -6,7 +6,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.myfinance.domain.model.Transaction
+import com.example.model.Transaction
 import com.example.ui.formatNumber
 import com.example.ui.AppListItem
 import com.example.ui.addCurrency

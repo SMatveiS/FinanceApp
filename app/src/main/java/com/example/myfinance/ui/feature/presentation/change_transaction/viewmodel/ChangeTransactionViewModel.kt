@@ -2,12 +2,12 @@ package com.example.myfinance.ui.feature.presentation.change_transaction.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.model.Category
-import com.example.myfinance.domain.usecase.account.GetAccountUseCase
-import com.example.myfinance.domain.usecase.category.GetCategoriesByType
-import com.example.myfinance.domain.usecase.transaction.AddTransactionUseCase
-import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCase
-import com.example.myfinance.domain.usecase.transaction.UpdateTransactionUseCase
+import com.example.domain.usecase.account.GetAccountUseCase
+import com.example.domain.usecase.category.GetCategoriesByType
+import com.example.domain.usecase.transaction.AddTransactionUseCase
+import com.example.domain.usecase.transaction.GetTransactionByIdUseCase
+import com.example.domain.usecase.transaction.UpdateTransactionUseCase
+import com.example.model.Category
 import com.example.ui.uiDateTimeFormat
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.assisted.Assisted

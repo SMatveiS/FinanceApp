@@ -9,7 +9,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.myfinance.domain.model.Settings
+import com.example.model.Settings
 import com.example.ui.AppTopBar
 
 @Composable

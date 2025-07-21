@@ -2,8 +2,8 @@ package com.example.myfinance.ui.feature.presentation.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myfinance.domain.usecase.category.GetAllCategoriesUseCase
-import com.example.myfinance.domain.usecase.category.GetCategoriesWithSubstringUseCase
+import com.example.domain.usecase.category.GetAllCategoriesUseCase
+import com.example.domain.usecase.category.GetCategoriesWithSubstringUseCase
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

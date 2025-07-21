@@ -7,7 +7,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import com.example.myfinance.domain.model.Category
+import com.example.model.Category
 import com.example.ui.AppListItem
 import com.example.ui.ErrorState
 import com.example.ui.LoadingState

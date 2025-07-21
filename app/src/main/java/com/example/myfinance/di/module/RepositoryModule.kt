@@ -1,11 +1,11 @@
 package com.example.myfinance.di.module
 
-import com.example.myfinance.data.repository.AccountRepositoryImpl
-import com.example.myfinance.data.repository.CategoryRepositoryImpl
-import com.example.myfinance.data.repository.TransactionRepositoryImpl
-import com.example.myfinance.domain.repository.AccountRepository
-import com.example.myfinance.domain.repository.CategoryRepository
-import com.example.myfinance.domain.repository.TransactionRepository
+import com.example.data.repository.external.AccountRepository
+import com.example.data.repository.external.CategoryRepository
+import com.example.data.repository.external.TransactionRepository
+import com.example.data.repository.internal.AccountRepositoryImpl
+import com.example.data.repository.internal.CategoryRepositoryImpl
+import com.example.data.repository.internal.TransactionRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

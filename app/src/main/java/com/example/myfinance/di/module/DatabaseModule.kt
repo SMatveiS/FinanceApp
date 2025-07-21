@@ -2,7 +2,7 @@ package com.example.myfinance.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.myfinance.data.local.database.AppDatabase
+import com.example.data.local.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

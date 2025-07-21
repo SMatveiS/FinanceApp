@@ -8,10 +8,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.example.myfinance.data.workmanager.SyncDbWorker
 import com.example.myfinance.di.AppComponent
 import com.example.myfinance.di.DaggerAppComponent
 import com.example.myfinance.di.module.workmanager.WorkerFactory
+import com.example.myfinance.workmanager.SyncDbWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
