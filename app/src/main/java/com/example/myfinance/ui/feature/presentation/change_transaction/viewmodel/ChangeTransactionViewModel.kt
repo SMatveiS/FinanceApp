@@ -8,7 +8,7 @@ import com.example.myfinance.domain.usecase.category.GetCategoriesByType
 import com.example.myfinance.domain.usecase.transaction.AddTransactionUseCase
 import com.example.myfinance.domain.usecase.transaction.GetTransactionByIdUseCase
 import com.example.myfinance.domain.usecase.transaction.UpdateTransactionUseCase
-import com.example.myfinance.ui.common.uiDateTimeFormat
+import com.example.ui.uiDateTimeFormat
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

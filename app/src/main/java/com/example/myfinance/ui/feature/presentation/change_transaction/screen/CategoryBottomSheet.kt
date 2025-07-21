@@ -8,9 +8,9 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.example.myfinance.domain.model.Category
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.ErrorState
-import com.example.myfinance.ui.common.LoadingState
+import com.example.ui.AppListItem
+import com.example.ui.ErrorState
+import com.example.ui.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)

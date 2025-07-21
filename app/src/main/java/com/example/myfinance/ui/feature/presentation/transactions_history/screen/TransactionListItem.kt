@@ -5,9 +5,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.addCurrency
-import com.example.myfinance.ui.common.formatNumber
+import com.example.ui.AppListItem
+import com.example.ui.addCurrency
+import com.example.ui.formatNumber
 
 @Composable
 fun TransactionListItem(

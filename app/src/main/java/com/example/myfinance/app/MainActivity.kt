@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.di.ActivityComponent
-import com.example.myfinance.ui.common.navbar.FinappNavBar
 import com.example.myfinance.ui.navigation.FinappNavHost
+import com.example.myfinance.ui.navigation.navbar.FinappNavBar
 import com.example.myfinance.ui.theme.MyFinanceTheme
 
 class MainActivity : ComponentActivity() {

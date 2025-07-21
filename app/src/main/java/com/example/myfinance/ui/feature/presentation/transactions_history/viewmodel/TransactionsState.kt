@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.viewm
 
 import com.example.myfinance.domain.model.Transaction
 import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
+import com.example.ui.datepicker.DatePickerDialogType
 import java.time.LocalDate
 
 /**

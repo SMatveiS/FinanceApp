@@ -18,10 +18,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfinance.R
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.addCurrency
-import com.example.myfinance.ui.common.formatNumber
-import com.example.myfinance.ui.common.uiDateFormat
+import com.example.ui.AppListItem
+import com.example.ui.addCurrency
+import com.example.ui.formatNumber
+import com.example.ui.uiDateFormat
 import com.example.myfinance.domain.model.CategoryStatistic
 import java.time.LocalDate
 

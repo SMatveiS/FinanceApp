@@ -15,10 +15,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 import com.example.myfinance.domain.model.Account
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.EditTextListItem
+import com.example.ui.AppListItem
+import com.example.ui.EditTextListItem
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.bottomsheet.CurrencyBottomSheetContent
-import com.example.myfinance.ui.common.getCurrencySymbol
+import com.example.ui.getCurrencySymbol
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

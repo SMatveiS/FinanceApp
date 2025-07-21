@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.myfinance.R
 import com.example.myfinance.domain.model.Settings
-import com.example.myfinance.ui.common.AppListItem
+import com.example.ui.AppListItem
 
 @Composable
 fun SettingsItem(settings: Settings) {

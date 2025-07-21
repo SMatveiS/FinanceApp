@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.myfinance.domain.model.Settings
-import com.example.myfinance.ui.common.AppTopBar
+import com.example.ui.AppTopBar
 
 @Composable
 fun SettingsScreen(settings: List<Settings>){

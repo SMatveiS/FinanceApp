@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.app.MainActivity
-import com.example.myfinance.ui.common.AppTopBar
-import com.example.myfinance.ui.common.ErrorState
-import com.example.myfinance.ui.common.LoadingState
+import com.example.ui.AppTopBar
+import com.example.ui.ErrorState
+import com.example.ui.LoadingState
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 

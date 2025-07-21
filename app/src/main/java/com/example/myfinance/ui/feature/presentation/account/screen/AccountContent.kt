@@ -6,10 +6,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.myfinance.domain.model.Account
-import com.example.myfinance.ui.common.formatNumber
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.addCurrency
-import com.example.myfinance.ui.common.getCurrencySymbol
+import com.example.ui.formatNumber
+import com.example.ui.AppListItem
+import com.example.ui.addCurrency
+import com.example.ui.getCurrencySymbol
 
 @Composable
 fun AccountContent(

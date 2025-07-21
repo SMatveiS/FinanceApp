@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.change_transaction.viewmod
 
 import com.example.myfinance.domain.model.Category
 import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.common.uiDateFormat
+import com.example.ui.uiDateFormat
 import com.example.myfinance.ui.feature.presentation.ScreenState
 import java.time.LocalDate
 import java.time.LocalDateTime
