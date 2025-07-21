@@ -20,7 +20,7 @@ import com.example.ui.LoadingState
 import com.example.ui.OpenTimePicker
 import com.example.ui.uiDateFormat
 import com.example.ui.uiTimeFormat
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.ui.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 import com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel.ChangeTransactionViewModel
 import java.time.ZoneId

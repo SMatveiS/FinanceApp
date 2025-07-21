@@ -16,9 +16,10 @@ import com.example.ui.AppTopBar
 import com.example.ui.ErrorState
 import com.example.ui.LoadingState
 import com.example.ui.datepicker.OpenDatePicker
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.ui.ScreenState
 import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
 import com.example.myfinance.ui.feature.presentation.transactions_history.viewmodel.TransactionsHistoryViewModel
+
 
 @Composable
 fun TransactionsHistoryScreen(

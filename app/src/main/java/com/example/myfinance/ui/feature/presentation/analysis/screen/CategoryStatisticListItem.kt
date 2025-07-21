@@ -3,11 +3,11 @@ package com.example.myfinance.ui.feature.presentation.analysis.screen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import com.example.model.CategoryStatistic
 import com.example.myfinance.R
 import com.example.ui.AppListItem
 import com.example.ui.addCurrency
 import com.example.ui.formatNumber
-import com.example.myfinance.domain.model.CategoryStatistic
 
 @Composable
 fun CategoryStatisticListItem(

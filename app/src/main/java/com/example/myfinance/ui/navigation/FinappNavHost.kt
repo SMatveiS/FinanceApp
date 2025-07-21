@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.example.myfinance.data.MockData.settings
+import com.example.data.MockData.settings
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
 import com.example.myfinance.ui.feature.presentation.analysis.screen.AnalysisScreen

@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.myfinance.domain.model.Transaction
+import com.example.model.Transaction
 import com.example.ui.addCurrency
 import com.example.ui.formatNumber
 import java.time.LocalDate

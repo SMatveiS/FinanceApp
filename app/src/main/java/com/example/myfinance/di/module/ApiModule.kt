@@ -1,9 +1,9 @@
 package com.example.myfinance.di.module
 
 import com.example.myfinance.BuildConfig
-import com.example.myfinance.data.remote.account.AccountApi
-import com.example.myfinance.data.remote.category.CategoryApi
-import com.example.myfinance.data.remote.transaction.TransactionApi
+import com.example.data.remote.account.AccountApi
+import com.example.data.remote.category.CategoryApi
+import com.example.data.remote.transaction.TransactionApi
 import dagger.Module
 import dagger.Provides
 import kotlinx.serialization.json.Json

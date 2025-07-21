@@ -9,8 +9,8 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import com.example.myfinance.data.workmanager.SyncOperationsWorker
-import com.example.myfinance.data.workmanager.SyncDbWorker
+import com.example.myfinance.workmanager.SyncDbWorker
+import com.example.myfinance.workmanager.SyncOperationsWorker
 import javax.inject.Inject
 
 /**

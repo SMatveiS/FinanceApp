@@ -1,7 +1,7 @@
 package com.example.myfinance.di.module.workmanager
 
-import com.example.myfinance.data.workmanager.SyncOperationsWorker
-import com.example.myfinance.data.workmanager.SyncDbWorker
+import com.example.myfinance.workmanager.SyncDbWorker
+import com.example.myfinance.workmanager.SyncOperationsWorker
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

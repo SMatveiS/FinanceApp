@@ -13,8 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import com.example.model.Account
 import com.example.myfinance.R
-import com.example.myfinance.domain.model.Account
 import com.example.ui.AppListItem
 import com.example.ui.EditTextListItem
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.bottomsheet.CurrencyBottomSheetContent

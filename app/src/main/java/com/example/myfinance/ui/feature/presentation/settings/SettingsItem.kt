@@ -3,8 +3,8 @@ package com.example.myfinance.ui.feature.presentation.settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import com.example.model.Settings
 import com.example.myfinance.R
-import com.example.myfinance.domain.model.Settings
 import com.example.ui.AppListItem
 
 @Composable
