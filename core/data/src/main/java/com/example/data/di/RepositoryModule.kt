@@ -1,4 +1,4 @@
-package com.example.myfinance.di.module
+package com.example.data.di
 
 import com.example.data.repository.external.AccountRepository
 import com.example.data.repository.external.CategoryRepository

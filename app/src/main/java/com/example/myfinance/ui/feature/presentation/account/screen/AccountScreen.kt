@@ -1,8 +1,5 @@
 package com.example.myfinance.ui.feature.presentation.account.screen
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
@@ -15,10 +12,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.R
 import com.example.myfinance.app.MainActivity
+import com.example.myfinance.app.findActivity
 import com.example.ui.AppTopBar
-import com.example.ui.ErrorState
-import com.example.ui.LoadingState
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ErrorState
+import com.example.ui.screenstate.LoadingState
+import com.example.ui.screenstate.ScreenState
 
 @Composable
 fun AccountScreen(
@@ -67,13 +65,4 @@ fun AccountScreen(
             ScreenState.LOADING -> LoadingState(modifier = Modifier.padding(innerPadding))
         }
     }
-}
-
-fun Context.findActivity(): Activity? {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    return null
 }

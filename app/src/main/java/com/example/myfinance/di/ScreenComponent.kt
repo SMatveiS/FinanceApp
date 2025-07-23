@@ -2,6 +2,7 @@ package com.example.myfinance.di
 
 import androidx.lifecycle.ViewModel
 import com.example.myfinance.di.module.viewmodel.ViewModelKey
+import com.example.myfinance.di.module.viewmodel.ViewModelModule
 import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountViewModel
 import com.example.myfinance.ui.feature.presentation.categories.viewmodel.CategoryViewModel
 import com.example.myfinance.ui.feature.presentation.expenses.viewmodel.ExpenseViewModel
@@ -12,7 +13,10 @@ import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 
 @ScreenScope
-@Subcomponent(modules = [ScreenModule::class])
+@Subcomponent(modules = [
+    ScreenModule::class,
+    ViewModelModule::class
+])
 interface ScreenComponent {
 
     val accountViewModel: AccountViewModel

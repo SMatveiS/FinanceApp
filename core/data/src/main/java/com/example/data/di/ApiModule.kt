@@ -1,6 +1,6 @@
-package com.example.myfinance.di.module
+package com.example.data.di
 
-import com.example.myfinance.BuildConfig
+import com.example.data.BuildConfig
 import com.example.data.remote.account.AccountApi
 import com.example.data.remote.category.CategoryApi
 import com.example.data.remote.transaction.TransactionApi

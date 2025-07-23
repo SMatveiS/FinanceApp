@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.category.GetAllCategoriesUseCase
 import com.example.domain.usecase.category.GetCategoriesWithSubstringUseCase
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ScreenState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

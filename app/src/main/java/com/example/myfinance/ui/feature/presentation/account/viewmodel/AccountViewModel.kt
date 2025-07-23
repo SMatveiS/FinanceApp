@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.account.GetAccountUseCase
 import com.example.domain.usecase.account.UpdateAccountUseCase
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

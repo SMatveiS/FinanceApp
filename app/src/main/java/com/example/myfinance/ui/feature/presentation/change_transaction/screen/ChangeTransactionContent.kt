@@ -29,7 +29,7 @@ import com.example.model.Transaction
 import com.example.myfinance.R
 import com.example.ui.AppListItem
 import com.example.ui.getCurrencySymbol
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ScreenState
 import com.example.ui.EditTextListItem
 
 @Composable

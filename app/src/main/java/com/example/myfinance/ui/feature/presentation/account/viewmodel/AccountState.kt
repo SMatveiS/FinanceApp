@@ -1,7 +1,7 @@
 package com.example.myfinance.ui.feature.presentation.account.viewmodel
 
 import com.example.model.Account
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ScreenState
 
 /**
  * Состояние экрана счёта

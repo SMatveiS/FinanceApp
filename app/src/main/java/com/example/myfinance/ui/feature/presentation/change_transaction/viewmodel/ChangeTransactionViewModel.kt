@@ -9,7 +9,7 @@ import com.example.domain.usecase.transaction.GetTransactionByIdUseCase
 import com.example.domain.usecase.transaction.UpdateTransactionUseCase
 import com.example.model.Category
 import com.example.ui.uiDateTimeFormat
-import com.example.ui.ScreenState
+import com.example.ui.screenstate.ScreenState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

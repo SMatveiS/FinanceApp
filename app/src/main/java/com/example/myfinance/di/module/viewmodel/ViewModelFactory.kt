@@ -19,7 +19,11 @@ class ViewModelFactory @Inject constructor(
         val viewModelProvider = viewModels[modelClass]
             ?: throw IllegalArgumentException("Unknown model class $modelClass")
 
-        return viewModelProvider.get() as T
+        try {
+            return viewModelProvider.get() as T
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
     }
 }
 

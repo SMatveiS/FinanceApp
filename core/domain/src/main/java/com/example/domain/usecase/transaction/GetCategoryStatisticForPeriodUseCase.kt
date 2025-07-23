@@ -40,7 +40,7 @@ class GetCategoryStatisticForPeriodUseCase @Inject constructor(
             }
 
             CategoryStatisticsInfo(
-                categoryStatistics = categoryStatistics,
+                categoryStatistics = categoryStatistics.sortedByDescending { it.proportion },
                 totalSum = transactionsInfo.transactionsSum,
                 currency = transactionsInfo.currency
             )
