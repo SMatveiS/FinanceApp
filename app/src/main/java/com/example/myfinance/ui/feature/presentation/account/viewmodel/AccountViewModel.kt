@@ -4,11 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.account.GetAccountUseCase
 import com.example.domain.usecase.account.UpdateAccountUseCase
+import com.example.domain.usecase.transaction.GetDailyAmounts
 import com.example.ui.screenstate.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.MonthDay
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 /**
@@ -17,7 +21,8 @@ import javax.inject.Inject
 
 class AccountViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
-    private val updateAccountUseCase: UpdateAccountUseCase
+    private val updateAccountUseCase: UpdateAccountUseCase,
+    private val getDailyAmounts: GetDailyAmounts
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AccountState>(AccountState())
@@ -38,10 +43,32 @@ class AccountViewModel @Inject constructor(
                 val accountResult = getAccountUseCase()
                 accountResult.fold (
                     onSuccess = { account ->
-                        _state.update { it.copy(
-                            account = account,
-                            screenState = ScreenState.SUCCESS
-                        ) }
+
+                        val currentDay = LocalDate.now()
+
+                        val startDate = currentDay.withDayOfMonth(1).format(DateTimeFormatter.ofPattern("y-MM-dd"))
+                        val endDate = currentDay.withDayOfMonth(currentDay.lengthOfMonth()).format(DateTimeFormatter.ofPattern("y-MM-dd"))
+
+                        val dailyAmountsResult = getDailyAmounts(startDate, endDate)
+
+                        dailyAmountsResult.fold(
+                            onSuccess = { dailyAmounts ->
+                                _state.update { it.copy(
+                                    account = account,
+                                    dailyAmounts = dailyAmounts,
+                                    screenState = ScreenState.SUCCESS
+                                ) }
+                            },
+
+                            onFailure = { error ->
+                                _state.update {
+                                    it.copy(
+                                        errorMessage = error.message,
+                                        screenState = ScreenState.ERROR
+                                    )
+                                }
+                            }
+                        )
                     },
 
                     onFailure = { error ->

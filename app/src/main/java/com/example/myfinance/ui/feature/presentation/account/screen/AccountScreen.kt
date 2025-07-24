@@ -50,6 +50,7 @@ fun AccountScreen(
             ScreenState.SUCCESS -> {
                 AccountContent(
                     account = state.account,
+                    dailyAmounts = state.dailyAmounts,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
