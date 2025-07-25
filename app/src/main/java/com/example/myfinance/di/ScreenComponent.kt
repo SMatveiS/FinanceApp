@@ -7,6 +7,7 @@ import com.example.myfinance.ui.feature.presentation.account.viewmodel.AccountVi
 import com.example.myfinance.ui.feature.presentation.categories.viewmodel.CategoryViewModel
 import com.example.myfinance.ui.feature.presentation.expenses.viewmodel.ExpenseViewModel
 import com.example.myfinance.ui.feature.presentation.incomes.viewmodel.IncomesViewModel
+import com.example.myfinance.ui.feature.presentation.settings.viewmodel.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Subcomponent
@@ -23,6 +24,7 @@ interface ScreenComponent {
     val categoryViewModel: CategoryViewModel
     val expenseViewModel: ExpenseViewModel
     val incomesViewModel: IncomesViewModel
+    val settingsViewModel: SettingsViewModel
 
     @Subcomponent.Factory
     interface Factory {
@@ -56,4 +58,10 @@ interface ScreenModule {
     @IntoMap
     @ViewModelKey(IncomesViewModel::class)
     fun bindIncomesViewModel(incomesViewModel: IncomesViewModel): ViewModel
+
+    @ScreenScope
+    @Binds
+    @IntoMap
+    @ViewModelKey(IncomesViewModel::class)
+    fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
 }

@@ -15,7 +15,7 @@ import com.example.myfinance.ui.feature.presentation.categories.screen.CategoryS
 import com.example.myfinance.ui.feature.presentation.change_transaction.screen.ChangeTransactionScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
-import com.example.myfinance.ui.feature.presentation.settings.SettingsScreen
+import com.example.myfinance.ui.feature.presentation.settings.screen.SettingsScreen
 import com.example.myfinance.ui.feature.presentation.transactions_history.screen.TransactionsHistoryScreen
 import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 

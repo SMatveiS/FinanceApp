@@ -11,16 +11,23 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.domain.usecase.theme.DarkThemeUseCase
 import com.example.myfinance.di.ActivityComponent
 import com.example.myfinance.ui.navigation.FinappNavHost
 import com.example.myfinance.ui.navigation.navbar.FinappNavBar
 import com.example.ui.theme.MyFinanceTheme
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
     internal lateinit var activityComponent: ActivityComponent
+
+    @Inject
+    lateinit var darkThemeUseCase: DarkThemeUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val appComponent = (application as FinApp).appComponent
@@ -31,7 +38,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            MyFinanceTheme {
+
+            val darkTheme by darkThemeUseCase.darkThemeFlow.collectAsState(false)
+            MyFinanceTheme(darkTheme = darkTheme) {
+
                 val navController = rememberNavController()
                 Scaffold(
                     containerColor = MaterialTheme.colorScheme.background,

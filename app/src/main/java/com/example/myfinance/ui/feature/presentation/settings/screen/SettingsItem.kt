@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.settings
+package com.example.myfinance.ui.feature.presentation.settings.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector

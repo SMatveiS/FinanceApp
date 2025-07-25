@@ -1,4 +1,4 @@
-package com.example.myfinance.ui.feature.presentation.settings
+package com.example.myfinance.ui.feature.presentation.settings.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SwitchThemeItem() {
+fun SwitchThemeItem(
+    isDarkThemeEnable: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -30,8 +33,8 @@ fun SwitchThemeItem() {
             color = MaterialTheme.colorScheme.onSurface
         )
         Switch(
-            checked = false,
-            onCheckedChange = {}
+            checked = isDarkThemeEnable,
+            onCheckedChange = { onCheckedChange(it) }
         )
     }
 }

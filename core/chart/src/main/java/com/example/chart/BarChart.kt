@@ -46,7 +46,7 @@ fun BarChart(data: List<Pair<String, Double>>, currency: String) {
         val barData = data.mapIndexed { index, (date, value) ->
             BarData(
                 point = Point(index.toFloat(), abs(value).toFloat()),
-                color = if (value < 0) Color(0xFFFF5F00) else MaterialTheme.colorScheme.primary,
+                color = if (value < 0) Color(0xFF2AE881) else Color(0xFFFF5F00),
                 label = date
             ) }
 
@@ -54,6 +54,8 @@ fun BarChart(data: List<Pair<String, Double>>, currency: String) {
             .startDrawPadding(30.dp)
             .steps(barData.size - 1)
             .shouldDrawAxisLineTillEnd(true)
+            .axisLineColor(MaterialTheme.colorScheme.onBackground)
+            .axisLabelColor(MaterialTheme.colorScheme.onBackground)
             .labelData { index ->
                 if (index == 0 || index == (barData.size / 2) - 1 || index == barData.size - 1) {
                     barData[index].label
@@ -71,6 +73,8 @@ fun BarChart(data: List<Pair<String, Double>>, currency: String) {
                 paddingBetweenBars = barWidth,
                 selectionHighlightData = SelectionHighlightData(
                     highlightTextOffset = 5.dp,
+                    highlightTextBackgroundColor = MaterialTheme.colorScheme.secondary,
+                    highlightTextColor = MaterialTheme.colorScheme.onSecondary,
                     popUpLabel = { x, y ->
                         val xLabel = barData[x.toInt()].label
                         val yLabel = "${String.format("%.2f", y)} $currency"
