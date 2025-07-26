@@ -29,6 +29,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("long", "BUILD_TIME", System.currentTimeMillis().toString() + "L")
+        }
+
+        debug {
+            buildConfigField("long", "BUILD_TIME", System.currentTimeMillis().toString() + "L")
         }
     }
     compileOptions {
@@ -40,6 +46,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

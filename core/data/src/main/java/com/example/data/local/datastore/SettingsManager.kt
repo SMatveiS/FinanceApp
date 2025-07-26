@@ -12,40 +12,53 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-val Context.themeDataStore: DataStore<Preferences> by preferencesDataStore(name = "theme")
+val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 @Singleton
-class ThemeManager @Inject constructor(context: Context) {
+class SettingsManager @Inject constructor(context: Context) {
 
     companion object {
         private val DARK_THEME_KEY = booleanPreferencesKey("dark_theme")
         private val MAIN_COLOR_KEY = intPreferencesKey("main_color")
+        private val SYNC_FREQ_KEY = intPreferencesKey("sync_frequency")
     }
 
-    private val themeDataStore = context.themeDataStore
+    private val settingsDataStore = context.settingsDataStore
 
-    val darkThemeFlow: Flow<Boolean> = themeDataStore.data
+
+    val darkThemeFlow: Flow<Boolean> = settingsDataStore.data
         .map { preferences ->
             preferences[DARK_THEME_KEY] ?: false
         }
 
     suspend fun setDarkTheme(enable: Boolean) {
-        themeDataStore.edit { preferences ->
+        settingsDataStore.edit { preferences ->
             preferences[DARK_THEME_KEY] = enable
         }
     }
 
 
-    val mainColorFlow: Flow<Int> = themeDataStore.data
+    val mainColorFlow: Flow<Int> = settingsDataStore.data
         .map { preferences ->
             preferences[MAIN_COLOR_KEY] ?: 0
         }
 
     suspend fun setMainColor(mainColor: Int) {
-        themeDataStore.edit { preferences ->
+        settingsDataStore.edit { preferences ->
             preferences[MAIN_COLOR_KEY] = mainColor
         }
     }
 
 
+    val syncFreqFlow: Flow<Int> = settingsDataStore.data
+        .map { preferences ->
+            preferences[SYNC_FREQ_KEY] ?: 5
+        }
+
+    suspend fun setSyncFreq(syncFreq: Int) {
+        settingsDataStore.edit { preferences ->
+            println("Новое значение: $syncFreq")
+            preferences[SYNC_FREQ_KEY] = syncFreq
+        }
+    }
 }

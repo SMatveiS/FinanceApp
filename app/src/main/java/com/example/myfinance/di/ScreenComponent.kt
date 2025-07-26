@@ -9,6 +9,7 @@ import com.example.myfinance.ui.feature.presentation.expenses.viewmodel.ExpenseV
 import com.example.myfinance.ui.feature.presentation.incomes.viewmodel.IncomesViewModel
 import com.example.myfinance.ui.feature.presentation.pickMainColor.PickMainColorViewModel
 import com.example.myfinance.ui.feature.presentation.settings.viewmodel.SettingsViewModel
+import com.example.myfinance.ui.feature.presentation.sync_choice.SyncChoiceViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Subcomponent
@@ -27,6 +28,7 @@ interface ScreenComponent {
     val incomesViewModel: IncomesViewModel
     val settingsViewModel: SettingsViewModel
     val pickMainColorViewModel: PickMainColorViewModel
+    val syncChoiceViewModel: SyncChoiceViewModel
 
     @Subcomponent.Factory
     interface Factory {
@@ -72,4 +74,10 @@ interface ScreenModule {
     @IntoMap
     @ViewModelKey(PickMainColorViewModel::class)
     fun bindPickMainColorViewModel(pickMainColorViewModel: PickMainColorViewModel): ViewModel
+
+    @ScreenScope
+    @Binds
+    @IntoMap
+    @ViewModelKey(SyncChoiceViewModel::class)
+    fun bindSyncChoiceViewModel(syncChoiceViewModel: SyncChoiceViewModel): ViewModel
 }

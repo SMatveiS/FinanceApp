@@ -16,8 +16,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.domain.usecase.theme.DarkThemeUseCase
-import com.example.domain.usecase.theme.MainColorUseCase
+import com.example.domain.usecase.settings.DarkThemeUseCase
+import com.example.domain.usecase.settings.MainColorUseCase
 import com.example.myfinance.di.ActivityComponent
 import com.example.myfinance.ui.navigation.FinappNavHost
 import com.example.myfinance.ui.navigation.navbar.FinappNavBar

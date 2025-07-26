@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
+import com.example.myfinance.ui.feature.presentation.AppInfoScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
 import com.example.myfinance.ui.feature.presentation.analysis.screen.AnalysisScreen
@@ -16,6 +17,7 @@ import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScr
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
 import com.example.myfinance.ui.feature.presentation.pickMainColor.PickMainColorScreen
 import com.example.myfinance.ui.feature.presentation.settings.screen.SettingsScreen
+import com.example.myfinance.ui.feature.presentation.sync_choice.SyncChoiceScreen
 import com.example.myfinance.ui.feature.presentation.transactions_history.screen.TransactionsHistoryScreen
 import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 
@@ -139,10 +141,20 @@ fun FinappNavHost(
         navigation<NavRoutes.Settings>(startDestination = NavRoutes.MainSettings) {
 
             composable<NavRoutes.MainSettings> { SettingsScreen(
-                toPickMainColor = { navController.navigate(NavRoutes.PickMainColor) }
+                toPickMainColor = { navController.navigate(NavRoutes.PickMainColor) },
+                toSyncChoice = { navController.navigate(NavRoutes.SyncChoice) },
+                toAppInfo = { navController.navigate(NavRoutes.AppInfo)}
             ) }
 
             composable<NavRoutes.PickMainColor> { PickMainColorScreen(
+                returnToPreviousScreen = { navController.popBackStack() }
+            ) }
+
+            composable<NavRoutes.SyncChoice> { SyncChoiceScreen(
+                returnToPreviousScreen = { navController.popBackStack() }
+            ) }
+
+            composable<NavRoutes.AppInfo> { AppInfoScreen(
                 returnToPreviousScreen = { navController.popBackStack() }
             ) }
         }

@@ -21,6 +21,8 @@ sealed class NavRoutes {
     @Serializable object Analysis
     @Serializable object MainSettings
     @Serializable object PickMainColor
+    @Serializable object SyncChoice
+    @Serializable object AppInfo
 
     @Serializable
     data class ChangeTransaction(val transactionId: Int? = null) : NavRoutes()

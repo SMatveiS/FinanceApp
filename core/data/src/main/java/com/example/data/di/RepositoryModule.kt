@@ -2,11 +2,11 @@ package com.example.data.di
 
 import com.example.data.repository.external.AccountRepository
 import com.example.data.repository.external.CategoryRepository
-import com.example.data.repository.external.ThemeRepository
+import com.example.data.repository.external.SettingsRepository
 import com.example.data.repository.external.TransactionRepository
 import com.example.data.repository.internal.AccountRepositoryImpl
 import com.example.data.repository.internal.CategoryRepositoryImpl
-import com.example.data.repository.internal.ThemeRepositoryImpl
+import com.example.data.repository.internal.SettingsRepositoryImpl
 import com.example.data.repository.internal.TransactionRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -33,6 +33,6 @@ interface RepositoryModule {
 
     @Singleton
     @Binds
-    fun provideThemeRepository(themeRepositoryImpl: ThemeRepositoryImpl): ThemeRepository
+    fun provideSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
 
 }

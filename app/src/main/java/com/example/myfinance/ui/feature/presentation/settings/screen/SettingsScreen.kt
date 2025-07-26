@@ -18,7 +18,9 @@ import com.example.ui.AppTopBar
 
 @Composable
 fun SettingsScreen(
-    toPickMainColor: () -> Unit
+    toPickMainColor: () -> Unit,
+    toSyncChoice: () -> Unit,
+    toAppInfo: () -> Unit
 ){
 
     val context = LocalContext.current
@@ -50,13 +52,13 @@ fun SettingsScreen(
             SettingsItem("Хаптики", {})
             HorizontalDivider()
 
-            SettingsItem("Синхронизация", {})
+            SettingsItem("Синхронизация", toSyncChoice)
             HorizontalDivider()
 
             SettingsItem("Язык", {})
             HorizontalDivider()
 
-            SettingsItem("О программе", {})
+            SettingsItem("О программе", toAppInfo)
             HorizontalDivider()
 
         }

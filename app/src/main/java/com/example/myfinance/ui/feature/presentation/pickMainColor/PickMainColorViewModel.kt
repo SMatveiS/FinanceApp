@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.pickMainColor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.theme.MainColorUseCase
+import com.example.domain.usecase.settings.MainColorUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

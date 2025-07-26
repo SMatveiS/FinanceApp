@@ -8,22 +8,32 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.example.domain.usecase.settings.SyncFreqUseCase
 import com.example.myfinance.di.AppComponent
 import com.example.myfinance.di.DaggerAppComponent
 import com.example.myfinance.di.module.workmanager.WorkerFactory
 import com.example.myfinance.workmanager.SyncDbWorker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class FinApp(): Application() {
 
     lateinit var appComponent: AppComponent
+    private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private var currentSyncFreq: Int = 5
 
     @Inject
     lateinit var workerFactory: WorkerFactory
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var syncFreqUseCase: SyncFreqUseCase
 
     override fun onCreate() {
         super.onCreate()
@@ -37,18 +47,29 @@ class FinApp(): Application() {
         WorkManager.initialize(this, config)
 
         networkMonitor.startMonitoring()
-        schedulePeriodicSync()
+        startSyncFrequencyObserver()
+    }
+
+    private fun startSyncFrequencyObserver() {
+        appScope.launch {
+            syncFreqUseCase.syncFreqFlow.collect { newFreq ->
+                if (newFreq != currentSyncFreq) {
+                    currentSyncFreq = newFreq
+                    schedulePeriodicSync(newFreq.toLong())
+                }
+            }
+        }
     }
 
 
-    private fun schedulePeriodicSync() {
+    private fun schedulePeriodicSync(freq: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
         val syncWorkRequest = PeriodicWorkRequest.Builder(
             SyncDbWorker::class.java,
-            5, TimeUnit.HOURS,
+            freq, TimeUnit.HOURS,
             15, TimeUnit.MINUTES
         ).setConstraints(constraints).build()
 

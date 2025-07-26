@@ -2,7 +2,7 @@ package com.example.data.repository.external
 
 import kotlinx.coroutines.flow.Flow
 
-interface ThemeRepository {
+interface SettingsRepository {
 
     val darkThemeFlow: Flow<Boolean>
 
@@ -12,4 +12,9 @@ interface ThemeRepository {
     val mainColorFlow: Flow<Int>
 
     suspend fun setMainColor(mainColor: Int)
+
+
+    val syncFreqFlow: Flow<Int>
+
+    suspend fun setSyncFreq(syncFreq: Int)
 }

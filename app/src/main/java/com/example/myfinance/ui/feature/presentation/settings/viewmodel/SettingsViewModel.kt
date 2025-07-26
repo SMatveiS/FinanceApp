@@ -2,7 +2,7 @@ package com.example.myfinance.ui.feature.presentation.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.theme.DarkThemeUseCase
+import com.example.domain.usecase.settings.DarkThemeUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

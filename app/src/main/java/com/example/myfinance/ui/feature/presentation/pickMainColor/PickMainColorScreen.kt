@@ -19,7 +19,7 @@ import com.example.ui.AppListItem
 import com.example.ui.AppTopBar
 import com.example.ui.theme.Blue
 import com.example.ui.theme.Green
-import com.example.ui.theme.Purple
+import com.example.ui.theme.LightPurple
 
 @Composable
 fun PickMainColorScreen(
@@ -67,7 +67,7 @@ fun PickMainColorScreen(
             AppListItem(
                 leftTitle = "Фиолетовый",
                 rightIcon = ImageVector.vectorResource(R.drawable.light_arrow),
-                itemBackground = Purple,
+                itemBackground = LightPurple,
                 clickable = true,
                 onClick = viewModel::setPurpleMainColor
             )
