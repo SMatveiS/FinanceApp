@@ -1,8 +1,8 @@
 package com.example.myfinance.ui.feature.presentation.categories.screen
 
 import androidx.compose.runtime.Composable
-import com.example.myfinance.domain.model.Category
-import com.example.myfinance.ui.common.AppListItem
+import com.example.model.Category
+import com.example.ui.AppListItem
 
 @Composable
 fun CategoryItem(category: Category) {

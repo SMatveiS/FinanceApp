@@ -7,11 +7,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import com.example.myfinance.domain.model.Category
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.ErrorState
-import com.example.myfinance.ui.common.LoadingState
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.model.Category
+import com.example.ui.AppListItem
+import com.example.ui.screenstate.ErrorState
+import com.example.ui.screenstate.LoadingState
+import com.example.ui.screenstate.ScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

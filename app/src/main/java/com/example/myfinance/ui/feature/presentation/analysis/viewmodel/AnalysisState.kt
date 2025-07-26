@@ -1,8 +1,8 @@
 package com.example.myfinance.ui.feature.presentation.analysis.viewmodel
 
-import com.example.myfinance.domain.model.CategoryStatistic
-import com.example.myfinance.ui.common.datepicker.DatePickerDialogType
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.model.CategoryStatistic
+import com.example.ui.datepicker.DatePickerDialogType
+import com.example.ui.screenstate.ScreenState
 import java.time.LocalDate
 
 data class AnalysisState(

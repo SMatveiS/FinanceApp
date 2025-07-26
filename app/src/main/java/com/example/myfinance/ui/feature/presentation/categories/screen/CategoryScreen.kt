@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myfinance.app.MainActivity
-import com.example.myfinance.ui.common.AppTopBar
-import com.example.myfinance.ui.common.ErrorState
-import com.example.myfinance.ui.common.LoadingState
-import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.feature.presentation.account.screen.findActivity
+import com.example.myfinance.app.findActivity
+import com.example.ui.AppTopBar
+import com.example.ui.screenstate.ErrorState
+import com.example.ui.screenstate.LoadingState
+import com.example.ui.screenstate.ScreenState
 
 @Composable
 fun CategoryScreen() {

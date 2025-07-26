@@ -1,9 +1,9 @@
 package com.example.myfinance.ui.feature.presentation.change_transaction.viewmodel
 
-import com.example.myfinance.domain.model.Category
-import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.common.uiDateFormat
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.model.Category
+import com.example.model.Transaction
+import com.example.ui.uiDateFormat
+import com.example.ui.screenstate.ScreenState
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

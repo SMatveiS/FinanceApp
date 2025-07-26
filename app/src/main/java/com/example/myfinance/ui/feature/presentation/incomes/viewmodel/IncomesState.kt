@@ -1,7 +1,7 @@
 package com.example.myfinance.ui.feature.presentation.incomes.viewmodel
 
-import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.model.Transaction
+import com.example.ui.screenstate.ScreenState
 
 /**
  * Состояние экрана доходов

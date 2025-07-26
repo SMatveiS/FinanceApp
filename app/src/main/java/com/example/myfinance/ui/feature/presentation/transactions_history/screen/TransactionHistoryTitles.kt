@@ -3,8 +3,8 @@ package com.example.myfinance.ui.feature.presentation.transactions_history.scree
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.uiDateFormat
+import com.example.ui.AppListItem
+import com.example.ui.uiDateFormat
 import java.time.LocalDate
 
 @Composable

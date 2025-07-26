@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.example.myfinance.data.MockData.settings
+import com.example.myfinance.ui.feature.presentation.AppInfoScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.AccountScreen
 import com.example.myfinance.ui.feature.presentation.account.screen.edit_account_screen.EditAccountScreen
 import com.example.myfinance.ui.feature.presentation.analysis.screen.AnalysisScreen
@@ -15,7 +15,9 @@ import com.example.myfinance.ui.feature.presentation.categories.screen.CategoryS
 import com.example.myfinance.ui.feature.presentation.change_transaction.screen.ChangeTransactionScreen
 import com.example.myfinance.ui.feature.presentation.expenses.screen.ExpensesScreen
 import com.example.myfinance.ui.feature.presentation.incomes.screen.IncomesScreen
-import com.example.myfinance.ui.feature.presentation.settings.SettingsScreen
+import com.example.myfinance.ui.feature.presentation.pickMainColor.PickMainColorScreen
+import com.example.myfinance.ui.feature.presentation.settings.screen.SettingsScreen
+import com.example.myfinance.ui.feature.presentation.sync_choice.SyncChoiceScreen
 import com.example.myfinance.ui.feature.presentation.transactions_history.screen.TransactionsHistoryScreen
 import com.example.myfinance.ui.navigation.NavRoutes.ChangeTransaction
 
@@ -57,7 +59,7 @@ fun FinappNavHost(
                 TransactionsHistoryScreen(
                     isIncome = false,
                     onBackArrowClicked = { navController.popBackStack() },
-                    onAnalysisClicked = { navController.navigate(route = NavRoutes.Analysis)},
+                    onAnalysisClicked = { navController.navigate(NavRoutes.Analysis)},
 
                     onItemClicked = { transactionId ->
                         navController.navigate(ChangeTransaction(transactionId))
@@ -77,7 +79,7 @@ fun FinappNavHost(
             composable<NavRoutes.Transactions> { backStackEntry ->
                 IncomesScreen (
                     onHistoryClicked = {
-                        navController.navigate(route = NavRoutes.TransactionsHistory)
+                        navController.navigate(NavRoutes.TransactionsHistory)
                     },
 
                     onFabClicked = {
@@ -103,7 +105,7 @@ fun FinappNavHost(
                 TransactionsHistoryScreen(
                     isIncome = true,
                     onBackArrowClicked = { navController.popBackStack() },
-                    onAnalysisClicked = { navController.navigate(route = NavRoutes.Analysis)},
+                    onAnalysisClicked = { navController.navigate(NavRoutes.Analysis)},
 
                     onItemClicked = { transactionId ->
                         navController.navigate(ChangeTransaction(transactionId))
@@ -122,7 +124,7 @@ fun FinappNavHost(
         navigation<NavRoutes.Account>(startDestination = NavRoutes.AccountStatistic) {
             composable<NavRoutes.AccountStatistic> {
                 AccountScreen(
-                    onEditAccountClicked = { navController.navigate(route = NavRoutes.EditAccount) }
+                    onEditAccountClicked = { navController.navigate(NavRoutes.EditAccount) }
                 )
             }
 
@@ -136,7 +138,25 @@ fun FinappNavHost(
 
         composable<NavRoutes.Categories> { CategoryScreen() }
 
-        composable<NavRoutes.Settings> { SettingsScreen(settings) }
+        navigation<NavRoutes.Settings>(startDestination = NavRoutes.MainSettings) {
 
+            composable<NavRoutes.MainSettings> { SettingsScreen(
+                toPickMainColor = { navController.navigate(NavRoutes.PickMainColor) },
+                toSyncChoice = { navController.navigate(NavRoutes.SyncChoice) },
+                toAppInfo = { navController.navigate(NavRoutes.AppInfo)}
+            ) }
+
+            composable<NavRoutes.PickMainColor> { PickMainColorScreen(
+                returnToPreviousScreen = { navController.popBackStack() }
+            ) }
+
+            composable<NavRoutes.SyncChoice> { SyncChoiceScreen(
+                returnToPreviousScreen = { navController.popBackStack() }
+            ) }
+
+            composable<NavRoutes.AppInfo> { AppInfoScreen(
+                returnToPreviousScreen = { navController.popBackStack() }
+            ) }
+        }
     }
 }

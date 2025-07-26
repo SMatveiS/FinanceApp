@@ -1,10 +1,7 @@
 package com.example.myfinance.ui.feature.presentation.analysis.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,16 +10,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myfinance.R
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.addCurrency
-import com.example.myfinance.ui.common.formatNumber
-import com.example.myfinance.ui.common.uiDateFormat
-import com.example.myfinance.domain.model.CategoryStatistic
+import com.example.chart.CategoryWithProportionItem
+import com.example.chart.DonutChart
+import com.example.model.CategoryStatistic
+import com.example.ui.AppListItem
+import com.example.ui.addCurrency
+import com.example.ui.formatNumber
+import com.example.ui.uiDateFormat
 import java.time.LocalDate
 
 @Composable
@@ -63,14 +59,15 @@ fun AnalysisContent(
             LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 item {
-                    Image(
-                        painter = painterResource(id = R.drawable.round),
-                        contentDescription = "Аналитика",
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .size(150.dp)
-                            .padding(top = 36.dp, bottom = 20.dp)
+                    DonutChart(
+                        categoryStatistics.map {
+                            CategoryWithProportionItem(
+                                name = it.category.name,
+                                proportion = it.proportion
+                            )
+                        }
                     )
+
                     HorizontalDivider()
                 }
 

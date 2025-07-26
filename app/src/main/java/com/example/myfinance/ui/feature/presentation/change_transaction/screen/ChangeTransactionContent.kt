@@ -24,13 +24,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.model.Category
+import com.example.model.Transaction
 import com.example.myfinance.R
-import com.example.myfinance.domain.model.Category
-import com.example.myfinance.domain.model.Transaction
-import com.example.myfinance.ui.common.AppListItem
-import com.example.myfinance.ui.common.getCurrencySymbol
-import com.example.myfinance.ui.feature.presentation.ScreenState
-import com.example.myfinance.ui.common.EditTextListItem
+import com.example.ui.AppListItem
+import com.example.ui.getCurrencySymbol
+import com.example.ui.screenstate.ScreenState
+import com.example.ui.EditTextListItem
 
 @Composable
 fun ChangeTransactionContent(
