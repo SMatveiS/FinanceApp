@@ -72,6 +72,7 @@ private val BlueLightColorScheme = lightColorScheme(
     surface = Light,
     error = Red,
 
+
     onPrimary = Black,
     onSecondary = Black,
     onTertiary = Black,
