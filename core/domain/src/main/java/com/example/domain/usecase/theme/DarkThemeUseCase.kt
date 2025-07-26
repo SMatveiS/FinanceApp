@@ -1,14 +1,14 @@
 package com.example.domain.usecase.theme
 
-import com.example.data.local.datastore.ThemeManager
+import com.example.data.repository.external.ThemeRepository
 import javax.inject.Inject
 
 class DarkThemeUseCase @Inject constructor(
-    private val themeManager: ThemeManager
+    private val themeRepository: ThemeRepository
 ) {
 
-    val darkThemeFlow = themeManager.darkThemeFlow
+    val darkThemeFlow = themeRepository.darkThemeFlow
 
     suspend fun setDarkTheme(isDarkThemeEnable: Boolean) =
-        themeManager.setDarkTheme(isDarkThemeEnable)
+        themeRepository.setDarkTheme(isDarkThemeEnable)
 }

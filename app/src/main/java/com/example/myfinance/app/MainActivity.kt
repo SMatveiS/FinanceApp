@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.domain.usecase.theme.DarkThemeUseCase
+import com.example.domain.usecase.theme.MainColorUseCase
 import com.example.myfinance.di.ActivityComponent
 import com.example.myfinance.ui.navigation.FinappNavHost
 import com.example.myfinance.ui.navigation.navbar.FinappNavBar
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var darkThemeUseCase: DarkThemeUseCase
 
+    @Inject
+    lateinit var mainColorUseCase: MainColorUseCase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val appComponent = (application as FinApp).appComponent
         activityComponent = appComponent.activityComponentFactory().create(this)
@@ -40,7 +44,12 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val darkTheme by darkThemeUseCase.darkThemeFlow.collectAsState(false)
-            MyFinanceTheme(darkTheme = darkTheme) {
+            val mainColor by mainColorUseCase.mainColorFlow.collectAsState(0)
+
+            MyFinanceTheme(
+                mainColor = mainColor,
+                darkTheme = darkTheme
+            ) {
 
                 val navController = rememberNavController()
                 Scaffold(

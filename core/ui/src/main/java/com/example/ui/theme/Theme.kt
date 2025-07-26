@@ -5,30 +5,29 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF25945E),
-    secondary = Color(0xFF194222),
-    tertiary = Color(0xFF3B383E),
-    outlineVariant = Color(0xFF938F99),
+private val GreenDarkColorScheme = darkColorScheme(
+    primary = DarkGreen,
+    secondary = VeryDarkGreen,
+    tertiary = VeryDarkGrey,
+    outlineVariant = Grey,
     background = Black,
-    surface = Color(0xFF3B383E),
-    error = Color(0xFFFFB4AB),
+    surface = VeryDarkGrey,
+    error = LightRed,
 
-    onPrimary = Color(0xFFE7E0E8),
-    onSecondary = Color(0xFFE7E0E8),
-    onTertiary = Color(0xFFE7E0E8),
-    onBackground = Color(0xFFE7E0E8),
-    onSurface = Color(0xFFE7E0E8),
-    onSurfaceVariant = Color(0xFFE7E0E8),
-    onError = Color(0xFF690005),
+    onPrimary = Light,
+    onSecondary = Light,
+    onTertiary = Light,
+    onBackground = Light,
+    onSurface = Light,
+    onSurfaceVariant = Light,
+    onError = DarkRed,
 )
 
-private val LightColorScheme = lightColorScheme(
+private val GreenLightColorScheme = lightColorScheme(
     primary = Green,
     secondary = LightGreen,
-    tertiary = Grey,
+    tertiary = Light,
     outlineVariant = LightGrey,
     background = White,
     surface = Light,
@@ -43,14 +42,105 @@ private val LightColorScheme = lightColorScheme(
     onError = White,
 )
 
+
+
+
+private val BlueDarkColorScheme = darkColorScheme(
+    primary = SeaColor,
+    secondary = DarkBlue,
+    tertiary = VeryDarkGrey,
+    outlineVariant = Grey,
+    background = Black,
+    surface = VeryDarkGrey,
+    error = LightRed,
+
+    onPrimary = Light,
+    onSecondary = Light,
+    onTertiary = Light,
+    onBackground = Light,
+    onSurface = Light,
+    onSurfaceVariant = Light,
+    onError = DarkRed,
+)
+
+private val BlueLightColorScheme = lightColorScheme(
+    primary = Blue,
+    secondary = LightBlue,
+    tertiary = Light,
+    outlineVariant = LightGrey,
+    background = White,
+    surface = Light,
+    error = Red,
+
+    onPrimary = Black,
+    onSecondary = Black,
+    onTertiary = Black,
+    onBackground = Black,
+    onSurface = Black,
+    onSurfaceVariant = DarkGrey,
+    onError = White,
+)
+
+
+
+
+private val PurpleDarkColorScheme = darkColorScheme(
+    primary = Purple,
+    secondary = DarkPurple,
+    tertiary = VeryDarkGrey,
+    outlineVariant = Grey,
+    background = Black,
+    surface = VeryDarkGrey,
+    error = LightRed,
+
+    onPrimary = Light,
+    onSecondary = Light,
+    onTertiary = Light,
+    onBackground = Light,
+    onSurface = Light,
+    onSurfaceVariant = Light,
+    onError = DarkRed,
+)
+
+private val PurpleLightColorScheme = lightColorScheme(
+    primary = LightPurple,
+    secondary = LightPink,
+    tertiary = Light,
+    outlineVariant = LightGrey,
+    background = White,
+    surface = Light,
+    error = Red,
+
+    onPrimary = Black,
+    onSecondary = Black,
+    onTertiary = Black,
+    onBackground = Black,
+    onSurface = Black,
+    onSurfaceVariant = DarkGrey,
+    onError = White,
+)
+
+
+
 @Composable
 fun MyFinanceTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    mainColor: Int = 0,
     content: @Composable () -> Unit
 ) {
-    val colorScheme =
-        if (darkTheme) DarkColorScheme
-    else LightColorScheme
+    // Основной цвет - зелёный
+    val colorScheme = if (mainColor == 0) {
+        if (darkTheme) GreenDarkColorScheme
+        else GreenLightColorScheme
+    // Основной цвет - синий
+    } else if (mainColor == 1) {
+        if (darkTheme) BlueDarkColorScheme
+        else BlueLightColorScheme
+    // Основной цвет - фиолетовый
+    } else {
+        if (darkTheme) PurpleDarkColorScheme
+        else PurpleLightColorScheme
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,

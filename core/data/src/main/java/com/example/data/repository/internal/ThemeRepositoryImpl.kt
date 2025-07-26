@@ -15,4 +15,11 @@ class ThemeRepositoryImpl @Inject constructor(
     override suspend fun setDarkTheme(isDarkThemeEnable: Boolean) = withContext(Dispatchers.IO) {
         themeManager.setDarkTheme(enable = isDarkThemeEnable)
     }
+
+
+    override val mainColorFlow = themeManager.mainColorFlow
+
+    override suspend fun setMainColor(mainColor: Int) = withContext(Dispatchers.IO) {
+        themeManager.setMainColor(mainColor)
+    }
 }
