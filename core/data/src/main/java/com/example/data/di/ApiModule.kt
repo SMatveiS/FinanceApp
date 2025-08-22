@@ -1,6 +1,5 @@
 package com.example.data.di
 
-import com.example.data.BuildConfig
 import com.example.data.remote.account.AccountApi
 import com.example.data.remote.category.CategoryApi
 import com.example.data.remote.transaction.TransactionApi
@@ -29,7 +28,7 @@ object ApiModule {
         val originalRequest = chain.request()
 
         val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer ${BuildConfig.TOKEN}")
+            .header("Authorization", "Bearer bOIT5VdAvwCuTdoPkUCBhrzt")
             .build()
 
         chain.proceed(newRequest)
