@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.transaction.GetCategoryStatisticForPeriodUseCase
 import com.example.ui.datepicker.DatePickerDialogType
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.ui.screenstate.ScreenState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

@@ -19,33 +19,23 @@ class SyncDbUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Result<Unit> {
-        val accountResult = accountRepository.syncAccount()
 
-        // Нельзя сделать через map, так как вернёт Result<Result<...>>
-        return accountResult.fold(
+        // Синхронизируем счёт
+        val account = accountRepository.syncAccount().getOrElse {
+            return Result.failure(it)
+        }
 
-            onFailure =  { error -> Result.failure(error) },
+        // Синхронизируем категории
+        categoryRepository.syncCategories().getOrElse {
+            return Result.failure(it)
+        }
 
-            onSuccess = { account ->
-                val categoriesResult = categoryRepository.syncCategories()
-
-                categoriesResult.fold(
-                    onFailure =  { error -> Result.failure(error) },
-
-                    onSuccess = {
-                        val transactionsResult = transactionRepository.syncTransactions(
-                            id = account.id,
-                            startDate = OffsetDateTime.parse(account.createdAt)
-                                .format(DateTimeFormatter.ofPattern("y-MM-dd")),
-                            endDate = LocalDate.now().format(DateTimeFormatter.ofPattern("y-MM-dd"))
-                        )
-
-                        transactionsResult
-                    }
-                )
-
-            }
+        // Синхронизируем транзакции
+        return transactionRepository.syncTransactions(
+            id = account.id,
+            startDate = OffsetDateTime.parse(account.createdAt)
+                .format(DateTimeFormatter.ofPattern("y-MM-dd")),
+            endDate = LocalDate.now().format(DateTimeFormatter.ofPattern("y-MM-dd"))
         )
     }
-
 }

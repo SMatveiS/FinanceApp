@@ -1,7 +1,7 @@
 package com.example.myfinance.ui.feature.presentation.categories.viewmodel
 
 import com.example.model.Category
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.ui.screenstate.ScreenState
 
 /**
  * Состояние экрана статей

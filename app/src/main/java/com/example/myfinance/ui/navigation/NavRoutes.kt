@@ -10,15 +10,19 @@ sealed class NavRoutes {
     @Serializable object Expenses
     @Serializable object Incomes
     @Serializable object Account
+    @Serializable object Settings
 
 
     @Serializable object Transactions
     @Serializable object AccountStatistic
     @Serializable object EditAccount
     @Serializable object Categories
-    @Serializable object Settings
     @Serializable object TransactionsHistory
     @Serializable object Analysis
+    @Serializable object MainSettings
+    @Serializable object PickMainColor
+    @Serializable object SyncChoice
+    @Serializable object AppInfo
 
     @Serializable
     data class ChangeTransaction(val transactionId: Int? = null) : NavRoutes()

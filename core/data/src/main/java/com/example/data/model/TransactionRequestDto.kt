@@ -17,9 +17,9 @@ import java.time.format.DateTimeFormatter
 @Serializable
 data class TransactionRequestDto(
     @SerialName("accountId")
-    val accountId: Int = 1,
+    val accountId: Int = 0,
     @SerialName("categoryId")
-    val categoryId: Int = 1,
+    val categoryId: Int = 0,
     @SerialName("amount")
     val amount: String = "500.00",
     @SerialName("transactionDate")

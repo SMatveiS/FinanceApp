@@ -3,7 +3,7 @@ package com.example.myfinance.ui.feature.presentation.expenses.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.transaction.GetTodayTransactionsUseCase
-import com.example.myfinance.ui.feature.presentation.ScreenState
+import com.example.ui.screenstate.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

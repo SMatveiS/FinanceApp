@@ -19,6 +19,7 @@ val Context.accountDataStore: DataStore<Preferences> by preferencesDataStore(nam
 
 @Singleton
 class AccountManager @Inject constructor(private val context: Context) {
+
     companion object {
         private val ACCOUNT_KEY = stringPreferencesKey("account_data")
     }
@@ -29,7 +30,7 @@ class AccountManager @Inject constructor(private val context: Context) {
     }
 
 
-    val accountFlow: Flow<Account?> = context.accountDataStore.data
+    private val accountFlow: Flow<Account?> = context.accountDataStore.data
         .map { preferences ->
             preferences[ACCOUNT_KEY]?.let { jsonString ->
                 try {

@@ -5,7 +5,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.chart.BarChart
 import com.example.model.Account
+import com.example.model.DailyAmount
 import com.example.ui.formatNumber
 import com.example.ui.AppListItem
 import com.example.ui.addCurrency
@@ -14,6 +16,7 @@ import com.example.ui.getCurrencySymbol
 @Composable
 fun AccountContent(
     account: Account?,
+    dailyAmounts: List<DailyAmount>,
     modifier: Modifier = Modifier
 ) {
 
@@ -34,6 +37,11 @@ fun AccountContent(
             rightTitle = getCurrencySymbol(account?.currency ?: "RUB"),
             itemBackground = MaterialTheme.colorScheme.secondary,
             itemHeight = 56
+        )
+
+        BarChart(
+            data = dailyAmounts.map { Pair(it.date, it.amount) },
+            currency = getCurrencySymbol(account?.currency ?: "RUB")
         )
     }
 }

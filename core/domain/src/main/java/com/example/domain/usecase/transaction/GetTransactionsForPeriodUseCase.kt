@@ -28,29 +28,26 @@ class GetTransactionsForPeriodUseCase @Inject constructor(
         isIncomes: Boolean
     ): Result<TransactionsInfo> {
 
-        val accountResult = getAccountUseCase()
-        // Нельзя сделать через map, так как вернёт Result<Result<...>>
-        return accountResult.fold(
-            onFailure = { error -> Result.failure(error) },
-            onSuccess = { account ->
-                val transactionsResult = transactionRepository.getTransactionForPeriod(
-                    id = account.id,
-                    startDate = startDate,
-                    endDate = endDate
-                )
+        val account = getAccountUseCase().getOrElse {
+            return Result.failure(it)
+        }
 
-                transactionsResult.map { transactions ->
-                    val sortedTransactions = transactions.filter {
-                        it.category.isIncome == isIncomes
-                    }.sortedByDescending { it.date }
-
-                    TransactionsInfo(
-                        transactions = sortedTransactions,
-                        transactionsSum = sortedTransactions.sumOf { it.amount },
-                        currency = account.currency
-                    )
-                }
-            }
+        val transactionsResult = transactionRepository.getTransactionForPeriod(
+            id = account.id,
+            startDate = startDate,
+            endDate = endDate
         )
+
+        return transactionsResult.map { transactions ->
+            val sortedTransactions = transactions.filter {
+                it.category.isIncome == isIncomes
+            }.sortedByDescending { it.date }
+
+            TransactionsInfo(
+                transactions = sortedTransactions,
+                transactionsSum = sortedTransactions.sumOf { it.amount },
+                currency = account.currency
+            )
+        }
     }
 }

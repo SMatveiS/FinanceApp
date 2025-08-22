@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -20,8 +21,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt")
             )
         }
     }
@@ -36,7 +36,7 @@ android {
 
 dependencies {
 
-    api(project(":core:model"))
+    implementation(project(":core:model"))
     implementation(project(":core:ui"))
 
     implementation(libs.androidx.core.ktx)
